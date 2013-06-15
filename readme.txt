@@ -1,0 +1,88 @@
+=== Ninja Forms - File Uploads Extension ===
+Contributors: kstover, jameslaws
+Donate link: http://wpninjas.com
+Tags: form, forms
+Requires at least: 3.3
+Tested up to: 3.5
+Stable tag: 1.0.1
+
+License: GPLv2 or later
+
+== Description ==
+The Ninja Forms File Uploads Extension allows users to upload files. These files are stored in a database that can be browsed or searched by an administrator. Files can be downloaded or deleted by administrators as well.
+
+== Screenshots ==
+
+To see up to date screenshots, visit the [Ninja Forms](http://wpninjas.com/ninja-forms/) page.
+
+== Installation ==
+
+This section describes how to install the plugin and get it working.
+
+1. Upload the `ninja-forms` directory to your `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Visit the 'Forms' menu item in your admin sidebar
+4. When you create a form, you can now add upload fields on the field edit page.
+5. A "File Uploads" link will now appear underneath the main "Forms" admin menu.
+
+== Use ==
+
+For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
+
+== Changelog ==
+
+= 1.0.1 =
+
+*Changes:*
+
+* Modified the way that the pre-processing is handled for more effeciency.
+
+= 1.0 =
+
+*Bugs:*
+
+* Fixed a bug that prevented files from being replaced on the backend.
+
+= 0.9 =
+
+*Bugs:*
+
+* Fixed a bug that prevented files from being replaced when editing user submissions.
+
+= 0.8 =
+
+*Features:*
+
+* Added the ability to search for file uploads by User ID, User email, or User login.
+
+= 0.7 =
+
+* Updated code formatting.
+
+= 0.6 =
+
+* Fixed a bug that was causing the new [ninja_forms_field id=3] shortcode to fail when used in conjunction with the Uploads Extension.
+
+= 0.5 =
+
+* Changed the upload directory to the built-in WordPress uploads directory. This should help limit the cases of users not being able to upload files because of directory restrictions. Old files have not been moved over because it would be impossible to correctly fix links to new locations.
+* Fixed a bug that was causing some users to lose their upload record when they deactivated and reactivated the plugin.
+* Errors should now show properly for files that are over the file size limit set in the plugin settings.
+
+= 0.4 =
+
+* Various bug fixes including:
+* A bug that prevented files from being moved to the proper directory.
+* A bug that prevented the "update file" link from working on pages that already had a file uploaded.
+* A bug that prevented the "featured image" functionality from working properly.
+
+* Added a new setting to the upload settings page for file upload URLs.
+
+= 0.3 =
+
+* Various bug fixes.
+
+= 0.2 =
+
+* Various bug fixes.
+* Changed the way that javascript and css files are loaded in extensions.
