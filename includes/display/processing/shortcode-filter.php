@@ -35,6 +35,9 @@ function ninja_forms_uploads_shortcode( $value, $atts ){
 						}
 						$tmp_value .= "<a href='".$url."'>".$filename."</a>";
 						break;
+					case 'url':
+						$tmp_value .= $url;
+						break;
 				}
 				$x++;
 			}

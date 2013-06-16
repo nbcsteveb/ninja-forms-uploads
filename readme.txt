@@ -4,7 +4,7 @@ Donate link: http://wpninjas.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 License: GPLv2 or later
 
@@ -30,6 +30,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
 
 == Changelog ==
+
+= 1.0.2 =
+
+*Changes:*
+
+* Added a new option to the [ninja_forms_field id=] shortcode. You can now use [ninja_forms_field id=2 method=url]. This will return just the url of the file. For example, you can now do something like this: <img src="[ninja_forms_field id=2 method=url]">.
 
 = 1.0.1 =
 
