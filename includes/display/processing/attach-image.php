@@ -86,6 +86,37 @@ function ninja_forms_detach_files_from_post( $post_id, $field_id ){
 add_action( 'ninja_forms_create_post', 'ninja_forms_attach_files_to_post' );
 add_action( 'ninja_forms_update_post', 'ninja_forms_attach_files_to_post' );
 
+/*
+ *
+ * Function to check whether or not a file should be added to the media library. If it is, call the attachment function.
+ *
+ * @since 1.0.3
+ * @return void
+ */
+
+function ninja_forms_check_add_to_media_library( $form_id ){
+	global $ninja_forms_processing;
+	if( $ninja_forms_processing->get_extra_value( 'uploads' ) ){
+		foreach( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ){
+
+			$field_row = $ninja_forms_processing->get_field_settings( $field_id );
+			$user_value = $ninja_forms_processing->get_field_value( $field_id );
+			if( isset( $field_row['data']['media_library'] ) AND $field_row['data']['media_library'] == 1 ){
+				
+				if( is_array( $user_value ) ){
+					foreach( $user_value as $key => $file ){
+						$filename = $file['file_path'].$file['file_name'];
+						$attach_array = ninja_forms_generate_metadata( '', $filename );
+					}
+				}
+			}
+		}
+	}
+}
+
+add_action( 'ninja_forms_post_process', 'ninja_forms_check_add_to_media_library' );
+
+
 function ninja_forms_generate_metadata( $post_id, $filename ){
 	$wp_filetype = wp_check_filetype( basename( $filename ), null );
 	$attachment = array(

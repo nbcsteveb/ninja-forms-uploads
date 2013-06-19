@@ -160,7 +160,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 	}else{
 		$upload_types = '';
 	}
-	
+
 	if(isset($field_data['upload_rename'])){
 		$upload_rename = $field_data['upload_rename'];
 	}else{
@@ -206,6 +206,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 
 	$orig_user_file_name = $user_file_name;
 
+	$user_file_array = array();
 	if($user_file_name != ''){
 
 		//Trim whitespace and replace special characters from our file name.
@@ -214,10 +215,10 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$user_file_name = preg_replace("/[\/\&%#\$]/", "", $user_file_name);
 		$user_file_name = preg_replace("/[\"\']/", "", $user_file_name);
 		$user_file_name = preg_replace("/\s+/", "", $user_file_name);
-
-		if(isset($upload_types) AND !empty($upload_types)){
-			$user_file_array = explode(".", $user_file_name);
-			$ext = array_pop($user_file_array);
+		
+		$user_file_array = explode(".", $user_file_name);
+		$ext = array_pop($user_file_array);
+		if(isset($upload_types) AND !empty($upload_types)){	
 			if(strpos($upload_types, $ext) === false){
 				$ninja_forms_processing->add_error('upload_'.$field_id, __('File type is not allowed: '.$user_file_name, 'ninja-forms'), $field_id);
 			}
@@ -231,8 +232,14 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		if(is_user_logged_in()){
 			$current_user = wp_get_current_user();
 			$user_name = $current_user->user_nicename;
+			$display_name = $current_user->display_name;
+			$first_name = $current_user->user_firstname;
+			$last_name = $current_user->user_lastname;
 		}else{
 			$user_name = '';
+			$display_name = '';
+			$first_name = '';
+			$last_name = '';
 		}
 
 		//If we have a file naming convention, use it to change our file name.
@@ -251,11 +258,18 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$file_name = str_replace("%day%", date('d'), $file_name);
 			$file_name = str_replace("%year%", date('Y'), $file_name);
 			$file_name = str_replace("%username%", $user_name, $file_name);
+			$file_name = str_replace("%displayname%", $display_name, $file_name);
+			$file_name = str_replace("%firstname%", $first_name, $file_name);
+			$file_name = str_replace("%lastname%", $last_name, $file_name);
 			//$file_name = str_replace("%random%", ninja_forms_random_string(5), $file_name );
 			$file_name .= '.'.$ext;
+
+			echo "FILENAME: ".$file_name;
 		}else{
 			$file_name = $user_file_name;
 		}
+
+		echo "BLEEP: ".$file_name;
 
 		if($custom_upload_dir != ''){
 			$custom_upload_dir = stripslashes(trim($custom_upload_dir));
@@ -267,6 +281,9 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$custom_upload_dir = str_replace("%day%", date('d'), $custom_upload_dir);
 			$custom_upload_dir = str_replace("%year%", date('Y'), $custom_upload_dir);
 			$custom_upload_dir = str_replace("%username%", $user_name, $custom_upload_dir);
+			$custom_upload_dir = str_replace("%displayname%", $display_name, $custom_upload_dir);
+			$custom_upload_dir = str_replace("%firstname%", $first_name, $custom_upload_dir);
+			$custom_upload_dir = str_replace("%lastname%", $last_name, $custom_upload_dir);
 		}
 
 		$upload_path = $base_upload_dir.$custom_upload_dir;

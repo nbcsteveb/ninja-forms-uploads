@@ -61,6 +61,9 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 						$custom_upload_dir = str_replace("%day%", date('d'), $custom_upload_dir);
 						$custom_upload_dir = str_replace("%year%", date('Y'), $custom_upload_dir);
 						$custom_upload_dir = str_replace("%username%", $user_name, $custom_upload_dir);
+						$custom_upload_dir = str_replace("%displayname%", $display_name, $custom_upload_dir);
+						$custom_upload_dir = str_replace("%firstname%", $first_name, $custom_upload_dir);
+						$custom_upload_dir = str_replace("%lastname%", $last_name, $custom_upload_dir);
 
 						if( strpos( $custom_upload_dir, '/' ) !== false ){
 							$sep = '/';
@@ -86,11 +89,41 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 					
 					$upload_dir = $base_upload_dir.$custom_upload_dir;
 
-					//$upload_dir = apply_filters( 'ninja_forms_uploads_dir', $upload_dir, $field_id );
+					$upload_dir = apply_filters( 'ninja_forms_uploads_dir', $upload_dir, $field_id );
 
 					$upload_dir = trailingslashit( $upload_dir );
 
 					$file_dir = $upload_dir.$file_name;
+
+					$x = 1;
+					
+					while( file_exists( $file_dir ) ){
+						$tmp_name = $file_name;
+						if( strpos( $tmp_name, '.' ) !== false ){
+							$tmp_name = explode( '.', $tmp_name );
+							$name = $tmp_name[0];
+							$ext = $tmp_name[1];							
+						}else{
+							$name = $tmp_name;
+							$ext = '';
+						}
+						if( $x < 9 ){
+							$num = "00".$x;
+						}else if( $x > 9 AND $x < 99 ){
+							$num = "0".$x;
+						}else{
+							$num = $x;
+						}
+						$name .= '-'.$num;
+						if( $ext != '' ){
+							$tmp_name = $name.'.'.$ext;
+						}else{
+							$tmp_name = $name;
+						}
+						
+						$file_dir = $upload_dir.$tmp_name;
+						$x++;
+					}
 
 					if(!$ninja_forms_processing->get_all_errors()){
 						if( file_exists ( $file_path ) AND !is_dir( $file_path ) AND copy( $file_path, $file_dir ) ){

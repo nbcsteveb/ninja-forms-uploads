@@ -21,8 +21,14 @@ function ninja_forms_register_field_upload(){
 			),
 			array(
 				'type' => 'checkbox',
+				'name' => 'media_library',
+				'label' => __( 'Add this file to the WordPress Media Library?', 'ninja-forms-uploads' ),
+				//'class' => 'widefat',
+			),
+			array(
+				'type' => 'checkbox',
 				'name' => 'email_attachment',
-				'label' => __('Email file as an attachment to administrators.'),
+				'label' => __('Email file as an attachment to administrators.', 'ninja-forms-uploads' ),
 				//'width' => 'thin',
 			),
 		),

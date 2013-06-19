@@ -20,6 +20,9 @@ function ninja_forms_help_uploads(){
 			<li><span class="code">%filename%</span> - <?php _e('The file\'s original filename, with any special characters removed.', 'ninja-forms');?></li>
 			<li><span class="code">%formtitle%</span> - <?php _e('The title of the current form, with any special characters removed.', 'ninja-forms');?></li>
 			<li><span class="code">%username%</span> - <?php _e('The WordPress username for the user, if they are logged in.', 'ninja-forms');?></li>
+			<li><span class="code">%displayname%</span> - <?php _e('The WordPress displayname for the user, if they are logged in.', 'ninja-forms');?></li>
+			<li><span class="code">%lastname%</span> - <?php _e('The WordPress lastname for the user, if they are logged in.', 'ninja-forms');?></li>
+			<li><span class="code">%firstname%</span> - <?php _e('The WordPress firstname for the user, if they are logged in.', 'ninja-forms');?></li>
 			<li><span class="code">%date%</span> - <?php _e('Today\'s date in yyyy-mm-dd format.', 'ninja-forms');?></li>
 			<li><span class="code">%month%</span> - <?php _e('Today\'s month in mm format.', 'ninja-forms');?></li>
 			<li><span class="code">%day%</span> - <?php _e('Today\'s day in dd format.', 'ninja-forms');?></li>

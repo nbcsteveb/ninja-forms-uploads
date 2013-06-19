@@ -4,7 +4,7 @@ Donate link: http://wpninjas.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 License: GPLv2 or later
 
@@ -30,6 +30,22 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
 
 == Changelog ==
+
+= 1.0.3 =
+
+*Changes:*
+
+* Changed the way that file uploads with duplicate names are handled. In previous versions, the new file would simply replace the older file with the same name; now, if a file already exists with the same name as an upload, the upload is renamed with a sequential number. e.g. my-file.jpg -> my-file-001.jpg -> my-file-002.jpg -> etc.
+
+* Added an option to add files to the WordPress Media Library. On each file upload field, you'll find this new option.
+
+* Added three new file renaming options: %displayname%, %firstname%, %lastname%. Each of these will be replaced with the appropriate user information.
+
+* Added a new filter named: ninja_forms_uploads_dir. This filter can be used to modify the location Ninja Forms uploads files.
+
+*Bugs:*
+
+* Fixed a bug that could cause some files from uploading properly.
 
 = 1.0.2 =
 
