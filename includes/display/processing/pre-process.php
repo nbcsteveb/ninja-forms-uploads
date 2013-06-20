@@ -269,8 +269,6 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$file_name = $user_file_name;
 		}
 
-		echo "BLEEP: ".$file_name;
-
 		if($custom_upload_dir != ''){
 			$custom_upload_dir = stripslashes(trim($custom_upload_dir));
 
