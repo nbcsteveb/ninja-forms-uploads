@@ -144,7 +144,7 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 
 	$field_row = ninja_forms_get_field_by_id( $field_id );
 	$field_type = $field_row['type'];
-	if( $field_type == '_upload' ){
+	if( $field_type == '_upload' AND is_object( $post ) ){
 		$args = array(
 			'post_type' => 'attachment',
 			'numberposts' => null,

@@ -264,7 +264,6 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			//$file_name = str_replace("%random%", ninja_forms_random_string(5), $file_name );
 			$file_name .= '.'.$ext;
 
-			echo "FILENAME: ".$file_name;
 		}else{
 			$file_name = $user_file_name;
 		}
