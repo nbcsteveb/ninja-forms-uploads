@@ -47,8 +47,14 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 					if(is_user_logged_in()){
 						$current_user = wp_get_current_user();
 						$user_name = $current_user->user_nicename;
+						$display_name = $current_user->display_name;
+						$first_name = $current_user->user_firstname;
+						$last_name = $current_user->user_lastname;
 					}else{
 						$user_name = '';
+						$display_name ='';
+						$first_name = '';
+						$last_name = '';
 					}
 
 					if($custom_upload_dir != ''){
@@ -95,35 +101,41 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 
 					$file_dir = $upload_dir.$file_name;
 
+					/*
 					$x = 1;
-					
-					while( file_exists( $file_dir ) ){
-						$tmp_name = $file_name;
-						if( strpos( $tmp_name, '.' ) !== false ){
-							$tmp_name = explode( '.', $tmp_name );
-							$name = $tmp_name[0];
-							$ext = $tmp_name[1];							
-						}else{
-							$name = $tmp_name;
-							$ext = '';
+					if( file_exists( $file_dir ) ){
+						while( file_exists( $file_dir ) ){
+							$tmp_name = $file_name;
+							if( strpos( $tmp_name, '.' ) !== false ){
+								$tmp_name = explode( '.', $tmp_name );
+								$name = $tmp_name[0];
+								$ext = $tmp_name[1];							
+							}else{
+								$name = $tmp_name;
+								$ext = '';
+							}
+							if( $x < 9 ){
+								$num = "00".$x;
+							}else if( $x > 9 AND $x < 99 ){
+								$num = "0".$x;
+							}else{
+								$num = $x;
+							}
+							$name .= '-'.$num;
+							if( $ext != '' ){
+								$tmp_name = $name.'.'.$ext;
+							}else{
+								$tmp_name = $name;
+							}
+							
+							$file_dir = $upload_dir.$tmp_name;
+							$x++;
 						}
-						if( $x < 9 ){
-							$num = "00".$x;
-						}else if( $x > 9 AND $x < 99 ){
-							$num = "0".$x;
-						}else{
-							$num = $x;
-						}
-						$name .= '-'.$num;
-						if( $ext != '' ){
-							$tmp_name = $name.'.'.$ext;
-						}else{
-							$tmp_name = $name;
-						}
-						
-						$file_dir = $upload_dir.$tmp_name;
-						$x++;
+
+						$file_name = $tmp_name;	
 					}
+
+					*/
 
 					if(!$ninja_forms_processing->get_all_errors()){
 						if( file_exists ( $file_path ) AND !is_dir( $file_path ) AND copy( $file_path, $file_dir ) ){
@@ -133,6 +145,7 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 								foreach( $current_uploads as $key => $file ){
 									if( $file['file_path'] == $file_path ){
 										$current_uploads[$key]['file_path'] = $upload_dir;
+										//$current_uploads[$key]['file_name'] = $file_name;
 										$current_uploads[$key]['complete'] = 1;
 									}
 								}

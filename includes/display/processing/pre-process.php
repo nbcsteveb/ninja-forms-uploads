@@ -288,10 +288,44 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 
 		$file_url = $base_upload_url.$custom_upload_url;
 		$file_url = trailingslashit( $file_url );
-		
-		$file_url .= $file_name;
+
+		$file_dir = $upload_path.'/'.$file_name;
+		if( file_exists( $file_dir ) ){
+			$x = 1;
+			while( file_exists( $file_dir ) ){
+				$tmp_name = $file_name;
+				if( strpos( $tmp_name, '.' ) !== false ){
+					$tmp_name = explode( '.', $tmp_name );
+					$name = $tmp_name[0];
+					$ext = $tmp_name[1];							
+				}else{
+					$name = $tmp_name;
+					$ext = '';
+				}
+				if( $x < 9 ){
+					$num = "00".$x;
+				}else if( $x > 9 AND $x < 99 ){
+					$num = "0".$x;
+				}else{
+					$num = $x;
+				}
+				$name .= '-'.$num;
+				if( $ext != '' ){
+					$tmp_name = $name.'.'.$ext;
+				}else{
+					$tmp_name = $name;
+				}
+				
+				$file_dir = $upload_path.'/'.$tmp_name;
+				$x++;
+			}
+
+			$file_name = $tmp_name;		
+		}
 	}
-	
+
+	$file_url .= $file_name;
+
 	if($multi){
 		$update_array = $ninja_forms_processing->get_field_value($field_id);
 		if( !is_array( $update_array ) OR empty( $update_array ) ){
