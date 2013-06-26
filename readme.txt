@@ -4,7 +4,7 @@ Donate link: http://wpninjas.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 
 License: GPLv2 or later
 
@@ -30,6 +30,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
 
 == Changelog ==
+
+= 1.0.4 =
+
+*Changes:*
+
+* Added a filter so that File Uploads will work properly with the confirmation page option of Multi-Part Forms.
 
 = 1.0.3 =
 
