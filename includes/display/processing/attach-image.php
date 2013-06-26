@@ -69,6 +69,8 @@ function ninja_forms_attach_files_to_post( $post_id ){
 							update_post_meta( $attach_id, 'ninja_forms_field_id', $field_id );
 							update_post_meta( $attach_id, 'ninja_forms_file_key', $key );
 							update_post_meta( $attach_id, 'ninja_forms_upload_id', $file['upload_id'] );
+							$file['attachment_id'] = $attach_id;
+							$ninja_forms_processing->update_field_value( $field_id, array( $key => $file ) );
 						}		
 					}
 				}
