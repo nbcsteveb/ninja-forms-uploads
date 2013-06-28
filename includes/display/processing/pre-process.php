@@ -103,9 +103,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 			}
 		}
 
-		if( !empty( $tmp_array ) ){
-			$ninja_forms_processing->update_field_value( $field_id, $tmp_array );
-		}
+		$ninja_forms_processing->update_field_value( $field_id, $tmp_array );
 
 		$file_error = false;
 		foreach( $files as $key => $f ){

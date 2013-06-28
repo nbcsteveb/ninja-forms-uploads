@@ -11,50 +11,70 @@
 
 function ninja_forms_field_upload_req_validation($field_id, $user_value){
 	global $ninja_forms_processing;
-	
-	if( isset( $_FILES['ninja_forms_field_'.$field_id] ) ){
-		$file_error = false;
-			$files = array();
-			$fdata = $_FILES['ninja_forms_field_'.$field_id];
-			if(is_array($fdata['name'])){
-				for($i=0;$i<count($fdata['name']);++$i){
-			    	$files[]=array(
-					    'name'    =>$fdata['name'][$i],
-					    'type'  => $fdata['type'][$i],
-					    'tmp_name'=>$fdata['tmp_name'][$i],
-					    'error' => $fdata['error'][$i], 
-					    'size'  => $fdata['size'][$i]  
-				    );
-			    }
-			    $multi = true;
-			}else{
-				$files[0]=$fdata;
-				$multi = false;
-			}
 
-			$file_error = false;
+	if( isset( $_FILES['ninja_forms_field_'.$field_id] ) ){
+		
+		$files = array();
+		$fdata = $_FILES['ninja_forms_field_'.$field_id];
+		
+		if( is_array( $fdata['name'] ) ){
+			foreach( $fdata['name'] as $key => $val ){
+				if( $key == 'new' ){
+					for ($x=0; $x < count( $fdata['name']['new'] ); $x++) { 
+						if( $fdata['error']['new'][$x] != 4 ){
+							$files[$x] = array(
+								'name'    => $fdata['name']['new'][$x],
+							    'type'  => $fdata['type']['new'][$x],
+							    'tmp_name'=> $fdata['tmp_name']['new'][$x],
+							    'error' => $fdata['error']['new'][$x], 
+							    'size'  => $fdata['size']['new'][$x],
+							);
+						}
+					}
+				}else{
+			    	$files[$key]=array(
+					    'name'    => $fdata['name'][$key],
+					    'type'  => $fdata['type'][$key],
+					    'tmp_name'=> $fdata['tmp_name'][$key],
+					    'error' => $fdata['error'][$key], 
+					    'size'  => $fdata['size'][$key],
+					    'key' => $key
+				    );					
+				}
+		    }
+		    $multi = true;
+		}else{
+			$files[0] = $fdata;
+			$multi = false;
+		}
+
+		$file_error = false;
+		if ( !empty( $files ) ) {
 			foreach($files as $f){
 				if(isset($f['error']) AND !empty($f['error'])){
 					$file_error = true;
 				}
-			}
+			}			
+		} else {
+			$file_error = true;
+		}
 
-			if(!isset($_POST['_upload_'.$field_id][0]['user_file_name'])){
-				$name = false;
-			}else{
-				$name = true;
-			}
+		if(!isset($_POST['_upload_'.$field_id][0]['user_file_name'])){
+			$name = false;
+		}else{
+			$name = true;
+		}
 
-			if($file_error AND !$name){
-				return false;
-			}else{
-				return true;
-			}
+		if($file_error AND !$name){
+			return false;
+		}else{
+			return true;
+		}
+
 	}else{
-
 		if( $ninja_forms_processing->get_field_value( $field_id ) ){
 			$user_value = $ninja_forms_processing->get_field_value( $field_id );
-			if( !is_array( $user_value ) OR $user_value[0] == '' OR $user_value == '' ){
+			if( !is_array( $user_value ) OR empty( $user_value ) ){
 				return false;
 			}else{
 				return true;
@@ -221,7 +241,7 @@ function ninja_forms_get_uploads($args = array()){
 		}
 	}
 
-	$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".NINJA_FORMS_UPLOADS_TABLE_NAME." ".$where." ORDER BY `date_updated` ASC", NINJA_FORMS_UPLOADS_TABLE_NAME), ARRAY_A);
+	$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".NINJA_FORMS_UPLOADS_TABLE_NAME." ".$where." ORDER BY `date_updated` DESC", NINJA_FORMS_UPLOADS_TABLE_NAME), ARRAY_A);
 	
 
 	if( isset( $args['upload_types'] ) OR isset( $args['upload_name'] ) ){
