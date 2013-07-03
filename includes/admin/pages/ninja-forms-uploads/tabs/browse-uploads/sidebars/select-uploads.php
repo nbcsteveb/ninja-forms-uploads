@@ -84,7 +84,7 @@ function ninja_forms_sidebar_select_uploads(){
 	?>
 		<label><strong><?php _e('Select A Form', 'ninja-forms');?>:</strong></label>
 		<p>
-			<select name="filter_form_id" id="" class="">
+			<select name="form_id" id="" class="">
 				<option value="all">-- All Forms </option>
 			<?php
 			if(is_array($form_results)){

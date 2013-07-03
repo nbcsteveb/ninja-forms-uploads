@@ -20,11 +20,11 @@ function ninja_forms_tab_browse_uploads(){
 
 	//Check for filters
 	$args = array();
-	if(isset($_POST['filter_form_id']) AND $_POST['filter_form_id'] == 'all'){
+	if(isset($_POST['form_id']) AND $_POST['form_id'] == 'all'){
 		unset( $_SESSION['ninja_forms_form_id'] );
-	}else if(isset($_POST['filter_form_id']) AND $_POST['filter_form_id'] != 'all'){
-		$args['form_id'] = $_POST['filter_form_id'];
-		$_SESSION['ninja_forms_form_id'] = $_POST['filter_form_id'];
+	}else if(isset($_POST['form_id']) AND $_POST['form_id'] != 'all'){
+		$args['form_id'] = $_POST['form_id'];
+		$_SESSION['ninja_forms_form_id'] = $_POST['form_id'];
 	}else if(isset($_SESSION['ninja_forms_form_id']) AND $_SESSION['ninja_forms_form_id'] != 'all'){
 		$args['form_id'] = $_SESSION['ninja_forms_form_id'];
 	}
@@ -190,22 +190,41 @@ function ninja_forms_tab_browse_uploads(){
 				$form_row = ninja_forms_get_form_by_field_id($field_id);
 				$form_data = $form_row['data'];
 				$form_title = $form_data['form_title'];
-				$user_file_name = stripslashes($data['user_file_name']);
+				if ( isset( $data['user_file_name'] ) ) {
+					$user_file_name = stripslashes($data['user_file_name']);
+				} else {
+					$user_file_name = '';
+				}
+				
 				if(isset($all_files[$i]['user_id']) AND !empty($all_files[$i]['user_id'])){
 					$user_data = get_userdata($all_files[$i]['user_id']);
 					$user_nicename = $user_data->user_nicename;
 				}else{
 					$user_nicename = '';
 				}
-		?>
+
+				if ( isset( $data['file_url'] ) ) {
+					$file_url = $data['file_url'];
+				} else {
+					$file_url = '';
+				}				
+
+				if ( isset( $data['file_name'] ) ) {
+					$file_name = $data['file_name'];
+				} else {
+					$file_name = '';
+				}
+
+
+				?>
 				<tr id="ninja_forms_upload_<?php echo $upload_id;?>_tr">
 					<th scope="row" class="check-column">
 						<input type="checkbox" id="" name="ninja_forms_uploads[]" value="<?php echo $upload_id;?>" class="ninja-forms-uploads-bulk-action">
 					</th>
 					<td>
-						<a href="<?php echo $data['file_url'];?>" target="_blank"><?php echo $data['file_name'];?></a>
+						<a href="<?php echo $file_url;?>" target="_blank"><?php echo $file_name;?></a>
 						<div class="row-actions">
-							<span class="view"><a class="view" title="View this file" href="<?php echo $data['file_url'];?>" target="_blank" id="">View</a> | </span>
+							<span class="view"><a class="view" title="View this file" href="<?php echo $file_url;?>" target="_blank" id="">View</a> | </span>
 							<span class="trash"><a class="trash ninja-forms-delete-upload" title="Delete this file" href="#" id="delete_upload_<?php echo $upload_id;?>">Delete</a></span>
 						</div>
 					</td>
