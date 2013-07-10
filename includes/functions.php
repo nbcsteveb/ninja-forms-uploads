@@ -59,7 +59,7 @@ function ninja_forms_field_upload_req_validation($field_id, $user_value){
 			$file_error = true;
 		}
 
-		if(!isset($_POST['_upload_'.$field_id][0]['user_file_name'])){
+		if(!isset($_POST['_upload_'.$field_id])){
 			$name = false;
 		}else{
 			$name = true;
