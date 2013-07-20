@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Ninja Forms - File Uploads
-Plugin URI: http://ninjaforms.com
+Plugin URI: http://wpninjas.com
 Description: File Uploads add-on for Ninja Forms.
 Version: 1.0.5
 Author: The WP Ninjas
-Author URI: http://wpninjas.net
+Author URI: http://wpninjas.com
 */
 global $wpdb;
 

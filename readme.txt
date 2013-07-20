@@ -19,7 +19,7 @@ To see up to date screenshots, visit the [Ninja Forms](http://wpninjas.com/ninja
 
 This section describes how to install the plugin and get it working.
 
-1. Upload the `ninja-forms` directory to your `/wp-content/plugins/` directory
+1. Upload the `ninja-forms-uploads` directory to your `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Visit the 'Forms' menu item in your admin sidebar
 4. When you create a form, you can now add upload fields on the field edit page.
