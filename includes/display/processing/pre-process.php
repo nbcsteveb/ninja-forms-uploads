@@ -204,6 +204,15 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 
 	$orig_user_file_name = $user_file_name;
 
+	if($multi){
+		$update_array = $ninja_forms_processing->get_field_value($field_id);
+		if( !is_array( $update_array ) OR empty( $update_array ) ){
+			$update_array = array();
+		}
+	}else{
+		$update_array = array();
+	}
+
 	$user_file_array = array();
 	if($user_file_name != ''){
 
@@ -288,18 +297,16 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$file_url = trailingslashit( $file_url );
 
 		$file_dir = $upload_path.'/'.$file_name;
-		if( file_exists( $file_dir ) ){
+
+		// Check to see if the file already exists. If it does, add numbers to the end until we find one that doesn't.
+		$file_name_array = ninja_forms_check_file_exists( $upload_path, $file_name );
+		$file_name = $file_name_array['file_name'];
+		$base_name = $file_name_array['base_name'];
+
+		if ( ninja_forms_check_file_name_in_update_array ( $file_name, $update_array ) ) {
 			$x = 1;
-			while( file_exists( $file_dir ) ){
-				$tmp_name = $file_name;
-				if( strpos( $tmp_name, '.' ) !== false ){
-					$tmp_name = explode( '.', $tmp_name );
-					$name = $tmp_name[0];
-					$ext = $tmp_name[1];							
-				}else{
-					$name = $tmp_name;
-					$ext = '';
-				}
+
+			while ( ninja_forms_check_file_name_in_update_array ( $file_name, $update_array ) ) {
 				if( $x < 9 ){
 					$num = "00".$x;
 				}else if( $x > 9 AND $x < 99 ){
@@ -307,31 +314,22 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 				}else{
 					$num = $x;
 				}
-				$name .= '-'.$num;
+				$name = $base_name.'-'.$num;
 				if( $ext != '' ){
 					$tmp_name = $name.'.'.$ext;
 				}else{
 					$tmp_name = $name;
 				}
-				
-				$file_dir = $upload_path.'/'.$tmp_name;
+
+				$file_name_array = ninja_forms_check_file_exists( $upload_path, $tmp_name, $base_name, $x );
+				$file_name = $file_name_array['file_name'];
+
 				$x++;
 			}
-
-			$file_name = $tmp_name;		
 		}
 	}
 
 	$file_url .= $file_name;
-
-	if($multi){
-		$update_array = $ninja_forms_processing->get_field_value($field_id);
-		if( !is_array( $update_array ) OR empty( $update_array ) ){
-			$update_array = array();
-		}
-	}else{
-		$update_array = array();
-	}
 
 	$tmp_array = array(
 		'user_file_name' => $orig_user_file_name,
@@ -375,4 +373,56 @@ function ninja_forms_field_uploads_create_key( $update_array ){
 	}
 
 	return $new_key;
+}
+
+function ninja_forms_check_file_exists( $upload_path, $file_name, $base_name = '', $x = 1 ){
+	$file_dir = $upload_path.'/'.$file_name;
+	$tmp_name = $file_name;	
+	if( strpos( $tmp_name, '.' ) !== false ){
+		$tmp_name = explode( '.', $tmp_name );
+		if ( $base_name == '' ) {
+			$base_name = $tmp_name[0];
+		}
+		$ext = $tmp_name[1];							
+	}else{
+		$base_name = $tmp_name;
+		$ext = '';
+	}				
+		
+	if ( file_exists ( $file_dir ) ) {
+		while( file_exists( $file_dir ) ){
+			if( $x < 9 ){
+				$num = "00".$x;
+			}else if( $x > 9 AND $x < 99 ){
+				$num = "0".$x;
+			}else{
+				$num = $x;
+			}
+			$name = $base_name.'-'.$num;
+			if( $ext != '' ){
+				$tmp_name = $name.'.'.$ext;
+			}else{
+				$tmp_name = $name;
+			}
+
+			$file_dir = $upload_path.'/'.$tmp_name;
+			$x++;
+		}
+		$file_name = $tmp_name;
+	}
+	
+	return array( 'file_name' => $file_name, 'base_name' => $base_name );
+}
+
+function ninja_forms_check_file_name_in_update_array( $file_name, $update_array ){
+	if ( is_array ( $update_array ) AND !empty ( $update_array ) ) {
+		foreach ( $update_array as $key => $file ) {
+			if ( $file['file_name'] == $file_name ) {
+				return true;
+			}
+		}
+		return false;
+	} else { 
+		return false;
+	}
 }
