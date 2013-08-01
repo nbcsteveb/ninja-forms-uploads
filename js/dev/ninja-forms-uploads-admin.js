@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
 		$("#ninja_forms_file_upload_" + file_upload_id).toggle();
 	});
 
-	$(".ninja-forms-rename-help").live("click", function(event){
+	$(document).on( 'click', '.ninja-forms-rename-help', function(event){
 		event.preventDefault();
 		if( !$("#tab-panel-upload_help").is(":visible") ){
 			$("#tab-link-upload_help").find("a").click();
