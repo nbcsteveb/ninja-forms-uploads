@@ -4,7 +4,7 @@
  * Browse Uploads Sidebar Functions
 
  */
-add_action('init', 'ninja_forms_register_sidebar_select_uploads');
+add_action('admin_init', 'ninja_forms_register_sidebar_select_uploads');
 
 function ninja_forms_register_sidebar_select_uploads(){
 	$args = array(
