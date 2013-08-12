@@ -4,7 +4,7 @@ Donate link: http://wpninjas.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 
 License: GPLv2 or later
 
@@ -30,6 +30,18 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [Ninja Forms Documentation](http://wpninjas.com/ninja-forms/docs/)
 
 == Changelog ==
+
+= 1.0.7 =
+
+*Bugs:*
+
+* Fixed a bug that prevented files from being emailed as attachments in multi-part forms.
+
+= 1.0.6 =
+
+*Changes:*
+
+* Updates for compatibility with WordPress 3.6
 
 = 1.0.5 =
 
