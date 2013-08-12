@@ -358,12 +358,6 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 	$update_array = apply_filters( 'ninja_forms_upload_pre_process_array', $update_array );
 
 	$ninja_forms_processing->update_field_value( $field_id, $update_array );
-
-	if ($email_attachment == 1 AND $file_name != '' ){
-		$attach_files = $ninja_forms_processing->get_form_setting( 'admin_attachments' );
-		array_push( $attach_files, $upload_path.'/'.$file_name );
-		$ninja_forms_processing->update_form_setting( 'admin_attachments', $attach_files );
-	}
 }
 
 function ninja_forms_field_uploads_create_key( $update_array ){
