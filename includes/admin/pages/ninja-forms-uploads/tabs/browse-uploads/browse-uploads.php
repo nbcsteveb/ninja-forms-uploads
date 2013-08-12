@@ -1,6 +1,6 @@
 <?php
 
-add_action('init', 'ninja_forms_register_tab_browse_uploads');
+add_action('admin_init', 'ninja_forms_register_tab_browse_uploads');
 function ninja_forms_register_tab_browse_uploads(){
 	$args = array(
 		'name' => 'Browse Uploads',
@@ -8,6 +8,7 @@ function ninja_forms_register_tab_browse_uploads(){
 		'display_function' => 'ninja_forms_tab_browse_uploads',
 		'save_function' => 'ninja_forms_save_browse_uploads',
 		'show_save' => false,
+		'tab_reload' => true,
 	);
 	if( function_exists( 'ninja_forms_register_tab' ) ){
 		ninja_forms_register_tab('browse_uploads', $args);
@@ -271,7 +272,9 @@ function ninja_forms_tab_browse_uploads(){
 }
 
 function ninja_forms_save_browse_uploads( $data ){
-
+	//echo "<pre>";
+	//var_dump ( $data );
+	//echo "</pre>";
 	if(isset($data['bulk_action']) AND $data['bulk_action'] == 'delete'){
 		if(isset($data['ninja_forms_uploads'])){
 			if(is_array($data['ninja_forms_uploads']) AND !empty($data['ninja_forms_uploads'])){
