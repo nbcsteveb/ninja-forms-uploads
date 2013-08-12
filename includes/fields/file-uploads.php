@@ -245,6 +245,11 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 					}else{
 						$complete = 1;
 					}
+					if ( isset ( $val['upload_id'] ) ) {
+						$upload_id = $val['upload_id'];
+					} else { 
+						$upload_id = '';
+					}
 					?>
 					<li>
 						<div>
@@ -256,7 +261,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][file_url]" value="<?php echo $val['file_url'];?>">
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][complete]" value="<?php echo $complete;?>">
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][changed]" value="0">
-						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][upload_id]" value="<?php echo $val['upload_id'];?>">
+						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][upload_id]" value="<?php echo $upload_id;?>">
 					</li>
 					<li>
 						<?php
