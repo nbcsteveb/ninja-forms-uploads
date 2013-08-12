@@ -1,19 +1,20 @@
 <?php
 
-add_action('init', 'ninja_forms_register_tab_upload_settings');
+add_action('admin_init', 'ninja_forms_register_tab_upload_settings');
 function ninja_forms_register_tab_upload_settings(){
 	$args = array(
 		'name' => 'Upload Settings',
 		'page' => 'ninja-forms-uploads',
 		'display_function' => '',
 		'save_function' => 'ninja_forms_save_upload_settings',
+		'tab_reload' => true,
 	);
 	if( function_exists( 'ninja_forms_register_tab' ) ){
 		ninja_forms_register_tab('upload_settings', $args);
 	}
 }
 
-add_action( 'init', 'ninja_forms_register_upload_settings_metabox');
+add_action( 'admin_init', 'ninja_forms_register_upload_settings_metabox');
 function ninja_forms_register_upload_settings_metabox(){
 	$args = array(
 		'page' => 'ninja-forms-uploads',
@@ -126,7 +127,6 @@ function ninja_forms_upload_settings_adv(){
 }
 
 function ninja_forms_save_upload_settings( $data ){
-
 	$plugin_settings = get_option( 'ninja_forms_settings' );
 	foreach( $data as $key => $val ){
 		$plugin_settings[$key] = $val;
