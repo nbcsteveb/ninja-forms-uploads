@@ -4,7 +4,7 @@ Donate link: http://wpninjas.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 
 License: GPLv2 or later
 
