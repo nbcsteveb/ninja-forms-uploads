@@ -1,21 +1,21 @@
 <?php
 /*
 Plugin Name: Ninja Forms - File Uploads
-Plugin URI: http://wpninjas.com
+Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 1.0.7
+Version: 1.0.8
 Author: The WP Ninjas
-Author URI: http://wpninjas.com
+Author URI: http://ninjaforms.com
 */
 global $wpdb;
 
-define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/ninja-forms-uploads");
-define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/ninja-forms-uploads");
+define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
+define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
-define("NINJA_FORMS_UPLOADS_VERSION", "1.0.7");
+define("NINJA_FORMS_UPLOADS_VERSION", "1.0.8");
 
 // this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
-define( 'NINJA_FORMS_UPLOADS_EDD_SL_STORE_URL', 'http://wpninjas.com' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
+define( 'NINJA_FORMS_UPLOADS_EDD_SL_STORE_URL', 'http://ninjaforms.com' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
 
 // the name of your product. This is the title of your product in EDD and should match the download title in EDD exactly
 define( 'NINJA_FORMS_UPLOADS_EDD_SL_ITEM_NAME', 'File Uploads' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
