@@ -41,6 +41,7 @@ function ninja_forms_register_field_upload(){
 		'edit_req' => true,
 		'edit_custom_class' => true,
 		'edit_help' => true,
+		'edit_desc' => true,
 		'edit_meta' => false,
 		'sidebar' => 'template_fields',
 		'edit_conditional' => true,
@@ -55,7 +56,7 @@ function ninja_forms_register_field_upload(){
 		'edit_sub_process' => 'ninja_forms_field_upload_process',
 		'req_validation' => 'ninja_forms_field_upload_req_validation',
 	);
-	
+
 	if( isset( $_REQUEST['form_id'] ) ){
 		$form_row = ninja_forms_get_form_by_id( $_REQUEST['form_id'] );
 		$form_data = $form_row['data'];
@@ -212,14 +213,14 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][changed]" value="0">
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][upload_id]" value="<?php echo $val['upload_id'];?>">
 
-						<a href="#" class="ninja-forms-delete-file-upload" id="ninja_forms_delete_file_upload_<?php echo $field_id;?>_<?php echo $key;?>">X</a> - 
+						<a href="#" class="ninja-forms-delete-file-upload" id="ninja_forms_delete_file_upload_<?php echo $field_id;?>_<?php echo $key;?>">X</a> -
 						<a href="<?php echo $val['file_url'];?>" target="_blank"><?php echo $val['user_file_name'];?></a> - <a href="#" name="" id="ninja_forms_change_file_upload_<?php echo $field_id;?>_<?php echo $key;?>" class="ninja-forms-change-file-upload"><?php _e('Change This File', 'ninja-forms');?></a>
 						<span id="ninja_forms_file_upload_<?php echo $field_id;?>_<?php echo $key;?>" style="display:none;">
 							<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_filesize;?>">
 							<input type="file" name="ninja_forms_field_<?php echo $field_id;?>[<?php echo $key;?>]" id="ninja_forms_field_<?php echo $field_id;?>-<?php echo $key;?>" rel="<?php echo $field_id;?>" >
 							<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[<?php echo $key;?>]" value=""  rel="<?php echo $field_id;?>" >
 						</span>
-	
+
 					</li>
 					<?php
 				}
@@ -247,7 +248,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 					}
 					if ( isset ( $val['upload_id'] ) ) {
 						$upload_id = $val['upload_id'];
-					} else { 
+					} else {
 						$upload_id = '';
 					}
 					?>
@@ -265,12 +266,12 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 					</li>
 					<li>
 						<?php
-					
+
 						_e( 'Change Upload', 'ninja-forms-uploads' );
 						echo ':';
 						?>
-						
-								
+
+
 						<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_filesize;?>">
 						<input type="file" name="ninja_forms_field_<?php echo $field_id;?>[<?php echo $key;?>]" id="ninja_forms_field_<?php echo $field_id;?>" class="<?php echo $upload_multi;?>" maxlength="<?php echo $upload_multi_count;?>"  rel="<?php echo $field_id;?>" >
 						<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[<?php echo $key;?>]" value=""  rel="<?php echo $field_id;?>" >
@@ -284,7 +285,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		}
 	}else{
 		?>
-		
+
 		<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_filesize;?>">
 		<input type="file" name="ninja_forms_field_<?php echo $field_id;?>[new][]" id="ninja_forms_field_<?php echo $field_id;?>" class="<?php echo $upload_multi;?>" maxlength="<?php echo $upload_multi_count;?>"  rel="<?php echo $field_id;?>" >
 		<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[new][]" value=""  rel="<?php echo $field_id;?>" >
