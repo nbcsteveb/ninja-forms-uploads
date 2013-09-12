@@ -98,21 +98,23 @@ add_action( 'ninja_forms_update_post', 'ninja_forms_attach_files_to_post' );
 
 function ninja_forms_check_add_to_media_library( $form_id ){
 	global $ninja_forms_processing;
-	if( $ninja_forms_processing->get_extra_value( 'uploads' ) ){
-		foreach( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ){
+	if ( $ninja_forms_processing->get_form_setting( 'create_post' ) != 1 ) {
+		if( $ninja_forms_processing->get_extra_value( 'uploads' ) ){
+			foreach( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ){
 
-			$field_row = $ninja_forms_processing->get_field_settings( $field_id );
-			$user_value = $ninja_forms_processing->get_field_value( $field_id );
-			if( isset( $field_row['data']['media_library'] ) AND $field_row['data']['media_library'] == 1 ){
-				
-				if( is_array( $user_value ) ){
-					foreach( $user_value as $key => $file ){
-						$filename = $file['file_path'].$file['file_name'];
-						$attach_array = ninja_forms_generate_metadata( '', $filename );
+				$field_row = $ninja_forms_processing->get_field_settings( $field_id );
+				$user_value = $ninja_forms_processing->get_field_value( $field_id );
+				if( isset( $field_row['data']['media_library'] ) AND $field_row['data']['media_library'] == 1 ){
+					
+					if( is_array( $user_value ) ){
+						foreach( $user_value as $key => $file ){
+							$filename = $file['file_path'].$file['file_name'];
+							$attach_array = ninja_forms_generate_metadata( '', $filename );
+						}
 					}
 				}
 			}
-		}
+		}		
 	}
 }
 
@@ -131,6 +133,7 @@ function ninja_forms_generate_metadata( $post_id, $filename ){
 	// you must first include the image.php file
 	// for the function wp_generate_attachment_metadata() to work
 	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
 	wp_update_attachment_metadata( $attach_id,  $attach_data );
 	return array( 'attach_id' => $attach_id, 'attach_data' => $attach_data );
