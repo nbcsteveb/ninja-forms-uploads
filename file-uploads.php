@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - File Uploads
 Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 1.0.9
+Version: 1.0.10
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 */
@@ -12,50 +12,21 @@ global $wpdb;
 define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
-define("NINJA_FORMS_UPLOADS_VERSION", "1.0.9");
+define("NINJA_FORMS_UPLOADS_VERSION", "1.0.10");
 
-// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
-define( 'NINJA_FORMS_UPLOADS_EDD_SL_STORE_URL', 'http://ninjaforms.com' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
-
-// the name of your product. This is the title of your product in EDD and should match the download title in EDD exactly
-define( 'NINJA_FORMS_UPLOADS_EDD_SL_ITEM_NAME', 'File Uploads' ); // IMPORTANT: change the name of this constant to something unique to prevent conflicts with other plugins using this system
-
-//Require EDD autoupdate file
-if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
-	// load our custom updater if it doesn't already exist
-	require_once( NINJA_FORMS_UPLOADS_DIR.'/includes/EDD_SL_Plugin_Updater.php' );
+function ninja_forms_uploads_setup_license() {
+	if ( class_exists( 'NF_Extension_Updater' ) ) {
+		$NF_Extension_Updater = new NF_Extension_Updater( 'File Uploads', NINJA_FORMS_UPLOADS_VERSION, 'WP Ninjas', __FILE__, 'uploads' );
+	}
 }
 
-$plugin_settings = get_option( 'ninja_forms_settings' );
-
-if( isset( $plugin_settings['uploads_version'] ) ){
-	$current_version = $plugin_settings['uploads_version'];
-}else{
-	$current_version = 0.4;
-}
-
-// retrieve our license key from the DB
-if( isset( $plugin_settings['uploads_license'] ) ){
-	$uploads_license = $plugin_settings['uploads_license'];
-}else{
-	$uploads_license = '';
-}
-
-// setup the updater
-$edd_updater = new EDD_SL_Plugin_Updater( NINJA_FORMS_UPLOADS_EDD_SL_STORE_URL, __FILE__, array(
-		'version' 	=> NINJA_FORMS_UPLOADS_VERSION, 		// current version number
-		'license' 	=> $uploads_license, 	// license key (used get_option above to retrieve from DB)
-		'item_name'     => NINJA_FORMS_UPLOADS_EDD_SL_ITEM_NAME, 	// name of this plugin
-		'author' 	=> 'WP Ninjas'  // author of this plugin
-	)
-);
+add_action( 'admin_init', 'ninja_forms_uploads_setup_license' );
 
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/sidebars/select-uploads.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/upload-settings/upload-settings.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
-require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/license-option.php");
 
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/pre-process.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/process.php");
@@ -84,6 +55,14 @@ function ninja_forms_add_upload_menu(){
 }
 
 register_activation_hook( __FILE__, 'ninja_forms_uploads_activation' );
+
+$plugin_settings = get_option( 'ninja_forms_settings' );
+
+if( isset( $plugin_settings['uploads_version'] ) ){
+	$current_version = $plugin_settings['uploads_version'];
+}else{
+	$current_version = 0.4;
+}
 
 if( version_compare( $current_version, '0.5', '<' ) ){
 	ninja_forms_uploads_activation();
