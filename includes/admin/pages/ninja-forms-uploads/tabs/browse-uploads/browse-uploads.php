@@ -271,10 +271,7 @@ function ninja_forms_tab_browse_uploads(){
 	<?php
 }
 
-function ninja_forms_save_browse_uploads( $data ){
-	//echo "<pre>";
-	//var_dump ( $data );
-	//echo "</pre>";
+function ninja_forms_save_browse_uploads( $form_id, $data ){
 	if(isset($data['bulk_action']) AND $data['bulk_action'] == 'delete'){
 		if(isset($data['ninja_forms_uploads'])){
 			if(is_array($data['ninja_forms_uploads']) AND !empty($data['ninja_forms_uploads'])){

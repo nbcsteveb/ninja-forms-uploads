@@ -5,47 +5,47 @@ function ninja_forms_attach_files_to_post( $post_id ){
 
 	if( $ninja_forms_processing->get_extra_value( 'uploads' ) ){
 		foreach( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ){
-
 			$field_row = $ninja_forms_processing->get_field_settings( $field_id );
 			$user_value = $ninja_forms_processing->get_field_value( $field_id );
+			if( is_array( $user_value ) AND !empty( $user_value ) ){
+				$tmp_array = array();
 
+				$args = array(
+		           'post_parent' => $post_id,
+		           'post_status' => 'null',
+		           'post_type'=> 'attachment'
+		        );
 
-			$tmp_array = array();
+		        $attachments = get_posts( $args );
 
-			$args = array(
-	           'post_parent' => $post_id,
-	           'post_status' => 'null',
-	           'post_type'=> 'attachment'
-	        );
+		        if( !empty( $attachments ) ){
+		        	$x = 0;
+		        	foreach( $attachments as $attachment ){
 
-	        $attachments = get_posts( $args );
-	        if( $attachments ){
-	        	$x = 0;
-	        	foreach( $attachments as $attachment ){
-	        		$attach_field = get_post_meta( $attachment->ID, 'ninja_forms_field_id', true );
-					$file_key = get_post_meta( $attachment->ID, 'ninja_forms_file_key', true );
-					$upload_id = get_post_meta( $attachment->ID, 'ninja_forms_upload_id', true );
-					if( $attach_field == $field_id ){
-						if( !array_key_exists( $file_key, $user_value ) ){
-							if( $upload_id != '' ){
-								ninja_forms_delete_upload( $upload_id );
+		        		$attach_field = get_post_meta( $attachment->ID, 'ninja_forms_field_id', true );
+						$file_key = get_post_meta( $attachment->ID, 'ninja_forms_file_key', true );
+						$upload_id = get_post_meta( $attachment->ID, 'ninja_forms_upload_id', true );
+						if( $attach_field == $field_id ){
+							if( !array_key_exists( $file_key, $user_value ) ){
+								if( $upload_id != '' ){
+									ninja_forms_delete_upload( $upload_id );
+								}
+								wp_delete_attachment( $attachment->ID );
+							}else{
+								$tmp_array[$x]['id'] = $attachment->ID;
+								$tmp_array[$x]['field_id'] = $attach_field;
+								$tmp_array[$x]['file_key'] = $file_key;
 							}
-							wp_delete_attachment( $attachment->ID );
-						}else{
-							$tmp_array[$x]['id'] = $attachment->ID;
-							$tmp_array[$x]['field_id'] = $attach_field;
-							$tmp_array[$x]['file_key'] = $file_key;
+						}else if( $attach_field == '' ){
+							//wp_update_post( array( 'ID' => $attachment->ID, 'post_parent' => 0 ) );
 						}
-					}else if( $attach_field == '' ){
-						wp_update_post( array( 'ID' => $attachment->ID, 'post_parent' => 0 ) );
-					}
-					$x++;
-	        	}
-	        }
+						$x++;
+		        	}
+		        }
 
-	        $attachments = $tmp_array;
+		        $attachments = $tmp_array;
 
-			if( is_array( $user_value ) ){
+			
 				foreach( $user_value as $key => $file ){
 					if( !isset( $file['changed'] ) OR $file['changed'] == 1 ){
 						foreach( $attachments as $attachment ){
@@ -59,8 +59,10 @@ function ninja_forms_attach_files_to_post( $post_id ){
 						}
 
 						if( isset( $file['complete'] ) AND $file['complete'] == 1 ){
+							
 							$filename = $file['file_path'].$file['file_name'];
 							$attach_array = ninja_forms_generate_metadata( $post_id, $filename );
+							
 							$attach_id = $attach_array['attach_id'];
 							$attach_data = $attach_array['attach_data'];
 							if( !empty( $attach_array ) AND isset( $field_row['data']['featured_image'] ) AND $field_row['data']['featured_image'] == 1 ){
@@ -71,18 +73,13 @@ function ninja_forms_attach_files_to_post( $post_id ){
 							update_post_meta( $attach_id, 'ninja_forms_upload_id', $file['upload_id'] );
 							$file['attachment_id'] = $attach_id;
 							$ninja_forms_processing->update_field_value( $field_id, array( $key => $file ) );
-						}		
+							
+						}
 					}
 				}
 			}
 		}		
 	}
-}
-
-function ninja_forms_detach_files_from_post( $post_id, $field_id ){
-
-	$attach_field = get_post_meta( $attachment->ID, 'ninja_forms_field_id', true );
-	wp_update_post( array( 'ID' => $attachment->ID, 'post_parent' => 0 ) );
 }
 
 add_action( 'ninja_forms_create_post', 'ninja_forms_attach_files_to_post' );
@@ -122,12 +119,13 @@ add_action( 'ninja_forms_post_process', 'ninja_forms_check_add_to_media_library'
 
 
 function ninja_forms_generate_metadata( $post_id, $filename ){
+
 	$wp_filetype = wp_check_filetype( basename( $filename ), null );
 	$attachment = array(
 		'post_mime_type' => $wp_filetype['type'],
 		'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
 		'post_content' => '',
-		'post_status' => 'inherit'
+		'post_status' => 'null'
 	);
 	$attach_id = wp_insert_attachment( $attachment, $filename, $post_id );
 	// you must first include the image.php file
@@ -135,6 +133,7 @@ function ninja_forms_generate_metadata( $post_id, $filename ){
 	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
+	$attach_data['ninja_forms_upload_field'] = true;
 	wp_update_attachment_metadata( $attach_id,  $attach_data );
 	return array( 'attach_id' => $attach_id, 'attach_data' => $attach_data );
 }
