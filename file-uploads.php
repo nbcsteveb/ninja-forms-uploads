@@ -33,6 +33,8 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/process.php")
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/attach-image.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/shortcode-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/post-meta-filter.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/email-value-filter.php");
+
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/mp-confirm-filter.php");
 
