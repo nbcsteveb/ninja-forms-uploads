@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 
 License: GPLv2 or later
 
@@ -26,6 +26,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.0.11 =
+
+*Changes:*
+
+* Added a filter so that when a user uploads a file, they don't see the directory to which it was uploaded in their email.
 
 = 1.0.10 =
 

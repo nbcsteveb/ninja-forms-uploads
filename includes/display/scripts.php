@@ -23,7 +23,7 @@ function ninja_forms_upload_display_js( $form_id ){
 
 		if( $output ){
 			wp_enqueue_script( 'ninja-forms-uploads-display',
-				NINJA_FORMS_UPLOADS_URL .'/js/dev/ninja-forms-uploads-display.js',
+				NINJA_FORMS_UPLOADS_URL .'/js/min/ninja-forms-uploads-display.min.js',
 				array( 'jquery', 'ninja-forms-display' ) );
 			if( $multi ){
 				wp_enqueue_script( 'jquery-multi-file',
