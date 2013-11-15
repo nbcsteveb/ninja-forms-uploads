@@ -165,6 +165,12 @@ function ninja_forms_field_upload_filter_data($data, $field_id){
 
 function ninja_forms_get_uploads($args = array()){
 	global $wpdb;
+	$plugin_settings = get_option( 'ninja_forms_settings' );
+	if ( isset ( $plugin_settings['date_format'] ) ) {
+		$date_format = $plugin_settings['date_format'];
+	} else {
+		$date_format = 'mm/dd/yyyy';
+	}
 	$where = '';
 	$limit = '';
 	$upload_id = '';
@@ -217,9 +223,13 @@ function ninja_forms_get_uploads($args = array()){
 		}
 		if(isset($args['begin_date'])){
 			$begin_date = $args['begin_date'];
+			if ( strtolower( substr( $date_format, 0, 1 ) ) == 'd' ) {
+				$begin_date = str_replace( '/', '-', $begin_date );
+			}
 			$begin_date .= ' 23:59:59';
 			$begin_date = strtotime($begin_date);
 			$begin_date = date("Y-m-d g:i:s", $begin_date);
+
 			if($where == ''){
 				$where .= "WHERE ";
 			}else{
@@ -229,6 +239,9 @@ function ninja_forms_get_uploads($args = array()){
 		}
 		if(isset($args['end_date'])){
 			$end_date = $args['end_date'];
+			if ( strtolower( substr( $date_format, 0, 1 ) ) == 'd' ) {
+				$end_date = str_replace( '/', '-', $end_date );
+			}
 			$end_date .= ' 23:59:59';
 			$end_date = strtotime($end_date);
 			$end_date = date("Y-m-d g:i:s", $end_date);
@@ -254,7 +267,12 @@ function ninja_forms_get_uploads($args = array()){
 				$form_id = $results[$x]['form_id'];
 				$form_row = ninja_forms_get_form_by_id($form_id);
 				$form_data = $form_row['data'];
-				$form_title = $form_data['form_title'];
+				if ( isset ( $form_data['form_title'] ) ) {
+					$form_title = $form_data['form_title'];
+				} else {
+					$form_title = '';
+				}
+				
 				$results[$x]['data']['form_title'] = $form_title;
 				
 				$user_file_name = $data['user_file_name'];

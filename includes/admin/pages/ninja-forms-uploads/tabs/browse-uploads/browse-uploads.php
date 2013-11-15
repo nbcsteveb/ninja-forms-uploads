@@ -8,7 +8,7 @@ function ninja_forms_register_tab_browse_uploads(){
 		'display_function' => 'ninja_forms_tab_browse_uploads',
 		'save_function' => 'ninja_forms_save_browse_uploads',
 		'show_save' => false,
-		'tab_reload' => true,
+		'tab_reload' => false,
 	);
 	if( function_exists( 'ninja_forms_register_tab' ) ){
 		ninja_forms_register_tab('browse_uploads', $args);
@@ -271,7 +271,7 @@ function ninja_forms_tab_browse_uploads(){
 	<?php
 }
 
-function ninja_forms_save_browse_uploads( $form_id, $data ){
+function ninja_forms_save_browse_uploads( $data ){
 	if(isset($data['bulk_action']) AND $data['bulk_action'] == 'delete'){
 		if(isset($data['ninja_forms_uploads'])){
 			if(is_array($data['ninja_forms_uploads']) AND !empty($data['ninja_forms_uploads'])){
