@@ -31,6 +31,12 @@ function ninja_forms_register_sidebar_select_uploads(){
 }
 
 function ninja_forms_sidebar_select_uploads(){
+	$plugin_settings = get_option( 'ninja_forms_settings' );
+	if ( isset ( $plugin_settings['date_format'] ) ) {
+		$date_format = $plugin_settings['date_format'];
+	} else {
+		$date_format = 'mm/dd/yyyy';
+	}
 	$form_results = ninja_forms_get_all_forms();
 
 	if(isset($_REQUEST['form_id']) AND !empty($_REQUEST['form_id'])){
@@ -119,12 +125,12 @@ function ninja_forms_sidebar_select_uploads(){
 		<p>
 			<?php _e('Begin Date', 'ninja-forms');?>: <input type="text" id="" name="begin_date" class="ninja-forms-admin-date" value="<?php echo $begin_date;?>">
 			<br />
-			mm/dd/yyyy
+			<?php echo $date_format;?>
 		</p>
 		<p>
 			<?php _e('End Date', 'ninja-forms');?>: <input type="text" id="" name="end_date" class="ninja-forms-admin-date" value="<?php echo $end_date;?>">
 			<br />
-			mm/dd/yyyy
+			<?php echo $date_format;?>
 		</p>
 		<p class="description">
 			<?php //_e('If both Begin Date and End Date are left blank, all file uploads will be displayed.', 'ninja-forms');?>

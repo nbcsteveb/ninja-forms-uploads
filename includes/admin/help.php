@@ -20,6 +20,7 @@ function ninja_forms_help_uploads(){
 			<li><span class="code">%filename%</span> - <?php _e('The file\'s original filename, with any special characters removed.', 'ninja-forms');?></li>
 			<li><span class="code">%formtitle%</span> - <?php _e('The title of the current form, with any special characters removed.', 'ninja-forms');?></li>
 			<li><span class="code">%username%</span> - <?php _e('The WordPress username for the user, if they are logged in.', 'ninja-forms');?></li>
+			<li><span class="code">%userid%</span> - <?php _e('The WordPress ID (int) for the user, if they are logged in.', 'ninja-forms');?></li>
 			<li><span class="code">%displayname%</span> - <?php _e('The WordPress displayname for the user, if they are logged in.', 'ninja-forms');?></li>
 			<li><span class="code">%lastname%</span> - <?php _e('The WordPress lastname for the user, if they are logged in.', 'ninja-forms');?></li>
 			<li><span class="code">%firstname%</span> - <?php _e('The WordPress firstname for the user, if they are logged in.', 'ninja-forms');?></li>

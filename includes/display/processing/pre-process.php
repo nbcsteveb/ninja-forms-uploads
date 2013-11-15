@@ -239,6 +239,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		if(is_user_logged_in()){
 			$current_user = wp_get_current_user();
 			$user_name = $current_user->user_nicename;
+			$user_id = $current_user->ID;
 			$display_name = $current_user->display_name;
 			$first_name = $current_user->user_firstname;
 			$last_name = $current_user->user_lastname;
@@ -247,6 +248,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$display_name = '';
 			$first_name = '';
 			$last_name = '';
+			$user_id = '';
 		}
 
 		//If we have a file naming convention, use it to change our file name.
@@ -267,6 +269,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$file_name = str_replace("%day%", date('d'), $file_name);
 			$file_name = str_replace("%year%", date('Y'), $file_name);
 			$file_name = str_replace("%username%", $user_name, $file_name);
+			$file_name = str_replace("%userid%", $user_id, $file_name);
 			$file_name = str_replace("%displayname%", $display_name, $file_name);
 			$file_name = str_replace("%firstname%", $first_name, $file_name);
 			$file_name = str_replace("%lastname%", $last_name, $file_name);
@@ -289,6 +292,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$custom_upload_dir = str_replace("%day%", date('d'), $custom_upload_dir);
 			$custom_upload_dir = str_replace("%year%", date('Y'), $custom_upload_dir);
 			$custom_upload_dir = str_replace("%username%", $user_name, $custom_upload_dir);
+			$custom_upload_dir = str_replace("%userid%", $user_id, $custom_upload_dir);
 			$custom_upload_dir = str_replace("%displayname%", $display_name, $custom_upload_dir);
 			$custom_upload_dir = str_replace("%firstname%", $first_name, $custom_upload_dir);
 			$custom_upload_dir = str_replace("%lastname%", $last_name, $custom_upload_dir);
