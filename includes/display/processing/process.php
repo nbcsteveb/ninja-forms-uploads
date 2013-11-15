@@ -47,11 +47,13 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 					if(is_user_logged_in()){
 						$current_user = wp_get_current_user();
 						$user_name = $current_user->user_nicename;
+						$user_id = $current_user->ID;
 						$display_name = $current_user->display_name;
 						$first_name = $current_user->user_firstname;
 						$last_name = $current_user->user_lastname;
 					}else{
 						$user_name = '';
+						$user_id = '';
 						$display_name ='';
 						$first_name = '';
 						$last_name = '';
@@ -67,6 +69,7 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 						$custom_upload_dir = str_replace("%day%", date('d'), $custom_upload_dir);
 						$custom_upload_dir = str_replace("%year%", date('Y'), $custom_upload_dir);
 						$custom_upload_dir = str_replace("%username%", $user_name, $custom_upload_dir);
+						$custom_upload_dir = str_replace("%userid%", $user_id, $custom_upload_dir);
 						$custom_upload_dir = str_replace("%displayname%", $display_name, $custom_upload_dir);
 						$custom_upload_dir = str_replace("%firstname%", $first_name, $custom_upload_dir);
 						$custom_upload_dir = str_replace("%lastname%", $last_name, $custom_upload_dir);
@@ -161,11 +164,13 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 							}
 							
 						}else{
-							$ninja_forms_processing->add_error('upload_'.$field_id, __('File Upload Error '.$file_dir, 'ninja-forms'), $field_id);
+							$ninja_forms_processing->add_error('upload_'.$field_id, __( 'File Upload Error', 'ninja-forms' ), $field_id);
 						}
 					}
 				}
-				do_action('ninja_forms_upload_process', $field_id);	
+				if ( !$ninja_forms_processing->get_all_errors() ) {
+					do_action('ninja_forms_upload_process', $field_id);
+				}
 			}
 		}
 	}
