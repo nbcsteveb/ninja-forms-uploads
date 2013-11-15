@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.0.11
+Stable tag: 1.1
 
 License: GPLv2 or later
 
@@ -26,6 +26,17 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.1 =
+
+*Changes:*
+
+* The format of date searching in the Browse Files tab will now be based upon the date format in Plugin Settings. i.e. you can now search dd/mm/yyyy.
+* Added the option to name a directory/file with %userid%.
+
+*Bugs:*
+
+* Fixed a bug that caused file upload fields to load multiple instances or open with pre-filled, incorrect data.
 
 = 1.0.11 =
 
