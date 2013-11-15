@@ -179,6 +179,27 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		$prefill = true;
 	}
 
+	if ( is_array ( $user_value ) ) {
+		$tmp = false;
+		foreach( $user_value as $key => $val ) {
+			if ( isset ( $val['file_name'] ) and !empty ( $val['file_name'] ) ) {
+				$tmp = true;
+			}
+			/*
+				echo $key;
+				echo " - ";
+				var_dump( $val );
+				echo "<br><br>";
+			*/
+
+		}
+		if ( !$tmp ) {
+			$prefill = false;
+		}		
+	}
+
+	//var_dump ( $user_value );
+
 	if(count($user_value) > 1){
 		$str_label = __('Files', 'ninja-forms');
 	}else{
@@ -240,6 +261,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 				?>
 				<ul style="list-style:none;">
 				<?php
+
 				foreach( $user_value as $key => $val ){
 					if( isset( $val['complete'] ) ){
 						$complete = $val['complete'];
