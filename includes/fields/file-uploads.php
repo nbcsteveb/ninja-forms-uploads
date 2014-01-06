@@ -57,6 +57,14 @@ function ninja_forms_register_field_upload(){
 		'req_validation' => 'ninja_forms_field_upload_req_validation',
 	);
 
+    if ( ninja_forms_upload_dropbox_connected() ) {
+        $args['edit_options'][] = array(
+            'type' => 'checkbox',
+            'name' => 'dropbox',
+            'label' => __( 'Add this file to Dropbox?', 'ninja-forms-uploads' ),
+        );
+    };
+
 	if( isset( $_REQUEST['form_id'] ) ){
 		$form_row = ninja_forms_get_form_by_id( $_REQUEST['form_id'] );
 		$form_data = $form_row['data'];
