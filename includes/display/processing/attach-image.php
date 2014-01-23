@@ -208,6 +208,8 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 add_filter( 'ninja_forms_field', 'ninja_forms_post_edit_file_attachment_filter', 10, 2 );
 
 function ninja_forms_compare_file_name( $a, $b ){
+	if ( !isset ( $a['file_name'] ) or !isset ( $b['file_name'] ) )
+		return false;
     if( $a['file_name'] == $b['file_name'] ){
         return 0;
     }
