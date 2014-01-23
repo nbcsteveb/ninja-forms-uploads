@@ -1,5 +1,25 @@
 <?php
-/**
+
+/*
+ * Function that checks to see if a mutlidimensional array is empty.
+ *
+ * @since 1.2
+ * @return bool
+ */
+function ninja_forms_is_array_empty( $array ) {
+    if ( is_array ( $array ) ) {
+        foreach ( $array as $value ) {
+            if ( !ninja_forms_is_array_empty ( $value ) ) {
+                return false;
+            }
+        }
+    } elseif ( !empty ( $array ) ) {
+        return false;
+    }
+    return true;
+}
+
+/*
  * Normally, Ninja Forms checks for an empty input to determine whether or not a field has been left blank.
  * This function will be called to provide custom 'required field' validation.
  * 
@@ -74,16 +94,17 @@ function ninja_forms_field_upload_req_validation($field_id, $user_value){
 	}else{
 		if( $ninja_forms_processing->get_field_value( $field_id ) ){
 			$user_value = $ninja_forms_processing->get_field_value( $field_id );
-			if( !is_array( $user_value ) OR empty( $user_value ) ){
+
+			if ( ninja_forms_is_array_empty( $user_value ) ) {
 				return false;
-			}else{
+			} else {
 				return true;
 			}
+
 		}else{
 			return false;
 		}
 	}
-	
 }
 
 /**

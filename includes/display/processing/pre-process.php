@@ -108,7 +108,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		$file_error = false;
 		foreach( $files as $key => $f ){
 			if( isset( $f['error'] ) AND !empty($f['error'] ) ){
-				if( $f['error'] == 2 ){
+				if( $f['error'] == 1 or $f['error'] == 2 ){
 					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_file_size.'mb.', 'ninja-forms'), $field_id);
 				}
 				$file_error = true;
@@ -273,7 +273,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$file_name = str_replace("%displayname%", $display_name, $file_name);
 			$file_name = str_replace("%firstname%", $first_name, $file_name);
 			$file_name = str_replace("%lastname%", $last_name, $file_name);
-			//$file_name = str_replace("%random%", ninja_forms_random_string(5), $file_name );
+			$file_name = str_replace("%random%", ninja_forms_random_string(5), $file_name );
 			$file_name .= '.'.$ext;
 
 		}else{
@@ -302,6 +302,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$custom_upload_url = str_replace( "\\", "/", $custom_upload_dir );
 
 		$file_url = $base_upload_url.$custom_upload_url;
+		$file_url = apply_filters( 'ninja_forms_uploads_url', $file_url, $field_id );
 		$file_url = trailingslashit( $file_url );
 
 		$file_dir = $upload_path.'/'.$file_name;
