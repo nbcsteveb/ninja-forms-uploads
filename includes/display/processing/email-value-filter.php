@@ -16,7 +16,12 @@ function ninja_forms_upload_email_value_filter( $user_value, $field_id ) {
 		if ( is_array ( $user_value ) ) {
 			$tmp_array = array();
 			foreach ( $user_value as $key => $data ) {
-				$tmp_array[] = $data['user_file_name'];
+				if ( isset ( $data['user_file_name'] ) ) {
+					$tmp_array[] = $data['user_file_name'];
+				}
+			}
+			if ( empty( $tmp_array ) ) {
+				$tmp_array = '';
 			}
 			$user_value = $tmp_array;
 		}
