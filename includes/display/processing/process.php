@@ -12,6 +12,8 @@
 function ninja_forms_field_upload_process($field_id, $user_value){
 	global $ninja_forms_processing;
 
+	$field_data = $ninja_forms_processing->get_all_submitted_fields();
+
 	$plugin_settings = get_option('ninja_forms_settings');
 	$field_row = ninja_forms_get_field_by_id($field_id);
 	$field_data = $field_row['data'];
@@ -25,7 +27,7 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 	}
 
 	$tmp_upload_file = $ninja_forms_processing->get_field_value( $field_id );
-
+	
 	if( is_array( $tmp_upload_file ) ){
 		foreach( $tmp_upload_file as $key => $file ){
 			if( ( isset( $file['complete'] ) AND $file['complete'] == 0 ) OR !isset( $file['complete'] ) ){
@@ -102,46 +104,30 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 
 					$upload_dir = trailingslashit( $upload_dir );
 
-					$file_dir = $upload_dir.$file_name;
+					if( strpos( $upload_dir, '/' ) !== false ){
+						$sep = '/';
+					}else if( strpos( $upload_dir, '\\' ) !== false ){
+						$sep = '\\';
+					}
+					
+					$tmp_upload_dir = explode( $sep, $upload_dir );
+					$x = 0;
+					$tmp_dir = '';
 
-					/*
-					$x = 1;
-					if( file_exists( $file_dir ) ){
-						while( file_exists( $file_dir ) ){
-							$tmp_name = $file_name;
-							if( strpos( $tmp_name, '.' ) !== false ){
-								$tmp_name = explode( '.', $tmp_name );
-								$name = $tmp_name[0];
-								$ext = $tmp_name[1];							
-							}else{
-								$name = $tmp_name;
-								$ext = '';
-							}
-							if( $x < 9 ){
-								$num = "00".$x;
-							}else if( $x > 9 AND $x < 99 ){
-								$num = "0".$x;
-							}else{
-								$num = $x;
-							}
-							$name .= '-'.$num;
-							if( $ext != '' ){
-								$tmp_name = $name.'.'.$ext;
-							}else{
-								$tmp_name = $name;
-							}
-							
-							$file_dir = $upload_dir.$tmp_name;
-							$x++;
+					foreach( $tmp_upload_dir as $dir ){
+						$tmp_dir = $tmp_dir.$sep.$dir;
+						if( !is_dir($tmp_dir) ){
+							mkdir( $tmp_dir );
 						}
-
-						$file_name = $tmp_name;	
+						$tmp_dir .= $sep;
+						$x++;
 					}
 
-					*/
+					$file_dir = $upload_dir.$file_name;
 
 					if(!$ninja_forms_processing->get_all_errors()){
 						if( file_exists ( $file_path ) AND !is_dir( $file_path ) AND copy( $file_path, $file_dir ) ){
+
 							$current_uploads = $ninja_forms_processing->get_field_value( $field_id );
 							if( is_array( $current_uploads ) AND !empty( $current_uploads ) ){
 								foreach( $current_uploads as $key => $file ){
