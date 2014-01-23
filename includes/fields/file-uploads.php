@@ -179,6 +179,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		$prefill = true;
 	}
 
+
 	if ( is_array ( $user_value ) ) {
 		$tmp = false;
 		foreach( $user_value as $key => $val ) {
@@ -276,7 +277,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 					?>
 					<li>
 						<div>
-							<?php echo $val['user_file_name'];?>
+							<a href="<?php echo $val['file_url'];?>"><?php echo $val['user_file_name'];?></a>
 						</div>
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][user_file_name]" value="<?php echo $val['user_file_name'];?>">
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][file_name]" value="<?php echo $val['file_name'];?>">
