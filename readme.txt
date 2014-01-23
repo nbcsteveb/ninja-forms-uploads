@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
-Tested up to: 3.5
-Stable tag: 1.1
+Tested up to: 3.8.1
+Stable tag: 1.2
 
 License: GPLv2 or later
 
@@ -26,6 +26,18 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.2 =
+
+*Bugs:*
+
+* Fixed a bug that prevented required file uploads from being validated when using AJAX submissions.
+* Fixed some php notices.
+
+*Changes:*
+
+* Added support for the new Ninja Forms loading class.
+* Editing a submission from the wp-admin that includes a file will now show a link to that file instead of just the filename.
 
 = 1.1 =
 
