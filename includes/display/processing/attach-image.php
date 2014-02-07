@@ -107,7 +107,9 @@ function ninja_forms_check_add_to_media_library( $form_id ){
 						foreach( $user_value as $key => $file ){
 							$filename = $file['file_path'].$file['file_name'];
 							$attach_array = ninja_forms_generate_metadata( '', $filename );
+							$user_value[$key]['attachment_id'] = $attach_array['attach_id'];
 						}
+						$ninja_forms_processing->update_field_value( $field_id, $user_value );
 					}
 				}
 			}
