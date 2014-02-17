@@ -33,7 +33,6 @@ function ninja_forms_field_upload_req_validation($field_id, $user_value){
 	global $ninja_forms_processing;
 
 	if( isset( $_FILES['ninja_forms_field_'.$field_id] ) ){
-		
 		$files = array();
 		$fdata = $_FILES['ninja_forms_field_'.$field_id];
 		
@@ -69,13 +68,7 @@ function ninja_forms_field_upload_req_validation($field_id, $user_value){
 		}
 
 		$file_error = false;
-		if ( !empty( $files ) ) {
-			foreach($files as $f){
-				if(isset($f['error']) AND !empty($f['error'])){
-					$file_error = true;
-				}
-			}			
-		} else {
+		if ( empty( $files ) ) {
 			$file_error = true;
 		}
 
@@ -92,6 +85,7 @@ function ninja_forms_field_upload_req_validation($field_id, $user_value){
 		}
 
 	}else{
+
 		if( $ninja_forms_processing->get_field_value( $field_id ) ){
 			$user_value = $ninja_forms_processing->get_field_value( $field_id );
 

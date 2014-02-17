@@ -206,11 +206,13 @@ function ninja_forms_upload_email_attachment( $field_id ){
 
 		if ( is_array ( $files ) ) {
 			foreach ( $files as $key => $val ) {
-				$upload_path = $val['file_path'];
-				$file_name = $val['file_name'];
-				$attach_files = $ninja_forms_processing->get_form_setting( 'admin_attachments' );
-				array_push( $attach_files, $upload_path.'/'.$file_name );
-				$ninja_forms_processing->update_form_setting( 'admin_attachments', $attach_files );
+				if ( isset ( $val['file_path'] ) ) {
+					$upload_path = $val['file_path'];
+					$file_name = $val['file_name'];
+					$attach_files = $ninja_forms_processing->get_form_setting( 'admin_attachments' );
+					array_push( $attach_files, $upload_path.'/'.$file_name );
+					$ninja_forms_processing->update_form_setting( 'admin_attachments', $attach_files );					
+				}
 			}
 		}
 	}
