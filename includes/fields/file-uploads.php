@@ -65,6 +65,14 @@ function ninja_forms_register_field_upload(){
         );
     };
 
+    if ( ninja_forms_upload_s3_connected() ) {
+        $args['edit_options'][] = array(
+            'type' => 'checkbox',
+            'name' => 's3',
+            'label' => __( 'Add this file to Amazon S3?', 'ninja-forms-uploads' ),
+        );
+    };
+
 	if( isset( $_REQUEST['form_id'] ) ){
 		$form_row = ninja_forms_get_form_by_id( $_REQUEST['form_id'] );
 		$form_data = $form_row['data'];
