@@ -84,7 +84,7 @@ function ninja_forms_upload_settings_adv(){
 
 ?>
 	<div class="">
-		<!--
+        <?php /*
 		<h4><?php _e('Base Directory', 'ninja-forms');?> <img id="" class='ninja-forms-help-text' src="<?php echo NINJA_FORMS_URL;?>/images/question-ico.gif" title=""></h4>
 		<label for="">
 			<input type="text" class="widefat code" name="base_upload_dir" id="base_upload_dir" value="<?php echo $base_upload_dir;?>" />
@@ -102,7 +102,7 @@ function ninja_forms_upload_settings_adv(){
 		<input type="hidden" id="ninja_forms_default_base_upload_url" value="<?php echo $default_base_upload_url;?>">
 		<input type="button" id="ninja_forms_reset_base_upload_dir" value="Reset Upload Directory">
 		<br />
-		-->
+		*/ ?>
 		<h4><?php _e('Custom Directory', 'ninja-forms');?> <img id="" class='ninja-forms-help-text' src="<?php echo NINJA_FORMS_URL;?>/images/question-ico.gif" title=""></h4>
 		<label for="">
 			<input type="text" class="widefat code" name="custom_upload_dir" id="" value="<?php echo $custom_upload_dir;?>" />
