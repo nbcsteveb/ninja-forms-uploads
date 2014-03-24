@@ -116,7 +116,7 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 
 					foreach( $tmp_upload_dir as $dir ){
 						$tmp_dir = $tmp_dir.$sep.$dir;
-						if( !is_dir($tmp_dir) ){
+						if( is_string( $tmp_dir ) and !is_dir($tmp_dir) ){
 							mkdir( $tmp_dir );
 						}
 						$tmp_dir .= $sep;
