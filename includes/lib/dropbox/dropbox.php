@@ -6,8 +6,8 @@ require_once(NINJA_FORMS_UPLOADS_DIR. "/includes/lib/dropbox/OAuth/Consumer/Curl
 
 class nf_dropbox
 {
-    const CONSUMER_KEY = 'lmrj7v0rqo3jrju';
-    const CONSUMER_SECRET = 'iwriz5trgpg43cd';
+    const CONSUMER_KEY = 'g80jscev5iosghi';
+    const CONSUMER_SECRET = 'hsy0xtrr3gjkd0i';
     const RETRY_COUNT = 3;
 
     private static $instance = null;
@@ -139,7 +139,12 @@ class nf_dropbox
     }
 
     private function get_option( $key ) {
-        return $this->settings[$key];
+        if ( isset ( $key ) ) {
+            return $this->settings[$key];
+        } else {
+            return false;
+        }
+        
     }
 
     private function set_option( $key, $value ) {
