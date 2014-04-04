@@ -15,7 +15,7 @@ function ninja_forms_upload_display_js( $form_id ){
 				if( !$output ){
 					$output = true;
 				}			
-				if( !$multi AND $field['data']['upload_multi'] == 1 ){
+				if( !$multi && isset($field['data']['upload_multi']) && $field['data']['upload_multi'] == 1 ){
 					$multi = true;
 				}
 			}

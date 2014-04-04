@@ -28,6 +28,9 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
 
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/external-settings/external-settings.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/external-post-process.php");
+
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/pre-process.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/process.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/attach-image.php");

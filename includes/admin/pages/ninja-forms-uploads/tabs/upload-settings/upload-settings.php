@@ -84,6 +84,25 @@ function ninja_forms_upload_settings_adv(){
 
 ?>
 	<div class="">
+        <?php /*
+		<h4><?php _e('Base Directory', 'ninja-forms');?> <img id="" class='ninja-forms-help-text' src="<?php echo NINJA_FORMS_URL;?>/images/question-ico.gif" title=""></h4>
+		<label for="">
+			<input type="text" class="widefat code" name="base_upload_dir" id="base_upload_dir" value="<?php echo $base_upload_dir;?>" />
+		</label>		
+		<span class="howto">Where should Ninja Forms place uploaded files? This should be the "first part" of the directory, including trailing slash. i.e. /var/html/wp-content/plugins/ninja-forms/uploads/</span>
+		<h4><?php _e('Base URL', 'ninja-forms');?> <img id="" class='ninja-forms-help-text' src="<?php echo NINJA_FORMS_URL;?>/images/question-ico.gif" title=""></h4>
+		<label for="">
+			<input type="text" class="widefat code" name="base_upload_url" id="base_upload_url" value="<?php echo $base_upload_url;?>" />
+		</label>
+
+		<span class="howto">What is the URL to the base directory given above? This will be used on the backend to link to the files that have been uploaded.</span>
+		<br />
+		<span class="howto"><b>Please note that Ninja Forms will attempt to determine this directory, but you may need to overwrite it based on your server settings.</b></span>
+		<input type="hidden" id="ninja_forms_default_base_upload_dir" value="<?php echo $default_base_upload_dir;?>">
+		<input type="hidden" id="ninja_forms_default_base_upload_url" value="<?php echo $default_base_upload_url;?>">
+		<input type="button" id="ninja_forms_reset_base_upload_dir" value="Reset Upload Directory">
+		<br />
+		*/ ?>
 		<h4><?php _e('Custom Directory', 'ninja-forms');?> <img id="" class='ninja-forms-help-text' src="<?php echo NINJA_FORMS_URL;?>/images/question-ico.gif" title=""></h4>
 		<label for="">
 			<input type="text" class="widefat code" name="custom_upload_dir" id="" value="<?php echo $custom_upload_dir;?>" />
