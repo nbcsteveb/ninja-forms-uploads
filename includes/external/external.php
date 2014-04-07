@@ -23,11 +23,17 @@ abstract class External {
 
 	}
 
-	public static function instance( $external ) {
+	public static function instance( $external, $require = false) {
+		if ( $require ) {
+			require_once( $external );
+			$external = basename( $external, '.php' );
+		}
 		$external_class = 'External_'. ucfirst( $external );
 		if ( class_exists( $external_class ) ) {
 			return new $external_class();
 		}
+
+		return false;
 	}
 
 	public function register_location( $locations) {
