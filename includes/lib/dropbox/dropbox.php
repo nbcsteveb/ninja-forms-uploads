@@ -167,6 +167,15 @@ class nf_dropbox
         throw $e;
     }
 
+	public function get_link( $path ) {
+		$response = $this->dropbox->media( $path );
+		if ( $response['code'] == 200 ) {
+			return $response['body']->url;
+		}
+
+		return false;
+	}
+
     public function chunk_upload_file($path, $file, $processed_file)
     {
         $offest = $upload_id = null;

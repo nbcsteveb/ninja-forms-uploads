@@ -12,6 +12,8 @@ class External_Amazon extends Ninja_Forms_Upload\External {
 
 	private $connected_settings;
 
+	private $file_path = false;
+
 	function __construct() {
 		$this->setSettings();
 		parent::__construct( $this->title , $this->slug, $this->settings );
@@ -68,8 +70,26 @@ class External_Amazon extends Ninja_Forms_Upload\External {
 		return false;
 	}
 
+	private function prepare() {
+		if ( ! $this->file_path ) {
+			$this->file_path = $this->sanitize_path( $this->connected_settings['file_path'] );
+		}
+		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
+	}
+
 	protected function upload_file( $filename ) {
-		$s3 = new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
-		$s3->putObjectFile($filename, $this->connected_settings['bucket_name'], $this->connected_settings['file_path'] .baseName( $filename ), S3::ACL_PUBLIC_READ);
+		$s3 = $this->prepare();
+		$s3->putObjectFile($filename, $this->connected_settings['bucket_name'], $this->file_path . basename( $filename ), S3::ACL_PUBLIC_READ);
+	}
+
+	private function sanitize_path( $path ) {
+		$path = ltrim( $path, '/' );
+		$path = rtrim( $path, '/' );
+		return $path .'/';
+	}
+
+	public function file_url( $filename ) {
+		$s3 = $this->prepare();
+		return $s3->getAuthenticatedURL( $this->connected_settings['bucket_name'], $this->file_path . $filename, 3600 );
 	}
 }

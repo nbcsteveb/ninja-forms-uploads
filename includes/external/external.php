@@ -107,8 +107,7 @@ abstract class External {
 
 	protected function upload_file( $filename ) {}
 
-	public function file_url() {
-		return 'http://1.gravatar.com/avatar/7ead9eb77e47d954eb8683f6ce6393e6?s=100&d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D100&r=G';
+	public function file_url( $filename ) {
 		return '';
 	}
 

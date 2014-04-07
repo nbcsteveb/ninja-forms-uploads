@@ -13,3 +13,19 @@ function ninja_forms_register_tab_external_settings(){
         ninja_forms_register_tab('external_settings', $args);
     }
 }
+
+add_action('admin_init', 'ninja_forms_external_url');
+function ninja_forms_external_url() {
+	if ( isset( $_GET['nf-upload'] ) ) {
+		$args = array(
+			'id' => $_GET['nf-upload']
+		);
+		$upload = ninja_forms_get_uploads( $args );
+		$external = \Ninja_Forms_Upload\External::instance( $upload['data']['upload_location'] );
+		if ( $external ) {
+			$file_url = $external->file_url( $upload['data']['file_name'] );
+		}
+		wp_redirect( $file_url );
+		die();
+	}
+}

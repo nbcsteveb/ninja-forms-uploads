@@ -209,10 +209,9 @@ function ninja_forms_tab_browse_uploads(){
 					if ( isset( $data['upload_location'] ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
 						$external = \Ninja_Forms_Upload\External::instance( $data['upload_location'] );
 						if ( $external ) {
-							$file_url = $external->file_url();
+							$file_url = admin_url( '?nf-upload='. $upload_id );
 						}
 					}
-
 				} else {
 					$file_url = '';
 				}				

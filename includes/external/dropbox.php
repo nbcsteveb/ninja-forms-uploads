@@ -45,6 +45,15 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 		$dropbox->upload_file( $filename );
 	}
 
+	public function file_url( $filename ) {
+		$dropbox = new nf_dropbox();
+		$url = $dropbox->get_link( $filename );
+		if ( $url ) {
+			return $url;
+		}
+		return admin_url();
+	}
+
 	public function connect_url( $form_id, $data ) {
 		$dropbox = new nf_dropbox();
 		$callback_url = admin_url( '/admin.php?page=ninja-forms-uploads&tab=external_settings' );
