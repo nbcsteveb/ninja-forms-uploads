@@ -2,7 +2,7 @@
 
 require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/lib/dropbox/dropbox.php' );
 
-class External_Dropbox extends external {
+class External_Dropbox extends Ninja_Forms_Upload\External {
 
 	private $title = 'Dropbox';
 
