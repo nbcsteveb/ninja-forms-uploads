@@ -30,7 +30,7 @@ class External_Amazon extends Ninja_Forms_Upload\External {
 			array(
 				'name' => 'amazon_s3_secret_key',
 				'type' => 'text',
-				'label' => __( 'Secret Key', 'ninja-forms-uploadss' ),
+				'label' => __( 'Secret Key', 'ninja-forms-uploads' ),
 				'desc' => '',
 			),
 			array(
@@ -43,7 +43,7 @@ class External_Amazon extends Ninja_Forms_Upload\External {
 				'name' => 'amazon_s3_file_path',
 				'type' => 'text',
 				'label' => __( 'File Path', 'ninja-forms-uploads' ),
-				'desc' => 'The default file path in the bucket where the file will be uploaded to',
+				'desc' => __( 'The default file path in the bucket where the file will be uploaded to', 'ninja-forms-uploads' ),
 				'default_value'	=> 'ninja-forms/'
 			),
 		);

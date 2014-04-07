@@ -3,7 +3,7 @@
 add_action('admin_init', 'ninja_forms_register_tab_external_settings');
 function ninja_forms_register_tab_external_settings(){
     $args = array(
-        'name' => 'External Settings',
+        'name' => __( 'External Settings', 'ninja-forms-uploads' ),
         'page' => 'ninja-forms-uploads',
         'display_function' => '',
         'save_function' => 'ninja_forms_save_upload_settings',

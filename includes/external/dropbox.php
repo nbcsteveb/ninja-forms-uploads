@@ -24,7 +24,7 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 			array(
 				'name' => 'dropbox_connect',
 				'type' => '',
-				'label' => __( 'Connect to Dropbox', 'ninja-forms-uploads' ),
+				'label' => sprintf( __( 'Connect to %s', 'ninja-forms-uploads' ), $this->title ),
 				'desc' => '',
 				'display_function' => array( $this, 'connect_url' )
 			),
@@ -59,9 +59,9 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 		$callback_url = admin_url( '/admin.php?page=ninja-forms-uploads&tab=external_settings' );
 		$disconnect_url = admin_url( '/admin.php?page=ninja-forms-uploads&tab=external_settings&action=disconnect_'. $this->slug );
 		if ( $dropbox->is_authorized() ) { ?>
-			<a id="dropbox-disconnect"  href="<?php echo $disconnect_url; ?>" class="button-secondary">Disconnect</a>
+			<a id="dropbox-disconnect"  href="<?php echo $disconnect_url; ?>" class="button-secondary"><?php _e( 'Disconnect', 'ninja-forms-uploads' ); ?></a>
 		<?php } else { ?>
-			<a id="dropbox-connect" href="<?php echo $dropbox->get_authorize_url( $callback_url ); ?>" class="button-secondary">Connect</a>
+			<a id="dropbox-connect" href="<?php echo $dropbox->get_authorize_url( $callback_url ); ?>" class="button-secondary"><?php _e( 'Connect', 'ninja-forms-uploads' ); ?></a>
 		<?php }
 	}
 
@@ -79,9 +79,7 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 		if(isset($_GET['page']) && $_GET['page'] == 'ninja-forms-uploads' &&
 		   isset($_GET['tab']) && $_GET['tab'] == 'external_settings' &&
 		   isset($_GET['oauth_token']) && isset($_GET['uid']) ) {
-			echo '<div class="updated">
-             <p>Connected to '. $this->title .'</p>
-         </div>';
+			echo '<div class="updated"><p>'. sprintf( __( 'Connected to %s', 'ninja-forms-uploads' ), $this->title ) .'</p></div>';
 		}
 	}
 
@@ -89,9 +87,7 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 		if(isset($_GET['page']) && $_GET['page'] == 'ninja-forms-uploads' &&
 		   isset($_GET['tab']) && $_GET['tab'] == 'external_settings' &&
 		   isset($_GET['action']) && $_GET['action'] == 'disconnect_'. $this->slug ) {
-			echo '<div class="updated">
-             <p>Disconnected from '.  $this->title .'</p>
-         </div>';
+			echo '<div class="updated"><p>'. sprintf( __( 'Disconnected from %s', 'ninja-forms-uploads' ), $this->title ) .'</p></div>';
 		}
 	}
 
