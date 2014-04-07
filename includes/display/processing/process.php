@@ -173,10 +173,14 @@ function ninja_forms_upload_db_update( $field_id ){
 	$form_id = $ninja_forms_processing->get_form_ID();
 	$user_id = $ninja_forms_processing->get_user_ID();
 	$files = $ninja_forms_processing->get_field_value( $field_id );
+	$field_row = $ninja_forms_processing->get_field_settings( $field_id );
 	if( is_array( $files ) AND !empty( $files ) ){
 		foreach( $files as $key => $f ){
 			if( !isset( $f['upload_id'] ) OR $f['upload_id'] == '' ){
 				$data = serialize( $f );
+				if( isset( $field_row['data']['upload_location'] ) ) {
+					$data['upload_location'] = $field_row['data']['upload_location'];
+				}
 				$wpdb->insert( NINJA_FORMS_UPLOADS_TABLE_NAME, array('user_id' => $user_id, 'form_id' => $form_id, 'field_id' => $field_id, 'data' => $data) );
 				$files[$key]['upload_id'] = $wpdb->insert_id;				
 			}

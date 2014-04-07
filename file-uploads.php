@@ -14,6 +14,8 @@ define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ 
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
 define("NINJA_FORMS_UPLOADS_VERSION", "1.2.1");
 
+define("NINJA_FORMS_UPLOADS_DEFAULT_LOCATION", 'server' );
+
 function ninja_forms_uploads_setup_license() {
 	if ( class_exists( 'NF_Extension_Updater' ) ) {
 		$NF_Extension_Updater = new NF_Extension_Updater( 'File Uploads', NINJA_FORMS_UPLOADS_VERSION, 'WP Ninjas', __FILE__, 'uploads' );
@@ -25,11 +27,20 @@ add_action( 'admin_init', 'ninja_forms_uploads_setup_license' );
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/sidebars/select-uploads.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/upload-settings/upload-settings.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/external-settings/external-settings.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
 
-require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/external-settings/external-settings.php");
-require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/external-post-process.php");
+// External location class loader
+require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/external/external.php' );
+$external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
+if ( $external_dir ) {
+	foreach ( $external_dir as $dir ) {
+		if ( basename( $dir, '.php' ) == 'external' ) continue;
+		require_once( $dir );
+		$external = \Ninja_Forms_Upload\External::instance( basename( $dir, '.php' ) );
+	}
+}
 
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/pre-process.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/process.php");
