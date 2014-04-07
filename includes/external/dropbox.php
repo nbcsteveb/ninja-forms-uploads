@@ -11,7 +11,7 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 	private $settings;
 
 	function __construct() {
-		$this->setSettings();
+		$this->set_settings();
 		parent::__construct( $this->title , $this->slug, $this->settings );
 
 		add_action( 'admin_init', array( $this, 'disconnect' ) );
@@ -19,7 +19,7 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 		add_action( 'admin_notices', array( $this, 'disconnect_notice' ) );
 	}
 
-	private function setSettings() {
+	private function set_settings() {
 		$this->settings = array(
 			array(
 				'name' => 'dropbox_connect',
@@ -35,7 +35,7 @@ class External_Dropbox extends Ninja_Forms_Upload\External {
 		);
 	}
 
-	protected function is_connected( $data = null ) {
+	public function is_connected() {
 		$dropbox = new nf_dropbox();
 		return $dropbox->is_authorized();
 	}

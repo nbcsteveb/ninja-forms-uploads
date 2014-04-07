@@ -12,16 +12,16 @@ class External_Amazon extends Ninja_Forms_Upload\External {
 
 	private $settings;
 
-	private $connected_settings;
+	private $connected_settings = false;
 
 	private $file_path = false;
 
 	function __construct() {
-		$this->setSettings();
+		$this->set_settings();
 		parent::__construct( $this->title , $this->slug, $this->settings );
 	}
 
-	private function setSettings() {
+	private function set_settings() {
 		$this->settings = array(
 			array(
 				'name' => 'amazon_s3_access_key',
@@ -51,31 +51,34 @@ class External_Amazon extends Ninja_Forms_Upload\External {
 		);
 	}
 
-	protected function is_connected( $data = null ){
-		if (!$data) {
-			$data = get_option( 'ninja_forms_settings' );
-		}
+	public function is_connected(){
+		$data = get_option( 'ninja_forms_settings' );
 		if ( (isset($data['amazon_s3_access_key']) && $data['amazon_s3_access_key'] != '') &&
 				 (isset($data['amazon_s3_secret_key']) && $data['amazon_s3_secret_key'] != '') &&
 			 		(isset($data['amazon_s3_bucket_name']) && $data['amazon_s3_bucket_name'] != '') &&
 			 			(isset($data['amazon_s3_file_path']) && $data['amazon_s3_file_path'] != '')
 		) {
-			$settings = array();
-			$settings['access_key'] = $data['amazon_s3_access_key'];
-			$settings['secret_key'] = $data['amazon_s3_secret_key'];
-			$settings['bucket_name'] = $data['amazon_s3_bucket_name'];
-			$settings['file_path'] = $data['amazon_s3_file_path'];
-			$this->connected_settings = $settings;
 			return true;
 		}
 
 		return false;
 	}
 
-	private function prepare() {
-		if ( ! $this->file_path ) {
-			$this->file_path = $this->sanitize_path( $this->connected_settings['file_path'] );
+	private function load_settings() {
+		if ( ! $this->connected_settings ) {
+			$data = get_option( 'ninja_forms_settings' );
+			$settings = array();
+			$settings['access_key'] = $data['amazon_s3_access_key'];
+			$settings['secret_key'] = $data['amazon_s3_secret_key'];
+			$settings['bucket_name'] = $data['amazon_s3_bucket_name'];
+			$settings['file_path'] = $data['amazon_s3_file_path'];
+			$this->connected_settings = $settings;
 		}
+	}
+
+	private function prepare() {
+		$this->load_settings();
+		$this->file_path = $this->sanitize_path( $this->connected_settings['file_path'] );
 		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
 	}
 

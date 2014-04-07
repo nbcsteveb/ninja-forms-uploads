@@ -60,7 +60,7 @@ abstract class External {
 		}
 	}
 
-	protected function is_connected( $data = null ) {
+	public function is_connected() {
 		return false;
 	}
 
