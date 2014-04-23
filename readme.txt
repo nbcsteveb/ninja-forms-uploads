@@ -27,6 +27,12 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
+= 1.3.1 =
+
+*Bugs:*
+
+* The extension should now properly activate on all PHP versions.
+
 = 1.3 =
 
 *Features:*
