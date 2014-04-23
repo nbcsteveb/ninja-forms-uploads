@@ -269,7 +269,7 @@ function ninja_forms_get_uploads($args = array()){
 		}
 	}
 
-	$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".NINJA_FORMS_UPLOADS_TABLE_NAME." ".$where." ORDER BY `date_updated` DESC", NINJA_FORMS_UPLOADS_TABLE_NAME), ARRAY_A);
+	$results = $wpdb->get_results( "SELECT * FROM ".NINJA_FORMS_UPLOADS_TABLE_NAME." ".$where." ORDER BY `date_updated` DESC", ARRAY_A );
 	
 
 	if( isset( $args['upload_types'] ) OR isset( $args['upload_name'] ) ){
