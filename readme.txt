@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
-Tested up to: 3.8.1
-Stable tag: 1.2.1
+Tested up to: 3.9
+Stable tag: 1.3
 
 License: GPLv2 or later
 
@@ -27,11 +27,16 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.3 =
+
+*Features:*
+
+* You can now store uploaded files in Dropbox or Amazon S3! Simply select the storage location on a per-upload-field basis.
 
 *Bugs:*
 
-* Fixed a bug with AJAX submissions and File Uploads
+* Fixed a PHP notice.
+* Fixed a bug that could cause some installations to lose the ninja-forms/tmp/ directory.
 
 = 1.2 =
 
