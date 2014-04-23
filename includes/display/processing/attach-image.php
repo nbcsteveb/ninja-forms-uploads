@@ -47,6 +47,7 @@ function ninja_forms_attach_files_to_post( $post_id ){
 
 			
 				foreach( $user_value as $key => $file ){
+					// Check to see if we are changing files that already exist.
 					if( !isset( $file['changed'] ) OR $file['changed'] == 1 ){
 						foreach( $attachments as $attachment ){
 							if( $attachment['file_key'] == $key ){
@@ -57,24 +58,23 @@ function ninja_forms_attach_files_to_post( $post_id ){
 								wp_delete_attachment( $attachment['id'] );
 							}
 						}
-
-						if( isset( $file['complete'] ) AND $file['complete'] == 1 ){
-							
-							$filename = $file['file_path'].$file['file_name'];
-							$attach_array = ninja_forms_generate_metadata( $post_id, $filename );
-							
-							$attach_id = $attach_array['attach_id'];
-							$attach_data = $attach_array['attach_data'];
-							if( !empty( $attach_array ) AND isset( $field_row['data']['featured_image'] ) AND $field_row['data']['featured_image'] == 1 ){
-								ninja_forms_set_featured_image( $post_id, $attach_id );
-							}
-							update_post_meta( $attach_id, 'ninja_forms_field_id', $field_id );
-							update_post_meta( $attach_id, 'ninja_forms_file_key', $key );
-							update_post_meta( $attach_id, 'ninja_forms_upload_id', $file['upload_id'] );
-							$file['attachment_id'] = $attach_id;
-							$ninja_forms_processing->update_field_value( $field_id, array( $key => $file ) );
-							
+					}
+					if( isset( $file['complete'] ) AND $file['complete'] == 1 ){
+						
+						$filename = $file['file_path'].$file['file_name'];
+						$attach_array = ninja_forms_generate_metadata( $post_id, $filename );
+						
+						$attach_id = $attach_array['attach_id'];
+						$attach_data = $attach_array['attach_data'];
+						if( !empty( $attach_array ) AND isset( $field_row['data']['featured_image'] ) AND $field_row['data']['featured_image'] == 1 ){
+							ninja_forms_set_featured_image( $post_id, $attach_id );
 						}
+						update_post_meta( $attach_id, 'ninja_forms_field_id', $field_id );
+						update_post_meta( $attach_id, 'ninja_forms_file_key', $key );
+						update_post_meta( $attach_id, 'ninja_forms_upload_id', $file['upload_id'] );
+						$file['attachment_id'] = $attach_id;
+						$ninja_forms_processing->update_field_value( $field_id, array( $key => $file ) );
+						
 					}
 				}
 			}

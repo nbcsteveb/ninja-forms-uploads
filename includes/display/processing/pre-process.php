@@ -189,10 +189,17 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 
 	$random_string = ninja_forms_random_string(5);
 
+	if ( ! is_dir( $base_upload_dir ) )
+		mkdir( $base_upload_dir );
+
+	if ( ! is_dir( $base_upload_dir . '/tmp/' ) )
+		mkdir( $base_upload_dir . '/tmp/' );
+
 	$tmp_upload_file = $base_upload_dir.'/tmp/'.$random_string.'/';
 	if(is_dir($tmp_upload_file)){
 		rmdir($tmp_upload_file);
 	}
+
 	mkdir($tmp_upload_file);
 
 	$tmp_upload_file .= 'ninja_forms_field_'.$field_id;
