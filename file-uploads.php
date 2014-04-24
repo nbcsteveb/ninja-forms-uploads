@@ -37,7 +37,7 @@ $external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
 if ( $external_dir ) {
 	foreach ( $external_dir as $dir ) {
 		if ( basename( $dir, '.php' ) == 'external' ) continue;
-		$external = \Ninja_Forms_Upload\External::instance( $dir, true );
+		$external = NF_Upload_External::instance( $dir, true );
 	}
 }
 

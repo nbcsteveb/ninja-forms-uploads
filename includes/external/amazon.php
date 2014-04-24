@@ -4,7 +4,7 @@ require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/lib/s3/s3.php' );
 /**
  * Class External_Amazon
  */
-class External_Amazon extends Ninja_Forms_Upload\External {
+class External_Amazon extends NF_Upload_External {
 
 	private $title = 'Amazon S3';
 
