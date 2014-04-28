@@ -1,8 +1,6 @@
 <?php
 
-namespace Ninja_Forms_Upload;
-
-abstract class External {
+abstract class NF_Upload_External {
 
 	private $slug;
 

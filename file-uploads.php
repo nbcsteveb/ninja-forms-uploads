@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - File Uploads
 Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 1.3.1
+Version: 1.3.2
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 */
@@ -12,7 +12,7 @@ global $wpdb;
 define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
-define("NINJA_FORMS_UPLOADS_VERSION", "1.3.1");
+define("NINJA_FORMS_UPLOADS_VERSION", "1.3.2");
 
 define("NINJA_FORMS_UPLOADS_DEFAULT_LOCATION", 'server' );
 
@@ -37,7 +37,7 @@ $external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
 if ( $external_dir ) {
 	foreach ( $external_dir as $dir ) {
 		if ( basename( $dir, '.php' ) == 'external' ) continue;
-		$external = \Ninja_Forms_Upload\External::instance( $dir, true );
+		$external = NF_Upload_External::instance( $dir, true );
 	}
 }
 
