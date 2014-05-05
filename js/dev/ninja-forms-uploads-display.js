@@ -22,5 +22,16 @@ jQuery(document).ready(function(jQuery) {
 		//}
 	});
 
+	jQuery( document ).on( 'submitResponse.uploads', function( e, response ) {
+		var success = response.success;
+
+		var form_settings = response.form_settings;
+		var hide_complete = form_settings.hide_complete;
+		var clear_complete = form_settings.clear_complete;
+		if ( success != false && clear_complete == 1 ) {
+			jQuery('input:file.multi').MultiFile('reset');
+		}
+	});
+
 	/* * * End File Upload JS * * */
 });
