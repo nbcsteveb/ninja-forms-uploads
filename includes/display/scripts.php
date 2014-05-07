@@ -22,8 +22,16 @@ function ninja_forms_upload_display_js( $form_id ){
 		}
 
 		if( $output ){
+			if ( defined( 'NINJA_FORMS_JS_DEBUG' ) && NINJA_FORMS_JS_DEBUG ) {
+				$suffix = '';
+				$src = 'dev';
+			} else {
+				$suffix = '.min';
+				$src = 'min';
+			}
+
 			wp_enqueue_script( 'ninja-forms-uploads-display',
-				NINJA_FORMS_UPLOADS_URL .'/js/min/ninja-forms-uploads-display.min.js',
+				NINJA_FORMS_UPLOADS_URL .'/js/' . $src . '/ninja-forms-uploads-display' .$suffix .'.js',
 				array( 'jquery', 'ninja-forms-display' ) );
 			if( $multi ){
 				wp_enqueue_script( 'jquery-multi-file',

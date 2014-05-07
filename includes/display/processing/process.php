@@ -82,20 +82,35 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 							$sep = '\\';
 						}
 						
+						$custom_upload_dir = untrailingslashit( $custom_upload_dir );
+
+						//Replacement for line 85->98 in ninja-forms-uploads\includes\display\processing\processing.php
 						$tmp_upload_dir = explode( $sep, $custom_upload_dir );
-						$x = 0;
-						$tmp_dir = '';
+						$tmp_dirs = array(); //We are going to store all dir levels in this array first
+						$tmp_dir = $base_upload_dir; //easier to set here directly instead of in the foreach loop
+
+						//Let’s store all dir levels
 						foreach( $tmp_upload_dir as $dir ){
-							if( $x == 0 ){
-								$tmp_dir = $base_upload_dir;
-							}
-							$tmp_dir = $tmp_dir.$sep.$dir;
-							if( !is_dir($tmp_dir) ){
-								mkdir( $tmp_dir );
-							}
-							$tmp_dir .= $sep;
-							$x++;
+							$tmp_dir = $tmp_dir.$dir.$sep;
+							//Prepend to array to get the deepest dir at the beginning
+							array_unshift($tmp_dirs, $tmp_dir);
 						}
+
+						$to_create = array();
+						//check which dirs to create
+						foreach( $tmp_dirs as $dir ){
+							if( is_dir($dir) ) {
+								break;
+							} else {
+								array_unshift( $to_create, $dir ); //Prepend to array so the deepest dir will at the end.
+							}
+						}
+
+						//create dirs
+						foreach( $to_create as $dir ) {
+							mkdir($dir);
+						}
+
 					}
 					
 					$upload_dir = $base_upload_dir.$custom_upload_dir;
@@ -110,19 +125,33 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 						$sep = '\\';
 					}
 					
+					//Replacement for line 113->124 ninja-forms-uploads\includes\display\processing\processing.php
 					$tmp_upload_dir = explode( $sep, $upload_dir );
-					$x = 0;
+					$tmp_dirs = array(); //We are going to store all dir levels in this array first
 					$tmp_dir = '';
 
+					//Let’s store all dir levels
 					foreach( $tmp_upload_dir as $dir ){
-						$tmp_dir = $tmp_dir.$sep.$dir;
-						if( is_string( $tmp_dir ) and !is_dir($tmp_dir) ){
-							mkdir( $tmp_dir );
-						}
-						$tmp_dir .= $sep;
-						$x++;
+						$tmp_dir = $tmp_dir.$dir.$sep;
+						//Prepend to array to get the deepest dir at the beginning
+						array_unshift( $tmp_dirs, $tmp_dir );
 					}
 
+					$to_create = array();
+					//check which dirs to create
+					foreach( $tmp_dirs as $dir ){
+						if( is_dir($dir) ) {
+							break;
+						} else {
+							array_unshift( $to_create, $dir ); //Prepend to array so the deepest dir will at the end.
+						}
+					}
+
+					//create dirs
+					foreach( $to_create as $dir ) {
+						mkdir($dir);
+					}
+					
 					$file_dir = $upload_dir.$file_name;
 
 					if(!$ninja_forms_processing->get_all_errors()){

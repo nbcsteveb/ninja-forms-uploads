@@ -95,8 +95,6 @@ function ninja_forms_register_field_upload(){
 add_action( 'admin_init', 'ninja_forms_field_upload_register_filters' );
 function ninja_forms_field_upload_register_filters(){
 	add_filter('ninja_forms_view_sub_td', 'ninja_forms_field_upload_sub_td', 10, 2);
-	//add_filter('ninja_forms_save_sub', 'ninja_forms_field_upload_save_sub', 10, 2);
-	//add_filter('ninja_forms_field', 'ninja_forms_field_upload_filter_data', 10, 2);
 }
 
 function ninja_forms_field_upload_default_value($data, $field_id){

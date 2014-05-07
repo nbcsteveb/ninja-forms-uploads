@@ -139,7 +139,7 @@ class nf_dropbox
     }
 
     private function get_option( $key ) {
-        if ( isset ( $key ) ) {
+        if ( isset ( $key ) && isset( $this->settings[$key] ) ) {
             return $this->settings[$key];
         } else {
             return false;

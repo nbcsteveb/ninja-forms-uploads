@@ -27,6 +27,14 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
+= 1.3.3 =
+
+*Bugs:*
+
+* Fixed a bug with Dropbox that could cause file uploads to be sluggish.
+* is_dir() and mkdir() warnings should be cleared up.
+* Multi-file upload fields should now clear correctly when a form is submitted.
+
 = 1.3.2 =
 
 *Bugs:*
