@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
-Tested up to: 3.9
-Stable tag: 1.3.2
+Tested up to: 3.9.1
+Stable tag: 1.3.4
 
 License: GPLv2 or later
 
@@ -26,6 +26,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.3.4 =
+
+*Bugs:*
+
+* Making sure the external upload doesn't fire if there is no file uploaded
 
 = 1.3.3 =
 
