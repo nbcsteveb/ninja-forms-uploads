@@ -87,8 +87,13 @@ abstract class NF_Upload_External {
 		if ( ! $user_value ) return;
 
 		foreach( $user_value as $key => $file ){
+			if ( ! isset( $file['file_path'] ) ) {
+				continue;
+			}
 			$filename = $file['file_path'] . $file['file_name'];
-			$this->upload_file( $filename );
+			if ( file_exists( $filename ) ) {
+				$this->upload_file( $filename );
+			}
 		}
 	}
 
@@ -97,9 +102,14 @@ abstract class NF_Upload_External {
 		if ( ! $user_value ) return;
 
 		foreach( $user_value as $key => $file ){
+			if ( ! isset( $file['file_path'] ) ) {
+				continue;
+			}
 			$filename = $file['file_path'] . $file['file_name'];
-			// Delete local file
-			unlink( $filename );
+			if ( file_exists( $filename ) ) {
+				// Delete local file
+				unlink( $filename );
+			}
 		}
 	}
 
@@ -108,8 +118,5 @@ abstract class NF_Upload_External {
 	public function file_url( $filename ) {
 		return '';
 	}
-
-
-
 
 } 
