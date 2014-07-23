@@ -27,7 +27,7 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 	}
 
 	$tmp_upload_file = $ninja_forms_processing->get_field_value( $field_id );
-	
+
 	if( is_array( $tmp_upload_file ) ){
 		foreach( $tmp_upload_file as $key => $file ){
 			if( ( isset( $file['complete'] ) AND $file['complete'] == 0 ) OR !isset( $file['complete'] ) ){
@@ -209,9 +209,11 @@ function ninja_forms_upload_db_update( $field_id ){
 				if( isset( $field_row['data']['upload_location'] ) ) {
 					$f['upload_location'] = $field_row['data']['upload_location'];
 				}
-				$data = serialize( $f );
-				$wpdb->insert( NINJA_FORMS_UPLOADS_TABLE_NAME, array('user_id' => $user_id, 'form_id' => $form_id, 'field_id' => $field_id, 'data' => $data) );
-				$files[$key]['upload_id'] = $wpdb->insert_id;				
+				if ( isset ( $f['user_file_name'] ) ) {
+					$data = serialize( $f );
+					$wpdb->insert( NINJA_FORMS_UPLOADS_TABLE_NAME, array('user_id' => $user_id, 'form_id' => $form_id, 'field_id' => $field_id, 'data' => $data) );
+					$files[$key]['upload_id'] = $wpdb->insert_id;						
+				}
 			}
 		}
 		$ninja_forms_processing->update_field_value( $field_id, $files );

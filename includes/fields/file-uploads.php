@@ -68,7 +68,8 @@ function ninja_forms_register_field_upload(){
 		'pre_process' => 'ninja_forms_field_upload_pre_process',
 		'edit_sub_pre_process' => 'ninja_forms_field_upload_pre_process',
 		'process' => 'ninja_forms_field_upload_process',
-		'edit_sub_process' => 'ninja_forms_field_upload_process',
+		'edit_sub_value' => 'nf_field_upload_edit_sub_value',
+		'sub_table_value' => 'nf_field_upload_sub_table_value',
 		'req_validation' => 'ninja_forms_field_upload_req_validation',
 	);
 
@@ -148,7 +149,7 @@ function ninja_forms_field_upload_edit($field_id, $data){
  */
 
 function ninja_forms_field_upload_display( $field_id, $data ){
-	global $ninja_forms_processing;
+	global $ninja_forms_loading, $ninja_forms_processing;
 
 	$plugin_settings = get_option('ninja_forms_settings');
 	if(isset($plugin_settings['max_file_size'])){
@@ -192,7 +193,6 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		$prefill = true;
 	}
 
-
 	if ( is_array ( $user_value ) ) {
 		$tmp = false;
 		foreach( $user_value as $key => $val ) {
@@ -210,6 +210,17 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		if ( !$tmp ) {
 			$prefill = false;
 		}		
+	} else if ( is_string ( $user_value ) ) {
+		$filename = basename( $user_value );
+		$tmp_array = array(
+			ninja_forms_random_string(5) => array(
+				'complete' => 1,
+				'user_file_name' => $filename,
+				'file_name' => $filename,
+				'file_url' => $user_value,
+			),
+		);
+		$user_value = $tmp_array;
 	}
 
 	//var_dump ( $user_value );
@@ -235,7 +246,10 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 					}else{
 						$complete = 1;
 					}
-
+					
+					if ( !isset ( $val['upload_id'] ) ) {
+						$val['upload_id'] = '';
+					}
 
 					// Output the accompanying file data that will be accessible in the extra_values during processing.
 					?>
@@ -327,5 +341,81 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[new][]" value=""  rel="<?php echo $field_id;?>" >
 		<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[]" value="" rel="<?php echo $field_id;?>">
 		<?php
+	}
+}
+
+/**
+ * Output our field on the edit submission page
+ *
+ * @since 1.3.4
+ * @return void
+ */
+function nf_field_upload_edit_sub_value( $field_id, $user_value ) {
+	if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
+		foreach ( $user_value as $key => $file ) {
+			?>
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][user_file_name]" value="<?php echo $file['user_file_name'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_name]" value="<?php echo $file['file_name'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_path]" value="<?php echo $file['file_path'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][complete]" value="<?php echo $file['complete'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
+			
+			<a href="<?php echo $file['file_url'];?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file['file_url'];?>" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]">
+			<br />
+			<?php
+		}
+	}
+}
+
+/**
+ * Filter the user value for editing submissions with a file upload field.
+ *
+ * @since 1.3.4
+ * @return array $user_value
+ */
+function nf_field_upload_filter_edit_sub_value( $user_value, $field_id, $sub_id ) {
+	$form_id = Ninja_Forms()->sub( $sub_id )->form_id;
+	if ( isset ( Ninja_Forms()->form( $form_id )->fields[ $field_id ]['type'] ) && Ninja_Forms()->form( $form_id )->fields[ $field_id ]['type'] == '_upload' ) {
+		if ( is_array ( $user_value ) ) {
+			foreach ( $user_value as $key => $file ) {
+				if ( empty ( $user_value[ $key ]['file_url'] ) ) {
+					unset ( $user_value[ $key ] );
+				} else {
+					$name = basename( $file['file_url'] );
+					$user_value[ $key ]['user_file_name'] = $name;
+					$user_value[ $key ]['file_name'] = $name;
+					$user_value[ $key ]['file_path'] = '';
+					$user_value[ $key ]['upload_id'] = '';					
+				}
+			}
+		}
+	}
+
+	return $user_value;
+}
+
+add_filter( 'nf_edit_sub_user_value', 'nf_field_upload_filter_edit_sub_value', 10, 3 );
+
+/**
+ * Filter the user value for the submissions table.
+ *
+ * @since 1.3.4
+ * @return string $file_links
+ */
+function nf_field_upload_sub_table_value( $field_id, $user_value, $field ) {
+	if ( $field['type'] == '_upload' ) {
+		if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
+			$x = 0;
+			foreach ( $user_value as $key => $file ) {
+				if ( $x > 4 )
+					break;
+				?>
+				<a href="<?php echo $file['file_url']; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
+				<br />
+				<?php
+				$x++;
+			}
+		}
 	}
 }
