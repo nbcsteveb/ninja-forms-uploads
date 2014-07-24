@@ -7,6 +7,7 @@ function ninja_forms_attach_files_to_post( $post_id ){
 		foreach( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ){
 			$field_row = $ninja_forms_processing->get_field_settings( $field_id );
 			$user_value = $ninja_forms_processing->get_field_value( $field_id );
+
 			if( is_array( $user_value ) AND !empty( $user_value ) ){
 				$tmp_array = array();
 
@@ -37,7 +38,7 @@ function ninja_forms_attach_files_to_post( $post_id ){
 								$tmp_array[$x]['file_key'] = $file_key;
 							}
 						}else if( $attach_field == '' ){
-							//wp_update_post( array( 'ID' => $attachment->ID, 'post_parent' => 0 ) );
+							wp_update_post( array( 'ID' => $attachment->ID, 'post_parent' => 0 ) );
 						}
 						$x++;
 		        	}
@@ -45,7 +46,6 @@ function ninja_forms_attach_files_to_post( $post_id ){
 
 		        $attachments = $tmp_array;
 
-			
 				foreach( $user_value as $key => $file ){
 					// Check to see if we are changing files that already exist.
 					if( !isset( $file['changed'] ) OR $file['changed'] == 1 ){
@@ -59,7 +59,8 @@ function ninja_forms_attach_files_to_post( $post_id ){
 							}
 						}
 					}
-					if( isset( $file['complete'] ) AND $file['complete'] == 1 ){
+
+					if( isset( $file['complete'] ) AND $file['complete'] == 1 && ( ! isset ( $file['changed'] ) || $file['changed'] == 1 ) ){
 						
 						$filename = $file['file_path'].$file['file_name'];
 						$attach_array = ninja_forms_generate_metadata( $post_id, $filename );
@@ -74,11 +75,35 @@ function ninja_forms_attach_files_to_post( $post_id ){
 						update_post_meta( $attach_id, 'ninja_forms_upload_id', $file['upload_id'] );
 						$file['attachment_id'] = $attach_id;
 						$ninja_forms_processing->update_field_value( $field_id, array( $key => $file ) );
+					}
+				}
+			} else {
+
+				$args = array(
+		           'post_parent' => $post_id,
+		           'post_status' => 'null',
+		           'post_type'=> 'attachment'
+		        );
+
+		        $attachments = get_posts( $args );
+
+				// Loop through our attachments and make sure that we don't have any empty fields.
+				foreach ( $ninja_forms_processing->get_all_fields() as $field_id => $user_value ) {
+					if ( $ninja_forms_processing->get_field_setting( $field_id, 'type') == '_upload' ) {
 						
+				        if( !empty( $attachments ) ){
+				        	foreach( $attachments as $attachment ){
+
+				        		$attach_field = get_post_meta( $attachment->ID, 'ninja_forms_field_id', true );
+								if( $attach_field == $field_id && empty ( $user_value ) ){
+									wp_delete_attachment( $attachment->ID );
+								}
+				        	}
+				        }
 					}
 				}
 			}
-		}		
+		}
 	}
 }
 
@@ -166,6 +191,9 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 				if( $attach_field == $field_id ){
 					$filename = basename ( get_attached_file( $attachment->ID ) );
 					$filepath = str_replace( $filename, '', get_attached_file( $attachment->ID ) );
+					if ( ! is_array( $data['default_value'] ) ) {
+						$data['default_value'] = array();
+					}					
 					$data['default_value'][$file_key] = array(
 						'user_file_name' => $filename,
 						'file_name' => $filename,
@@ -174,10 +202,11 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 						'complete' => 1,
 						'upload_id' => $upload_id
 					);
+
 				}
 			}
-			
 		}
+
 		if( isset( $field_row['data']['featured_image'] ) AND $field_row['data']['featured_image'] == 1 ){
 			$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
 			if ( $post_thumbnail_id != '' ) {
@@ -204,10 +233,11 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 			uasort($data['default_value'], 'ninja_forms_compare_file_name');
 		}
 	}
+	
 	return $data;
 }
 
-add_filter( 'ninja_forms_field', 'ninja_forms_post_edit_file_attachment_filter', 10, 2 );
+add_filter( 'ninja_forms_field', 'ninja_forms_post_edit_file_attachment_filter', 25, 2 );
 
 function ninja_forms_compare_file_name( $a, $b ){
 	if ( !isset ( $a['file_name'] ) or !isset ( $b['file_name'] ) )
