@@ -401,7 +401,7 @@ add_filter( 'nf_edit_sub_user_value', 'nf_field_upload_filter_edit_sub_value', 1
  * Filter the user value for the submissions table.
  *
  * @since 1.3.4
- * @return string $file_links
+ * @return void
  */
 function nf_field_upload_sub_table_value( $field_id, $user_value, $field ) {
 	if ( $field['type'] == '_upload' ) {
@@ -419,3 +419,29 @@ function nf_field_upload_sub_table_value( $field_id, $user_value, $field ) {
 		}
 	}
 }
+
+/**
+ * Filter our submission editing table if we are using the front-end editor extension
+ *
+ * @since 1.3.4
+ * @return string $link
+ */
+function nf_field_upload_fee_sub_table( $user_value, $field_id, $field_row ) {
+	if ( $field_row['type'] == '_upload' ) {
+		if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
+			$x = 0;
+			$return = '';
+			foreach ( $user_value as $key => $file ) {
+				if ( $x > 4 )
+					break;
+				$return .= '<a href="' . $file['file_url'] . '" target="_blank">' . basename( $file['file_url'] ) . '</a><br />';
+				$x++;
+			}
+			$user_value = $return;
+		}
+	}
+	
+	return $user_value;
+}
+
+add_filter( 'nf_edit_sub_table_value', 'nf_field_upload_fee_sub_table', 10, 3 );
