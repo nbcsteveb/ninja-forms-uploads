@@ -32,6 +32,7 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 *Bugs:*
 
 * Fixing a bug with file exports and version 2.7+ of Ninja Forms.
+
 * Fixed translation issues.
 
 *Changes:*
