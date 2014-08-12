@@ -354,15 +354,16 @@ function nf_field_upload_edit_sub_value( $field_id, $user_value ) {
 	if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
 		foreach ( $user_value as $key => $file ) {
 			?>
-			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][user_file_name]" value="<?php echo $file['user_file_name'];?>">
-			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_name]" value="<?php echo $file['file_name'];?>">
-			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_path]" value="<?php echo $file['file_path'];?>">
-			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][complete]" value="<?php echo $file['complete'];?>">
-			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
-			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
-			
-			<a href="<?php echo $file['file_url'];?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file['file_url'];?>" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]">
-			<br />
+			<div class="nf-sub-edit-upload">
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][user_file_name]" value="<?php echo $file['user_file_name'];?>">
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_name]" value="<?php echo $file['file_name'];?>">
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_path]" value="<?php echo $file['file_path'];?>">
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][complete]" value="<?php echo $file['complete'];?>">
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
+
+				<a href="<?php echo $file['file_url'];?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file['file_url'];?>" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]">
+			</div>
 			<?php
 		}
 	}
