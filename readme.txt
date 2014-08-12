@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
 Tested up to: 3.9.1
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 
 License: GPLv2 or later
 
@@ -26,6 +26,17 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.3.6 (12 August 2014) =
+
+*Bugs:*
+
+* Fixing a bug with file exports and version 2.7+ of Ninja Forms.
+* Fixed translation issues.
+
+*Changes:*
+
+* Added new .pot file.
 
 = 1.3.5 (24 July 2014) =
 
