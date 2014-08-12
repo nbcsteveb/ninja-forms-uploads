@@ -14,7 +14,8 @@ function ninja_forms_attach_files_to_post( $post_id ){
 				$args = array(
 		           'post_parent' => $post_id,
 		           'post_status' => 'null',
-		           'post_type'=> 'attachment'
+		           'post_type'=> 'attachment',
+		           'posts_per_page' => -1,
 		        );
 
 		        $attachments = get_posts( $args );
@@ -82,7 +83,8 @@ function ninja_forms_attach_files_to_post( $post_id ){
 				$args = array(
 		           'post_parent' => $post_id,
 		           'post_status' => 'null',
-		           'post_type'=> 'attachment'
+		           'post_type'=> 'attachment',
+		           'posts_per_page' => -1,
 		        );
 
 		        $attachments = get_posts( $args );
@@ -180,7 +182,8 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 			'post_type' => 'attachment',
 			'numberposts' => null,
 			'post_status' => null,
-			'post_parent' => $post->ID
+			'post_parent' => $post->ID,
+		    'posts_per_page' => -1,
 		); 
 		$attachments = get_posts($args);
 		if( $attachments ){

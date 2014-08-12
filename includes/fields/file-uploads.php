@@ -10,13 +10,13 @@ function ninja_forms_register_field_upload(){
 			array(
 				'type' => 'text', //What type of input should this be?
 				'name' => 'upload_types', //What should it be named. This should always be a programmatic name, not a label.
-				'label' => '<strong>' . __('Allowed File Types', 'ninja-forms') . '</strong><br/>' . __('Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. .jpg, .gif, .png, .pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.'), //Label to be shown before the option.
+				'label' => '<strong>' . __('Allowed File Types', 'ninja-forms-uploads') . '</strong><br/>' . __('Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. .jpg, .gif, .png, .pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.'), //Label to be shown before the option.
 				'class' => 'widefat', //Additional classes to be added to the input element.
 			),
 			array(
 				'type' => 'text',
 				'name' => 'upload_rename',
-				'label' => '<strong>' . __('Rename Uploaded File', 'ninja-forms') . '</strong><br />' . __('Advanced renaming options. If you do not want to rename the files, leave this box blank', 'ninja-forms').' <a href="#" class="ninja-forms-rename-help">' . __('Get help renaming files', 'ninja-forms') . '</a>',
+				'label' => '<strong>' . __('Rename Uploaded File', 'ninja-forms-uploads') . '</strong><br />' . __('Advanced renaming options. If you do not want to rename the files, leave this box blank', 'ninja-forms-uploads').' <a href="#" class="ninja-forms-rename-help">' . __('Get help renaming files', 'ninja-forms-uploads') . '</a>',
 				'class' => 'widefat',
 			),
 			array(
@@ -128,14 +128,14 @@ function ninja_forms_field_upload_edit($field_id, $data){
 		<input type="hidden" name="ninja_forms_field_<?php echo $field_id;?>[upload_multi]" value="0">
 		<input type="checkbox" id="field_<?php echo $field_id;?>_upload_multi" name="ninja_forms_field_<?php echo $field_id;?>[upload_multi]" value="1" class="ninja-forms-upload-multi" <?php checked($upload_multi, 1);?>>
 		<label for="field_<?php echo $field_id;?>_upload_multi">
-			<?php _e( 'Allow the user to upload multiple files.' , 'ninja-forms'); ?>
+			<?php _e( 'Allow the user to upload multiple files.' , 'ninja-forms-uploads'); ?>
 		</label>
 	</div>
 
 	<div class="description description-thin" style="" id="field_<?php echo $field_id;?>_upload_multi_count_label">
 		<label for="field_<?php echo $field_id;?>_upload_multi_count">
 			<input type="text" id="field_<?php echo $field_id;?>_upload_multi_count" name="ninja_forms_field_<?php echo $field_id;?>[upload_multi_count]" value="<?php echo $upload_multi_count;?>" class="widefat">
-			<?php _e( 'How many files can be uploaded?' , 'ninja-forms'); ?><br />
+			<?php _e( 'How many files can be uploaded?' , 'ninja-forms-uploads'); ?><br />
 		</label>
 	</div>
 	<?php
@@ -226,9 +226,9 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 	//var_dump ( $user_value );
 
 	if(count($user_value) > 1){
-		$str_label = __('Files', 'ninja-forms');
+		$str_label = __('Files', 'ninja-forms-uploads');
 	}else{
-		$str_label = __('File', 'ninja-forms');
+		$str_label = __('File', 'ninja-forms-uploads');
 	}
 
 	if( $prefill AND !$field_error ){
@@ -263,7 +263,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 						<input type="hidden" name="_upload_<?php echo $field_id;?>[<?php echo $key;?>][upload_id]" value="<?php echo $val['upload_id'];?>">
 
 						<a href="#" class="ninja-forms-delete-file-upload" id="ninja_forms_delete_file_upload_<?php echo $field_id;?>_<?php echo $key;?>">X</a> -
-						<a href="<?php echo $val['file_url'];?>" target="_blank"><?php echo $val['user_file_name'];?></a> - <a href="#" name="" id="ninja_forms_change_file_upload_<?php echo $field_id;?>_<?php echo $key;?>" class="ninja-forms-change-file-upload"><?php _e('Change This File', 'ninja-forms');?></a>
+						<a href="<?php echo $val['file_url'];?>" target="_blank"><?php echo $val['user_file_name'];?></a> - <a href="#" name="" id="ninja_forms_change_file_upload_<?php echo $field_id;?>_<?php echo $key;?>" class="ninja-forms-change-file-upload"><?php _e('Change This File', 'ninja-forms-uploads');?></a>
 						<span id="ninja_forms_file_upload_<?php echo $field_id;?>_<?php echo $key;?>" style="display:none;">
 							<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_filesize;?>">
 							<input type="file" name="ninja_forms_field_<?php echo $field_id;?>[<?php echo $key;?>]" id="ninja_forms_field_<?php echo $field_id;?>-<?php echo $key;?>" rel="<?php echo $field_id;?>" >

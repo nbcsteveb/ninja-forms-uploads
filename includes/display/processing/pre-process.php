@@ -109,7 +109,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		foreach( $files as $key => $f ){
 			if( isset( $f['error'] ) AND !empty($f['error'] ) ){
 				if( $f['error'] == 1 or $f['error'] == 2 ){
-					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_file_size.'mb.', 'ninja-forms'), $field_id);
+					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_file_size.'mb.', 'ninja-forms-uploads'), $field_id);
 				}
 				$file_error = true;
 			}
@@ -234,7 +234,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$ext = array_pop($user_file_array);
 		if(isset($upload_types) AND !empty($upload_types)){	
 			if(strpos($upload_types, $ext) === false){
-				$ninja_forms_processing->add_error('upload_'.$field_id, __('File type is not allowed: '.$user_file_name, 'ninja-forms'), $field_id);
+				$ninja_forms_processing->add_error('upload_'.$field_id, apply_filters( 'nf_uploads_unallowed_file_type', __( 'File type is not allowed: '.$user_file_name, 'ninja-forms-uploads' ) ), $field_id);
 			}
 		}
 

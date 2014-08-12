@@ -179,7 +179,7 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 							}
 							
 						}else{
-							$ninja_forms_processing->add_error('upload_'.$field_id, __( 'File Upload Error', 'ninja-forms' ), $field_id);
+							$ninja_forms_processing->add_error('upload_'.$field_id, __( 'File Upload Error', 'ninja-forms-uploads' ), $field_id);
 						}
 					}
 				}

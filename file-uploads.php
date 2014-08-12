@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - File Uploads
 Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 1.3.5
+Version: 1.3.6
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 */
@@ -12,7 +12,7 @@ global $wpdb;
 define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
-define("NINJA_FORMS_UPLOADS_VERSION", "1.3.5");
+define("NINJA_FORMS_UPLOADS_VERSION", "1.3.6");
 
 define("NINJA_FORMS_UPLOADS_DEFAULT_LOCATION", 'server' );
 
@@ -30,6 +30,7 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/tabs/external-settings/external-settings.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/csv-filter.php");
 
 // External location class loader
 require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/external/external.php' );
@@ -82,4 +83,46 @@ if( isset( $plugin_settings['uploads_version'] ) ){
 
 if( version_compare( $current_version, '0.5', '<' ) ){
 	ninja_forms_uploads_activation();
+}
+
+/**
+ * Load translations for add-on.
+ * First, look in WP_LANG_DIR subfolder, then fallback to add-on plugin folder.
+ */
+function ninja_forms_uploads_load_translations() {
+
+	/** Set our unique textdomain string */
+	$textdomain = 'ninja-forms-uploads';
+
+	/** The 'plugin_locale' filter is also used by default in load_plugin_textdomain() */
+	$locale = apply_filters( 'plugin_locale', get_locale(), $textdomain );
+
+	/** Set filter for WordPress languages directory */
+	$wp_lang_dir = apply_filters(
+		'ninja_forms_uploads_wp_lang_dir',
+		trailingslashit( WP_LANG_DIR ) . 'ninja-forms-uploads/' . $textdomain . '-' . $locale . '.mo'
+	);
+
+	/** Translations: First, look in WordPress' "languages" folder = custom & update-secure! */
+	load_textdomain( $textdomain, $wp_lang_dir );
+
+	/** Translations: Secondly, look in plugin's "lang" folder = default */
+	$plugin_dir = trailingslashit( basename( dirname( __FILE__ ) ) );
+	$lang_dir = apply_filters( 'ninja_forms_uploads_lang_dir', $plugin_dir . 'languages/' );
+	load_plugin_textdomain( $textdomain, FALSE, $lang_dir );
+
+}
+
+add_action( 'plugins_loaded', 'ninja_forms_uploads_load_translations' );
+
+function nf_fu_pre_27() {
+	if ( defined( 'NINJA_FORMS_VERSION' ) ) {
+		if ( version_compare( NINJA_FORMS_VERSION, '2.7' ) == -1 ) {
+			return true;
+		} else {
+			return false;
+		}		
+	} else {
+		return null;
+	}
 }
