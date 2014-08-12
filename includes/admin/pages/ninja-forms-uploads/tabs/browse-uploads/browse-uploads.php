@@ -115,8 +115,8 @@ function ninja_forms_tab_browse_uploads(){
 		<div id="" class="tablenav top">
 			<div class="alignleft actions">
 				<select id="" class="" name="bulk_action">
-					<option value=""><?php _e('Bulk Actions', 'ninja-forms');?></option>
-					<option value="delete"><?php _e('Delete', 'ninja-forms');?></option>
+					<option value=""><?php _e('Bulk Actions', 'ninja-forms-uploads');?></option>
+					<option value="delete"><?php _e('Delete', 'ninja-forms-uploads');?></option>
 				</select>
 				<input type="submit" name="submit" value="Apply" class="button-secondary">
 			</div>
@@ -126,14 +126,14 @@ function ninja_forms_tab_browse_uploads(){
 					<option value="50" <?php selected($saved_limit, 50);?>>50</option>
 					<option value="100" <?php selected($saved_limit, 100);?>>100</option>
 				</select>
-				<?php _e('Uploads Per Page', 'ninja-forms');?>
+				<?php _e('Uploads Per Page', 'ninja-forms-uploads');?>
 				<input type="submit" name="submit" value="Go" class="button-secondary">
 			</div>
 			<div id="" class="alignright navtable-pages">
 				<?php
 				if($upload_count != 0 AND $current_page <= $page_count){
 				?>
-				<span class="displaying-num"><?php if($start == 0){ echo 1; }else{ echo $start; }?> - <?php echo $end;?> of <?php echo $upload_count;?> <?php if($upload_count == 1){ _e('Upload', 'ninja-forms'); }else{ _e('Uploads', 'ninja-forms');}?></span>
+				<span class="displaying-num"><?php if($start == 0){ echo 1; }else{ echo $start; }?> - <?php echo $end;?> of <?php echo $upload_count;?> <?php if($upload_count == 1){ _e('Upload', 'ninja-forms-uploads'); }else{ _e('Uploads', 'ninja-forms-uploads');}?></span>
 				<?php
 				}
 					if($page_count > 1){
@@ -172,11 +172,11 @@ function ninja_forms_tab_browse_uploads(){
 			<thead>
 				<tr>
 					<th class="check-column"><input type="checkbox" id="ninja_forms_select_all" class="ninja-forms-uploads-bulk-action"></th>
-					<th><?php _e('File Name', 'ninja-forms');?></th>
-					<th><?php _e('Original User Filename', 'ninja-forms');?></th>
-					<th><?php _e('Date', 'ninja-forms');?></th>
-					<th><?php _e('Form Name', 'ninja-forms');?></th>
-					<th><?php _e('User Name', 'ninja-forms');?></th>
+					<th><?php _e('File Name', 'ninja-forms-uploads');?></th>
+					<th><?php _e('Original User Filename', 'ninja-forms-uploads');?></th>
+					<th><?php _e('Date', 'ninja-forms-uploads');?></th>
+					<th><?php _e('Form Name', 'ninja-forms-uploads');?></th>
+					<th><?php _e('User Name', 'ninja-forms-uploads');?></th>
 				</tr>
 			</thead>
 			<tbody id="ninja_forms_uploads_tbody">
@@ -264,11 +264,11 @@ function ninja_forms_tab_browse_uploads(){
 			<tfoot>
 				<tr>
 					<th class="check-column"><input type="checkbox" id="ninja_forms_select_all" class="ninja-forms-uploads-bulk-action"></th>
-					<th><?php _e('File Name', 'ninja-forms');?></th>
-					<th><?php _e('Original User Filename', 'ninja-forms');?></th>
-					<th><?php _e('Date', 'ninja-forms');?></th>
-					<th><?php _e('Form Name', 'ninja-forms');?></th>
-					<th><?php _e('User Name', 'ninja-forms');?></th>
+					<th><?php _e('File Name', 'ninja-forms-uploads');?></th>
+					<th><?php _e('Original User Filename', 'ninja-forms-uploads');?></th>
+					<th><?php _e('Date', 'ninja-forms-uploads');?></th>
+					<th><?php _e('Form Name', 'ninja-forms-uploads');?></th>
+					<th><?php _e('User Name', 'ninja-forms-uploads');?></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -285,10 +285,10 @@ function ninja_forms_save_browse_uploads( $data ){
 				}
 				$update_msg = count( $_POST['ninja_forms_uploads'] ).' ';
 				if( count( $_POST['ninja_forms_uploads'] ) > 1 ){
-					$update_msg .= __( 'Uploads Deleted', 'ninja-forms' );
+					$update_msg .= __( 'Uploads Deleted', 'ninja-forms-uploads' );
 
 				}else{
-					$update_msg .= __( 'Upload Deleted', 'ninja-forms' );
+					$update_msg .= __( 'Upload Deleted', 'ninja-forms-uploads' );
 				}
 			}
 			return $update_msg;

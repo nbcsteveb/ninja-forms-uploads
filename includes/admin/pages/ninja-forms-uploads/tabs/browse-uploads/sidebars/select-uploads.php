@@ -88,7 +88,7 @@ function ninja_forms_sidebar_select_uploads(){
 	}
 
 	?>
-		<label><strong><?php _e('Select A Form', 'ninja-forms');?>:</strong></label>
+		<label><strong><?php _e('Select A Form', 'ninja-forms-uploads');?>:</strong></label>
 		<p>
 			<select name="form_id" id="" class="">
 				<option value="all">-- All Forms </option>
@@ -105,38 +105,38 @@ function ninja_forms_sidebar_select_uploads(){
 			?>
 			</select>
 		</p>
-		<label><strong><?php _e( 'User', 'ninja-forms' ); ?> - <span>(<?php _e( 'Optional', 'ninja-forms' );?>)</span>:</strong></label>
+		<label><strong><?php _e( 'User', 'ninja-forms-uploads' ); ?> - <span>(<?php _e( 'Optional', 'ninja-forms-uploads' );?>)</span>:</strong></label>
 		<p>
 			<input type="text" id="" name="upload_user" class="code" value="<?php echo $upload_user; ?>">
 			<br />
 			<?php _e( 'login, email, user ID', 'ninja-forms-uploads' );?>
 		</p>
-		<label><strong><?php _e( 'File Name', 'ninja-forms' ); ?> - <span>(<?php _e( 'Optional', 'ninja-forms' );?>)</span>:</strong></label>
+		<label><strong><?php _e( 'File Name', 'ninja-forms-uploads' ); ?> - <span>(<?php _e( 'Optional', 'ninja-forms-uploads' );?>)</span>:</strong></label>
 		<p>
 			<input type="text" id="" name="upload_name" class="code" value="<?php echo $upload_name; ?>">
 		</p>		
-		<label><strong><?php _e( 'File Type', 'ninja-forms' ); ?> - <span>(<?php _e( 'Optional', 'ninja-forms' ); ?>)</span></strong></label>
+		<label><strong><?php _e( 'File Type', 'ninja-forms-uploads' ); ?> - <span>(<?php _e( 'Optional', 'ninja-forms-uploads' ); ?>)</span></strong></label>
 		<p>
 			<input type="text" id="" name="upload_types" class="code" value="<?php echo $upload_types; ?>">
 			<br />
 			.jpg,.pdf.docx
 		</p>
-		<h4><?php _e('Date Range', 'ninja-forms');?> - <span>(<?php _e( 'Optional', 'ninja-forms' ); ?>)</span></h4>
+		<h4><?php _e('Date Range', 'ninja-forms-uploads');?> - <span>(<?php _e( 'Optional', 'ninja-forms-uploads' ); ?>)</span></h4>
 		<p>
-			<?php _e('Begin Date', 'ninja-forms');?>: <input type="text" id="" name="begin_date" class="ninja-forms-admin-date" value="<?php echo $begin_date;?>">
+			<?php _e('Begin Date', 'ninja-forms-uploads');?>: <input type="text" id="" name="begin_date" class="ninja-forms-admin-date" value="<?php echo $begin_date;?>">
 			<br />
 			<?php echo $date_format;?>
 		</p>
 		<p>
-			<?php _e('End Date', 'ninja-forms');?>: <input type="text" id="" name="end_date" class="ninja-forms-admin-date" value="<?php echo $end_date;?>">
+			<?php _e('End Date', 'ninja-forms-uploads');?>: <input type="text" id="" name="end_date" class="ninja-forms-admin-date" value="<?php echo $end_date;?>">
 			<br />
 			<?php echo $date_format;?>
 		</p>
 		<p class="description">
-			<?php //_e('If both Begin Date and End Date are left blank, all file uploads will be displayed.', 'ninja-forms');?>
+			<?php //_e('If both Begin Date and End Date are left blank, all file uploads will be displayed.', 'ninja-forms-uploads');?>
 		</p>
 		<p class="description description-wide">
-			<input type="submit" name="submit" id="" class="button-primary" value="<?php _e('Filter File Uploads', 'ninja-forms');?>">
+			<input type="submit" name="submit" id="" class="button-primary" value="<?php _e('Filter File Uploads', 'ninja-forms-uploads');?>">
 		</p>
 	</form>
 <?php
