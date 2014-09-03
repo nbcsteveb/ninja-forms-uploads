@@ -205,13 +205,7 @@ function ninja_forms_tab_browse_uploads(){
 				}
 
 				if ( isset( $data['file_url'] ) ) {
-					$file_url = $data['file_url'];
-					if ( isset( $data['upload_location'] ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
-						$external = NF_Upload_External::instance( $data['upload_location'] );
-						if ( $external && $external->is_connected() ) {
-							$file_url = admin_url( '?nf-upload='. $upload_id );
-						}
-					}
+					$file_url = ninja_forms_upload_file_url( $data );
 				} else {
 					$file_url = '';
 				}				
