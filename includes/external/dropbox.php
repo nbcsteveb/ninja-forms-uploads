@@ -49,7 +49,8 @@ class External_Dropbox extends NF_Upload_External {
 
 	protected function upload_file( $filename ) {
 		$dropbox = new nf_dropbox();
-		$dropbox->upload_file( $filename );
+		$path = apply_filters( 'ninja_forms_uploads_' . $this->slug .'_path', '' );
+		$dropbox->upload_file( $filename, $path );
 	}
 
 	public function file_url( $filename ) {
