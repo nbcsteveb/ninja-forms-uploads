@@ -72,7 +72,11 @@ abstract class NF_Upload_External {
 					$user_value = $ninja_forms_processing->get_field_value( $field_id );
 					if( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $this->slug ){
 						if( is_array( $user_value ) ){
-							return $user_value;
+							return array(
+								'user_value' => $user_value,
+								'field_row' => $field_row,
+								'field_id' => $field_id
+							);
 						}
 					}
 				}
@@ -83,18 +87,29 @@ abstract class NF_Upload_External {
 	}
 
 	public function upload_to_external( $form_id ){
-		$user_value = $this->post_process( $form_id );
-		if ( ! $user_value ) return;
+		$data = $this->post_process( $form_id );
+		if ( ! $data['user_value'] ) {
+			return;
+		}
+		global $ninja_forms_processing, $wpdb;
 
-		foreach( $user_value as $key => $file ){
+		foreach( $data['user_value'] as $key => $file ){
 			if ( ! isset( $file['file_path'] ) ) {
 				continue;
 			}
 			$filename = $file['file_path'] . $file['file_name'];
 			if ( file_exists( $filename ) ) {
-				$this->upload_file( $filename );
+				if ( ( $path = $this->upload_file( $filename ) ) ) {
+					if( isset( $data['field_row']['data']['upload_location'] ) ) {
+						$data['user_value'][$key]['upload_location'] = $data['field_row']['data']['upload_location'];
+					}
+					$data['user_value'][$key]['external_path'] = $path;
+					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][$key] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
+				}
 			}
 		}
+
+		$ninja_forms_processing->update_field_value( $data['field_id'], $data['user_value'] );
 	}
 
 	public function remove_server_upload( $form_id ){
@@ -113,9 +128,11 @@ abstract class NF_Upload_External {
 		}
 	}
 
-	protected function upload_file( $filename ) {}
+	protected function upload_file( $filename ) {
+		return '';
+	}
 
-	public function file_url( $filename ) {
+	public function file_url( $filename, $path ) {
 		return '';
 	}
 
