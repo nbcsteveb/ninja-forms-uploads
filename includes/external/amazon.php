@@ -76,7 +76,7 @@ class External_Amazon extends NF_Upload_External {
 		}
 	}
 
-	private function prepare( $path = false) {
+	private function prepare( $path = false ) {
 		$this->load_settings();
 		if ( ! $path ) {
 			$path = apply_filters( 'ninja_forms_uploads_' . $this->slug .'_path', $this->connected_settings['file_path'] );
@@ -87,8 +87,8 @@ class External_Amazon extends NF_Upload_External {
 		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
 	}
 
-	protected function upload_file( $filename ) {
-		$s3 = $this->prepare();
+	public function upload_file( $filename, $path = false ) {
+		$s3 = $this->prepare( $path );
 		$s3->putObjectFile($filename, $this->connected_settings['bucket_name'], $this->file_path . basename( $filename ), S3::ACL_PUBLIC_READ);
 		return $this->file_path;
 	}

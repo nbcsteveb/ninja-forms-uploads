@@ -128,7 +128,7 @@ abstract class NF_Upload_External {
 		}
 	}
 
-	protected function upload_file( $filename ) {
+	public function upload_file( $filename, $path = '' ) {
 		return '';
 	}
 
