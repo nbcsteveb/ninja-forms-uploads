@@ -38,9 +38,10 @@ class External_Dropbox extends NF_Upload_External {
 	public function is_connected() {
 		$data = get_option( 'ninja_forms_settings' );
 		if ( ( isset( $data['dropbox_access_token'] ) && $data['dropbox_access_token'] != '' ) &&
-			 ( isset( $data['dropbox_access_token_secret'] ) && $data['dropbox_access_token_secret'] != '' )
+		     ( isset( $data['dropbox_access_token_secret'] ) && $data['dropbox_access_token_secret'] != '' )
 		) {
 			$dropbox = new nf_dropbox();
+
 			return $dropbox->is_authorized();
 		}
 
@@ -49,8 +50,9 @@ class External_Dropbox extends NF_Upload_External {
 
 	public function upload_file( $filename, $path = '' ) {
 		$dropbox = new nf_dropbox();
-		$path = apply_filters( 'ninja_forms_uploads_' . $this->slug .'_path', $path );
+		$path    = apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $path );
 		$dropbox->upload_file( $filename, $path );
+
 		return $path;
 	}
 
@@ -79,8 +81,8 @@ class External_Dropbox extends NF_Upload_External {
 
 	public function disconnect() {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'ninja-forms-uploads' &&
-			 isset( $_GET['tab'] ) && $_GET['tab'] == 'external_settings' &&
-			 isset( $_GET['action'] ) && $_GET['action'] == 'disconnect_' . $this->slug
+		     isset( $_GET['tab'] ) && $_GET['tab'] == 'external_settings' &&
+		     isset( $_GET['action'] ) && $_GET['action'] == 'disconnect_' . $this->slug
 		) {
 
 			$dropbox = new nf_dropbox();
@@ -90,8 +92,8 @@ class External_Dropbox extends NF_Upload_External {
 
 	public function connect_notice() {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'ninja-forms-uploads' &&
-			 isset( $_GET['tab'] ) && $_GET['tab'] == 'external_settings' &&
-			 isset( $_GET['oauth_token'] ) && isset( $_GET['uid'] )
+		     isset( $_GET['tab'] ) && $_GET['tab'] == 'external_settings' &&
+		     isset( $_GET['oauth_token'] ) && isset( $_GET['uid'] )
 		) {
 			echo '<div class="updated"><p>' . sprintf( __( 'Connected to %s', 'ninja-forms-uploads' ), $this->title ) . '</p></div>';
 		}
@@ -99,8 +101,8 @@ class External_Dropbox extends NF_Upload_External {
 
 	public function disconnect_notice() {
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'ninja-forms-uploads' &&
-			 isset( $_GET['tab'] ) && $_GET['tab'] == 'external_settings' &&
-			 isset( $_GET['action'] ) && $_GET['action'] == 'disconnect_' . $this->slug
+		     isset( $_GET['tab'] ) && $_GET['tab'] == 'external_settings' &&
+		     isset( $_GET['action'] ) && $_GET['action'] == 'disconnect_' . $this->slug
 		) {
 			echo '<div class="updated"><p>' . sprintf( __( 'Disconnected from %s', 'ninja-forms-uploads' ), $this->title ) . '</p></div>';
 		}
