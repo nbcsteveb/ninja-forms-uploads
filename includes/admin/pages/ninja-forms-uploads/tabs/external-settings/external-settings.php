@@ -33,7 +33,7 @@ function ninja_forms_external_url() {
 
 function ninja_forms_upload_file_url( $data ) {
 	$file_url = $data['file_url'];
-	if ( isset( $data['upload_location'] ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
+	if ( isset( $data['upload_location'] ) && ( isset( $data['upload_id'] ) ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
 		$external = NF_Upload_External::instance( $data['upload_location'] );
 		if ( $external && $external->is_connected() ) {
 			$file_url = admin_url( '?nf-upload='. $data['upload_id'] );
