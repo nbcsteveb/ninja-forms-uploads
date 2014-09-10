@@ -40,12 +40,12 @@ function ninja_forms_register_field_upload(){
 				'label' => __( 'Add this file to the WordPress Media Library?', 'ninja-forms-uploads' ),
 				//'class' => 'widefat',
 			),
-			array(
-				'type' => 'checkbox',
-				'name' => 'email_attachment',
-				'label' => __('Email file as an attachment to administrators.', 'ninja-forms-uploads' ),
-				//'width' => 'thin',
-			)
+			// array(
+			// 	'type' => 'checkbox',
+			// 	'name' => 'email_attachment',
+			// 	'label' => __('Email file as an attachment to administrators.', 'ninja-forms-uploads' ),
+			// 	//'width' => 'thin',
+			// )
 		),
 		'edit_function' => 'ninja_forms_field_upload_edit',
 		'display_function' => 'ninja_forms_field_upload_display', //Required - This function will be called to create output when a user accesses a form containing this element.

@@ -32,6 +32,7 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/csv-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/add-attachment-type.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/upgrade-functions.php");
 
 // External location class loader
 // require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/external/external.php' );
