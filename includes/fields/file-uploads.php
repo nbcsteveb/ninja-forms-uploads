@@ -353,6 +353,7 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 function nf_field_upload_edit_sub_value( $field_id, $user_value ) {
 	if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
 		foreach ( $user_value as $key => $file ) {
+			$file_url = ninja_forms_upload_file_url( $file );
 			?>
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][user_file_name]" value="<?php echo $file['user_file_name'];?>">
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_name]" value="<?php echo $file['file_name'];?>">
@@ -360,8 +361,9 @@ function nf_field_upload_edit_sub_value( $field_id, $user_value ) {
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][complete]" value="<?php echo $file['complete'];?>">
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]" value="<?php echo $file['file_url'];?>">
 			
-			<a href="<?php echo $file['file_url'];?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file['file_url'];?>" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]">
+			<a href="<?php echo $file_url; ?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file_url; ?>">
 			<br />
 			<?php
 		}
@@ -408,10 +410,12 @@ function nf_field_upload_sub_table_value( $field_id, $user_value, $field ) {
 		if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
 			$x = 0;
 			foreach ( $user_value as $key => $file ) {
-				if ( $x > 4 )
+				if ( $x > 4 ) {
 					break;
+				}
+				$file_url = ninja_forms_upload_file_url( $file );
 				?>
-				<a href="<?php echo $file['file_url']; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
+				<a href="<?php echo $file_url; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
 				<br />
 				<?php
 				$x++;
@@ -432,9 +436,11 @@ function nf_field_upload_fee_sub_table( $user_value, $field_id, $field_row ) {
 			$x = 0;
 			$return = '';
 			foreach ( $user_value as $key => $file ) {
-				if ( $x > 4 )
+				if ( $x > 4 ) {
 					break;
-				$return .= '<a href="' . $file['file_url'] . '" target="_blank">' . basename( $file['file_url'] ) . '</a><br />';
+				}
+				$file_url = ninja_forms_upload_file_url( $file );
+				$return .= '<a href="' . $file_url . '" target="_blank">' . basename( $file['file_url'] ) . '</a><br />';
 				$x++;
 			}
 			$user_value = $return;

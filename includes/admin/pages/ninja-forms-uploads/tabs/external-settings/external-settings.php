@@ -23,9 +23,22 @@ function ninja_forms_external_url() {
 		$upload = ninja_forms_get_uploads( $args );
 		$external = NF_Upload_External::instance( $upload['data']['upload_location'] );
 		if ( $external ) {
-			$file_url = $external->file_url( $upload['data']['file_name'] );
+			$path = ( isset( $upload['data']['external_path'] ) ) ? $upload['data']['external_path'] : '';
+			$file_url = $external->file_url( $upload['data']['file_name'], $path );
 		}
 		wp_redirect( $file_url );
 		die();
 	}
+}
+
+function ninja_forms_upload_file_url( $data ) {
+	$file_url = $data['file_url'];
+	if ( isset( $data['upload_location'] ) && ( isset( $data['upload_id'] ) ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
+		$external = NF_Upload_External::instance( $data['upload_location'] );
+		if ( $external && $external->is_connected() ) {
+			$file_url = admin_url( '?nf-upload='. $data['upload_id'] );
+		}
+	}
+
+	return $file_url;
 }

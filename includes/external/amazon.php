@@ -1,5 +1,5 @@
 <?php
-require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/lib/s3/s3.php' );
+require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/lib/s3/s3.php' );
 
 /**
  * Class External_Amazon
@@ -18,45 +18,45 @@ class External_Amazon extends NF_Upload_External {
 
 	function __construct() {
 		$this->set_settings();
-		parent::__construct( $this->title , $this->slug, $this->settings );
+		parent::__construct( $this->title, $this->slug, $this->settings );
 	}
 
 	private function set_settings() {
 		$this->settings = array(
 			array(
-				'name' => 'amazon_s3_access_key',
-				'type' => 'text',
+				'name'  => 'amazon_s3_access_key',
+				'type'  => 'text',
 				'label' => __( 'Access Key', 'ninja-forms-uploads' ),
-				'desc' => '',
+				'desc'  => '',
 			),
 			array(
-				'name' => 'amazon_s3_secret_key',
-				'type' => 'text',
+				'name'  => 'amazon_s3_secret_key',
+				'type'  => 'text',
 				'label' => __( 'Secret Key', 'ninja-forms-uploads' ),
-				'desc' => '',
+				'desc'  => '',
 			),
 			array(
-				'name' => 'amazon_s3_bucket_name',
-				'type' => 'text',
+				'name'  => 'amazon_s3_bucket_name',
+				'type'  => 'text',
 				'label' => __( 'Bucket Name', 'ninja-forms-uploads' ),
-				'desc' => '',
+				'desc'  => '',
 			),
 			array(
-				'name' => 'amazon_s3_file_path',
-				'type' => 'text',
-				'label' => __( 'File Path', 'ninja-forms-uploads' ),
-				'desc' => __( 'The default file path in the bucket where the file will be uploaded to', 'ninja-forms-uploads' ),
-				'default_value'	=> 'ninja-forms/'
+				'name'          => 'amazon_s3_file_path',
+				'type'          => 'text',
+				'label'         => __( 'File Path', 'ninja-forms-uploads' ),
+				'desc'          => __( 'The default file path in the bucket where the file will be uploaded to', 'ninja-forms-uploads' ),
+				'default_value' => 'ninja-forms/'
 			),
 		);
 	}
 
-	public function is_connected(){
+	public function is_connected() {
 		$data = get_option( 'ninja_forms_settings' );
-		if ( (isset($data['amazon_s3_access_key']) && $data['amazon_s3_access_key'] != '') &&
-				 (isset($data['amazon_s3_secret_key']) && $data['amazon_s3_secret_key'] != '') &&
-			 		(isset($data['amazon_s3_bucket_name']) && $data['amazon_s3_bucket_name'] != '') &&
-			 			(isset($data['amazon_s3_file_path']) && $data['amazon_s3_file_path'] != '')
+		if ( ( isset( $data['amazon_s3_access_key'] ) && $data['amazon_s3_access_key'] != '' ) &&
+		     ( isset( $data['amazon_s3_secret_key'] ) && $data['amazon_s3_secret_key'] != '' ) &&
+		     ( isset( $data['amazon_s3_bucket_name'] ) && $data['amazon_s3_bucket_name'] != '' ) &&
+		     ( isset( $data['amazon_s3_file_path'] ) && $data['amazon_s3_file_path'] != '' )
 		) {
 			return true;
 		}
@@ -66,35 +66,45 @@ class External_Amazon extends NF_Upload_External {
 
 	private function load_settings() {
 		if ( ! $this->connected_settings ) {
-			$data = get_option( 'ninja_forms_settings' );
-			$settings = array();
-			$settings['access_key'] = $data['amazon_s3_access_key'];
-			$settings['secret_key'] = $data['amazon_s3_secret_key'];
-			$settings['bucket_name'] = $data['amazon_s3_bucket_name'];
-			$settings['file_path'] = $data['amazon_s3_file_path'];
+			$data                     = get_option( 'ninja_forms_settings' );
+			$settings                 = array();
+			$settings['access_key']   = $data['amazon_s3_access_key'];
+			$settings['secret_key']   = $data['amazon_s3_secret_key'];
+			$settings['bucket_name']  = $data['amazon_s3_bucket_name'];
+			$settings['file_path']    = $data['amazon_s3_file_path'];
 			$this->connected_settings = $settings;
 		}
 	}
 
-	private function prepare() {
+	private function prepare( $path = false ) {
 		$this->load_settings();
-		$this->file_path = $this->sanitize_path( $this->connected_settings['file_path'] );
+		if ( ! $path ) {
+			$path = apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $this->connected_settings['file_path'] );
+		} else if ( $path == '' ) {
+			$path = $this->connected_settings['file_path'];
+		}
+		$this->file_path = $this->sanitize_path( $path );
+
 		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
 	}
 
-	protected function upload_file( $filename ) {
-		$s3 = $this->prepare();
-		$s3->putObjectFile($filename, $this->connected_settings['bucket_name'], $this->file_path . basename( $filename ), S3::ACL_PUBLIC_READ);
+	public function upload_file( $filename, $path = false ) {
+		$s3 = $this->prepare( $path );
+		$s3->putObjectFile( $filename, $this->connected_settings['bucket_name'], $this->file_path . basename( $filename ), S3::ACL_PUBLIC_READ );
+
+		return $this->file_path;
 	}
 
 	private function sanitize_path( $path ) {
 		$path = ltrim( $path, '/' );
 		$path = rtrim( $path, '/' );
-		return $path .'/';
+
+		return $path . '/';
 	}
 
-	public function file_url( $filename ) {
-		$s3 = $this->prepare();
+	public function file_url( $filename, $path = '' ) {
+		$s3 = $this->prepare( $path );
+
 		return $s3->getAuthenticatedURL( $this->connected_settings['bucket_name'], $this->file_path . $filename, 3600 );
 	}
 }
