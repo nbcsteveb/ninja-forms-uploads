@@ -234,7 +234,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$ext = array_pop($user_file_array);
 		if(isset($upload_types) AND !empty($upload_types)){	
 			if(strpos($upload_types, $ext) === false){
-				$ninja_forms_processing->add_error('upload_'.$field_id, apply_filters( 'nf_uploads_unallowed_file_type', __( 'File type is not allowed: '.$user_file_name, 'ninja-forms-uploads' ) ), $field_id);
+				$ninja_forms_processing->add_error('upload_'.$field_id, apply_filters( 'nf_uploads_unallowed_file_type', __( 'File type is not allowed: ', 'ninja-forms-uploads' ) ) . $user_file_name, $field_id);
 			}
 		}
 
@@ -311,6 +311,9 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$file_url = $base_upload_url.$custom_upload_url;
 		$file_url = apply_filters( 'ninja_forms_uploads_url', $file_url, $field_id );
 		$file_url = trailingslashit( $file_url );
+
+		$upload_path = apply_filters( 'ninja_forms_uploads_dir', $upload_path, $field_id );
+		$upload_path = trailingslashit( $upload_path );
 
 		$file_dir = $upload_path.'/'.$file_name;
 
