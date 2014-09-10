@@ -31,16 +31,17 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/csv-filter.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/add-attachment-type.php");
 
 // External location class loader
-require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/external/external.php' );
-$external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
-if ( $external_dir ) {
-	foreach ( $external_dir as $dir ) {
-		if ( basename( $dir, '.php' ) == 'external' ) continue;
-		$external = NF_Upload_External::instance( $dir, true );
-	}
-}
+// require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/external/external.php' );
+// $external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
+// if ( $external_dir ) {
+// 	foreach ( $external_dir as $dir ) {
+// 		if ( basename( $dir, '.php' ) == 'external' ) continue;
+// 		$external = NF_Upload_External::instance( $dir, true );
+// 	}
+// }
 
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/pre-process.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/process.php");
