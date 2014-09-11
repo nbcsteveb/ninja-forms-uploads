@@ -22,51 +22,28 @@ function ninja_forms_uploads_shortcode( $value, $atts ){
 		if( is_array( $value ) AND !empty( $value ) ){
 			$x = 0;
 			foreach( $value as $val ){
-				if ( is_array( $val ) ) {
-					foreach ( $val as $v ) {
-						if ( ! isset ( $v['file_url'] ) )
-							continue;
-						$url = $v['file_url'];
-						$filename = $v['user_file_name'];
-						switch( $method ){
-							case 'embed':
-								$tmp_value .= "<img src='".$url."'>";
-								break;
-							case 'link':
-								if( $x > 0 ){
-									$tmp_value .= ", ";
-								}
-								$tmp_value .= "<a href='".$url."'>".$filename."</a>";
-								break;
-							case 'url':
-								$tmp_value .= $url;
-								break;
-						}
-						$x++;
-					}
-				} else {
-					if ( ! isset ( $val['file_url'] ) )
-						continue;
-					$url = $val['file_url'];
-					$filename = $val['user_file_name'];
-					switch( $method ){
-						case 'embed':
-							$tmp_value .= "<img src='".$url."'>";
-							break;
-						case 'link':
-							if( $x > 0 ){
-								$tmp_value .= ", ";
-							}
-							$tmp_value .= "<a href='".$url."'>".$filename."</a>";
-							break;
-						case 'url':
-							$tmp_value .= $url;
-							break;
-					}
-					$x++;
-				}
 
-				
+				if ( ! isset ( $val['file_url'] ) )
+					continue;
+
+				$url = $val['file_url'];
+				$filename = $val['user_file_name'];
+				switch( $method ){
+					case 'embed':
+						$tmp_value .= "<img src='".$url."'>";
+						break;
+					case 'link':
+						if( $x > 0 ){
+							$tmp_value .= ", ";
+						}
+						$tmp_value .= "<a href='".$url."'>".$filename."</a>";
+
+						break;
+					case 'url':
+						$tmp_value .= $url;
+						break;
+				}
+				$x++;				
 			}
 		}
 	}else{
