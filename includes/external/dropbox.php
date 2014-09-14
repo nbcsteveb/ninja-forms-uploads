@@ -40,9 +40,13 @@ class External_Dropbox extends NF_Upload_External {
 		if ( ( isset( $data['dropbox_access_token'] ) && $data['dropbox_access_token'] != '' ) &&
 		     ( isset( $data['dropbox_access_token_secret'] ) && $data['dropbox_access_token_secret'] != '' )
 		) {
-			$dropbox = new nf_dropbox();
+			if ( false === ( $authorised = get_transient( 'nf_fu_dropbox_authorised' ) ) ) {
+				$dropbox = new nf_dropbox();
+				$authorised = $dropbox->is_authorized();
 
-			return $dropbox->is_authorized();
+				set_transient( 'nf_fu_dropbox_authorised', $authorised, 60 * 60 * 5 );
+			}
+			return $authorised;
 		}
 
 		return false;
