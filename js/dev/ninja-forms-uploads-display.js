@@ -29,7 +29,9 @@ jQuery(document).ready(function(jQuery) {
 		var hide_complete = form_settings.hide_complete;
 		var clear_complete = form_settings.clear_complete;
 		if ( success != false && clear_complete == 1 ) {
-			jQuery('input:file.multi').MultiFile('reset');
+			if( jQuery.isFunction( jQuery.fn.MultiFile ) ) {
+				jQuery('input:file.multi').MultiFile('reset');
+			}
 		}
 	});
 

@@ -21,10 +21,13 @@ function ninja_forms_uploads_shortcode( $value, $atts ){
 
 		if( is_array( $value ) AND !empty( $value ) ){
 			$x = 0;
-			foreach( $value as $v ){
-				
-				$url = $v['file_url'];
-				$filename = $v['user_file_name'];
+			foreach( $value as $val ){
+
+				if ( ! isset ( $val['file_url'] ) )
+					continue;
+
+				$url = $val['file_url'];
+				$filename = $val['user_file_name'];
 				switch( $method ){
 					case 'embed':
 						$tmp_value .= "<img src='".$url."'>";
@@ -34,12 +37,13 @@ function ninja_forms_uploads_shortcode( $value, $atts ){
 							$tmp_value .= ", ";
 						}
 						$tmp_value .= "<a href='".$url."'>".$filename."</a>";
+
 						break;
 					case 'url':
 						$tmp_value .= $url;
 						break;
 				}
-				$x++;
+				$x++;				
 			}
 		}
 	}else{

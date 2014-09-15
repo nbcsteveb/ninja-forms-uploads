@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - File Uploads
 Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 1.3.7
+Version: 1.3.8
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 */
@@ -12,7 +12,7 @@ global $wpdb;
 define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
-define("NINJA_FORMS_UPLOADS_VERSION", "1.3.7");
+define("NINJA_FORMS_UPLOADS_VERSION", "1.3.8");
 
 define("NINJA_FORMS_UPLOADS_DEFAULT_LOCATION", 'server' );
 
@@ -31,13 +31,18 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/pages/ninja-forms-uploads/
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/help.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/csv-filter.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/add-attachment-type.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/upgrade-functions.php");
+
 
 // External location class loader
-require_once( NINJA_FORMS_UPLOADS_DIR. '/includes/external/external.php' );
+require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/external/external.php' );
 $external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
 if ( $external_dir ) {
 	foreach ( $external_dir as $dir ) {
-		if ( basename( $dir, '.php' ) == 'external' ) continue;
+		if ( basename( $dir, '.php' ) == 'external' ) {
+			continue;
+		}
 		$external = NF_Upload_External::instance( $dir, true );
 	}
 }
@@ -48,6 +53,7 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/attach-image.
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/shortcode-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/post-meta-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/email-value-filter.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/deprecated.php");
 
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/mp-confirm-filter.php");

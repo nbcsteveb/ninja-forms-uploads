@@ -177,6 +177,7 @@ function ninja_forms_tab_browse_uploads(){
 					<th><?php _e('Date', 'ninja-forms-uploads');?></th>
 					<th><?php _e('Form Name', 'ninja-forms-uploads');?></th>
 					<th><?php _e('User Name', 'ninja-forms-uploads');?></th>
+					<th><?php _e('File Location', 'ninja-forms-uploads');?></th>
 				</tr>
 			</thead>
 			<tbody id="ninja_forms_uploads_tbody">
@@ -205,13 +206,7 @@ function ninja_forms_tab_browse_uploads(){
 				}
 
 				if ( isset( $data['file_url'] ) ) {
-					$file_url = $data['file_url'];
-					if ( isset( $data['upload_location'] ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
-						$external = NF_Upload_External::instance( $data['upload_location'] );
-						if ( $external && $external->is_connected() ) {
-							$file_url = admin_url( '?nf-upload='. $upload_id );
-						}
-					}
+					$file_url = ninja_forms_upload_file_url( $data );
 				} else {
 					$file_url = '';
 				}				
@@ -220,6 +215,12 @@ function ninja_forms_tab_browse_uploads(){
 					$file_name = $data['file_name'];
 				} else {
 					$file_name = '';
+				}
+
+				if ( isset( $data['upload_location'] ) ) {
+					$upload_location = $data['upload_location'];
+				} else {
+					$upload_location = 'Server';
 				}
 
 				?>
@@ -246,6 +247,9 @@ function ninja_forms_tab_browse_uploads(){
 					<td>
 						<?php echo $user_nicename;?>
 					</td>
+					<td>
+						<?php echo ucwords( $upload_location );?>
+					</td>
 				</tr>
 			<?php
 			}
@@ -269,6 +273,7 @@ function ninja_forms_tab_browse_uploads(){
 					<th><?php _e('Date', 'ninja-forms-uploads');?></th>
 					<th><?php _e('Form Name', 'ninja-forms-uploads');?></th>
 					<th><?php _e('User Name', 'ninja-forms-uploads');?></th>
+					<th><?php _e('File Location', 'ninja-forms-uploads');?></th>
 				</tr>
 			</tfoot>
 		</table>

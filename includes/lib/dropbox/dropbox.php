@@ -155,13 +155,12 @@ class nf_dropbox
         update_option( 'ninja_forms_settings', $this->settings );
     }
 
-    public function upload_file($file)
+    public function upload_file($file, $path = '')
     {
         $i = 0;
         while ($i++ < self::RETRY_COUNT) {
             try {
-                return $this->dropbox->putFile($file, $this->remove_secret($file) );
-                return $this->dropbox->putFile($file, $this->remove_secret($file) );
+                return $this->dropbox->putFile($file, $this->remove_secret( $file ), $path );
             } catch (Exception $e) {}
         }
         throw $e;
