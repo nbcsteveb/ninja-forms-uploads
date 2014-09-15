@@ -34,6 +34,7 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/csv-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/add-attachment-type.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/upgrade-functions.php");
 
+
 // External location class loader
 require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/external/external.php' );
 $external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
@@ -52,6 +53,7 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/attach-image.
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/shortcode-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/post-meta-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/processing/email-value-filter.php");
+require_once(NINJA_FORMS_UPLOADS_DIR."/includes/deprecated.php");
 
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/scripts.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/display/mp-confirm-filter.php");
