@@ -115,12 +115,12 @@ abstract class NF_Upload_External {
 	}
 
 	public function remove_server_upload( $form_id ) {
-		$user_value = $this->post_process( $form_id );
-		if ( ! $user_value ) {
+		$data = $this->post_process( $form_id );
+		if ( ! $data['user_value'] ) {
 			return;
 		}
 
-		foreach ( $user_value as $key => $file ) {
+		foreach ( $data['user_value'] as $key => $file ) {
 			if ( ! isset( $file['file_path'] ) ) {
 				continue;
 			}
