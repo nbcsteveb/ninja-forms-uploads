@@ -80,6 +80,8 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 							$sep = '/';
 						}else if( strpos( $custom_upload_dir, '\\' ) !== false ){
 							$sep = '\\';
+						} else {
+							$sep = '/';
 						}
 						
 						$custom_upload_dir = untrailingslashit( $custom_upload_dir );

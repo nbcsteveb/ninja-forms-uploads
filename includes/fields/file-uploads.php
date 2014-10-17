@@ -414,10 +414,13 @@ function nf_field_upload_sub_table_value( $field_id, $user_value, $field ) {
 					break;
 				}
 				$file_url = ninja_forms_upload_file_url( $file );
-				?>
-				<a href="<?php echo $file_url; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
-				<br />
-				<?php
+				if ( isset ( $file['file_url'] ) ) {
+					?>
+					<a href="<?php echo $file_url; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
+					<br />
+					<?php					
+				}
+
 				$x++;
 			}
 		}
