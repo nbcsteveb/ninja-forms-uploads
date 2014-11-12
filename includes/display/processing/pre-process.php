@@ -47,10 +47,10 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		$custom_upload_dir = '';
 	}	
 
-	if(isset($plugin_settings['max_file_size'])){
-		$max_file_size = $plugin_settings['max_file_size'];
+	if(isset($plugin_settings['max_filesize'])){
+		$max_filesize = $plugin_settings['max_filesize'];
 	}else{
-		$max_file_size = 2;
+		$max_filesize = 2;
 	}
 
 	if( isset( $_FILES['ninja_forms_field_'.$field_id] ) ){
@@ -109,7 +109,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		foreach( $files as $key => $f ){
 			if( isset( $f['error'] ) AND !empty($f['error'] ) ){
 				if( $f['error'] == 1 or $f['error'] == 2 ){
-					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_file_size.'mb.', 'ninja-forms-uploads'), $field_id);
+					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_filesize.'mb.', 'ninja-forms-uploads'), $field_id);
 				}
 				$file_error = true;
 			}

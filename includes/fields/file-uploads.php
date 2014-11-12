@@ -152,8 +152,8 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 	global $ninja_forms_loading, $ninja_forms_processing;
 
 	$plugin_settings = get_option('ninja_forms_settings');
-	if(isset($plugin_settings['max_file_size'])){
-		$max_filesize = $plugin_settings['max_file_size'] * 1048576;
+	if(isset($plugin_settings['max_filesize'])){
+		$max_filesize = $plugin_settings['max_filesize'] * 1048576;
 	}else{
 		$max_filesize = 2097152;
 	}

@@ -44,8 +44,8 @@ function ninja_forms_uploads_activation(){
 		$opt['upload_error'] = __( 'There was an error uploading your file.', 'ninja-forms-uploads' );
 	}
 
-	if( !isset( $opt['max_file_size'] ) ){
-		$opt['max_file_size'] = 2;
+	if( !isset( $opt['max_filesize'] ) ){
+		$opt['max_filesize'] = 2;
 	}
 
 	$opt['uploads_version'] = NINJA_FORMS_UPLOADS_VERSION;
