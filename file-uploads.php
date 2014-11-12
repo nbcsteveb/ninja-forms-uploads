@@ -45,16 +45,17 @@ require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/csv-filter.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/add-attachment-type.php");
 require_once(NINJA_FORMS_UPLOADS_DIR."/includes/admin/upgrade-functions.php");
 
-
-// External location class loader
-require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/external/external.php' );
-$external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
-if ( $external_dir ) {
-	foreach ( $external_dir as $dir ) {
-		if ( basename( $dir, '.php' ) == 'external' ) {
-			continue;
+function nf_fu_load_externals() {
+	// External location class loader
+	require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/external/external.php' );
+	$external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
+	if ( $external_dir ) {
+		foreach ( $external_dir as $dir ) {
+			if ( basename( $dir, '.php' ) == 'external' ) {
+				continue;
+			}
+			$external = NF_Upload_External::instance( $dir, true );
 		}
-		$external = NF_Upload_External::instance( $dir, true );
 	}
 }
 
