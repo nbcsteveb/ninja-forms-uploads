@@ -67,22 +67,21 @@ abstract class NF_Upload_External {
 			return false;
 		}
 		global $ninja_forms_processing;
-		if ( $ninja_forms_processing->get_form_setting( 'create_post' ) != 1 ) {
-			if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
-				foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
-					$field_row  = $ninja_forms_processing->get_field_settings( $field_id );
-					$user_value = $ninja_forms_processing->get_field_value( $field_id );
-					if ( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $this->slug ) {
-						if ( is_array( $user_value ) ) {
-							return array(
-								'user_value' => $user_value,
-								'field_row'  => $field_row,
-								'field_id'   => $field_id
-							);
-						}
+		if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
+			foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
+				$field_row  = $ninja_forms_processing->get_field_settings( $field_id );
+				$user_value = $ninja_forms_processing->get_field_value( $field_id );
+				if ( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $this->slug ) {
+					if ( is_array( $user_value ) ) {
+						return array(
+							'user_value' => $user_value,
+							'field_row'  => $field_row,
+							'field_id'   => $field_id
+						);
 					}
 				}
 			}
+
 		}
 
 		return false;
