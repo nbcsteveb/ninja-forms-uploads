@@ -75,9 +75,11 @@ function ninja_forms_attach_files_to_post( $post_id ){
 						update_post_meta( $attach_id, 'ninja_forms_file_key', $key );
 						update_post_meta( $attach_id, 'ninja_forms_upload_id', $file['upload_id'] );
 						$file['attachment_id'] = $attach_id;
-						$ninja_forms_processing->update_field_value( $field_id, array( $key => $file ) );
+						$user_value[ $key ] = $file;
+						
 					}
 				}
+				$ninja_forms_processing->update_field_value( $field_id, $user_value );
 			} else {
 
 				$args = array(
@@ -136,7 +138,7 @@ function ninja_forms_check_add_to_media_library( $form_id ){
 							$attach_array = ninja_forms_generate_metadata( '', $filename );
 							$user_value[$key]['attachment_id'] = $attach_array['attach_id'];
 						}
-						$ninja_forms_processing->update_field_value( $field_id, $user_value );
+						// $ninja_forms_processing->update_field_value( $field_id, $user_value );
 					}
 				}
 			}
