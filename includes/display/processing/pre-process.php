@@ -22,7 +22,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 	}else{
 		$upload_types = '';
 	}
-	
+
 	if(isset($field_data['upload_rename'])){
 		$upload_rename = $field_data['upload_rename'];
 	}else{
@@ -34,7 +34,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 	}else{
 		$email_attachment = '';
 	}
-	
+
 	if(isset($plugin_settings['base_upload_dir'])){
 		$base_upload_dir = $plugin_settings['base_upload_dir'];
 	}else{
@@ -45,28 +45,28 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		$custom_upload_dir = $plugin_settings['custom_upload_dir'];
 	}else{
 		$custom_upload_dir = '';
-	}	
+	}
 
-	if(isset($plugin_settings['max_filesize'])){
-		$max_filesize = $plugin_settings['max_filesize'];
+	if(isset($plugin_settings['max_file_size'])){
+		$max_file_size = $plugin_settings['max_file_size'];
 	}else{
-		$max_filesize = 2;
+		$max_file_size = 2;
 	}
 
 	if( isset( $_FILES['ninja_forms_field_'.$field_id] ) ){
 		$files = array();
 		$fdata = $_FILES['ninja_forms_field_'.$field_id];
-		
+
 		if( is_array( $fdata['name'] ) ){
 			foreach( $fdata['name'] as $key => $val ){
 				if( $key == 'new' ){
-					for ($x=0; $x < count( $fdata['name']['new'] ); $x++) { 
+					for ($x=0; $x < count( $fdata['name']['new'] ); $x++) {
 						if( $fdata['error']['new'][$x] != 4 ){
 							$files[$x] = array(
 								'name'    => $fdata['name']['new'][$x],
 							    'type'  => $fdata['type']['new'][$x],
 							    'tmp_name'=> $fdata['tmp_name']['new'][$x],
-							    'error' => $fdata['error']['new'][$x], 
+							    'error' => $fdata['error']['new'][$x],
 							    'size'  => $fdata['size']['new'][$x],
 							);
 						}
@@ -76,10 +76,10 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 					    'name'    => $fdata['name'][$key],
 					    'type'  => $fdata['type'][$key],
 					    'tmp_name'=> $fdata['tmp_name'][$key],
-					    'error' => $fdata['error'][$key], 
+					    'error' => $fdata['error'][$key],
 					    'size'  => $fdata['size'][$key],
 					    'key' => $key
-				    );					
+				    );
 				}
 		    }
 		    $multi = true;
@@ -93,7 +93,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 
 		// Loop through our submitted files array and remove any that are "empty" but have _upload_ fields submitted.
 		$tmp_array = array();
-		
+
 		if( isset( $_POST['_upload_'.$field_id] ) AND is_array( $_POST['_upload_'.$field_id] ) ){
 			foreach( $_POST['_upload_'.$field_id] as $key => $val ){
 				if( ( isset( $files[$key] ) AND $files[$key]['name'] == '' ) OR !isset( $files[$key] ) ){
@@ -109,7 +109,7 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		foreach( $files as $key => $f ){
 			if( isset( $f['error'] ) AND !empty($f['error'] ) ){
 				if( $f['error'] == 1 or $f['error'] == 2 ){
-					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_filesize.'mb.', 'ninja-forms-uploads'), $field_id);
+					$ninja_forms_processing->add_error('upload_'.$field_id, __('File exceeds maximum file size. File must be under: '.$max_file_size.'mb.', 'ninja-forms-uploads'), $field_id);
 				}
 				$file_error = true;
 			}
@@ -170,7 +170,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 	}else{
 		$email_attachment = '';
 	}
-	
+
 	if(isset($plugin_settings['base_upload_dir'])){
 		$base_upload_dir = $plugin_settings['base_upload_dir'];
 	}
@@ -229,10 +229,10 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$user_file_name = preg_replace("/[\/\&%#\$]/", "", $user_file_name);
 		$user_file_name = preg_replace("/[\"\']/", "", $user_file_name);
 		$user_file_name = preg_replace("/\s+/", "", $user_file_name);
-		
+
 		$user_file_array = explode(".", $user_file_name);
 		$ext = array_pop($user_file_array);
-		if(isset($upload_types) AND !empty($upload_types)){	
+		if(isset($upload_types) AND !empty($upload_types)){
 			if(strpos($upload_types, $ext) === false){
 				$ninja_forms_processing->add_error('upload_'.$field_id, apply_filters( 'nf_uploads_unallowed_file_type', __( 'File type is not allowed: ', 'ninja-forms-uploads' ) ) . $user_file_name, $field_id);
 			}
@@ -242,7 +242,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 		$form_title = preg_replace("/[\/\&%#\$]/", "", $form_title);
 		$form_title = preg_replace("/[\"\']/", "", $form_title);
 		$form_title = preg_replace('/\s+/', '', $form_title);
-		
+
 		if(is_user_logged_in()){
 			$current_user = wp_get_current_user();
 			$user_name = $current_user->user_nicename;
@@ -282,6 +282,7 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$file_name = str_replace("%lastname%", $last_name, $file_name);
 			$file_name = str_replace("%random%", ninja_forms_random_string(5), $file_name );
 			$file_name .= '.'.$ext;
+			$file_name = apply_filters( 'nf_fu_filename' , $filename );
 
 		}else{
 			$user_file_name = stripslashes( trim( $user_file_name ) );
@@ -390,18 +391,18 @@ function ninja_forms_field_uploads_create_key( $update_array ){
 
 function ninja_forms_check_file_exists( $upload_path, $file_name, $base_name = '', $x = 1 ){
 	$file_dir = $upload_path.'/'.$file_name;
-	$tmp_name = $file_name;	
+	$tmp_name = $file_name;
 	if( strpos( $tmp_name, '.' ) !== false ){
 		$tmp_name = explode( '.', $tmp_name );
 		if ( $base_name == '' ) {
 			$base_name = $tmp_name[0];
 		}
-		$ext = $tmp_name[1];							
+		$ext = $tmp_name[1];
 	}else{
 		$base_name = $tmp_name;
 		$ext = '';
-	}				
-		
+	}
+
 	if ( file_exists ( $file_dir ) ) {
 		while( file_exists( $file_dir ) ){
 			if( $x < 9 ){
@@ -423,7 +424,7 @@ function ninja_forms_check_file_exists( $upload_path, $file_name, $base_name = '
 		}
 		$file_name = $tmp_name;
 	}
-	
+
 	return array( 'file_name' => $file_name, 'base_name' => $base_name );
 }
 
