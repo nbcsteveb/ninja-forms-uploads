@@ -3,7 +3,7 @@
 add_action('admin_init', 'ninja_forms_register_tab_browse_uploads');
 function ninja_forms_register_tab_browse_uploads(){
 	$args = array(
-		'name' => 'Browse Uploads',
+		'name' => __( 'Browse Uploads', 'ninja-forms-uploads' ),
 		'page' => 'ninja-forms-uploads',
 		'display_function' => 'ninja_forms_tab_browse_uploads',
 		'save_function' => 'ninja_forms_save_browse_uploads',
@@ -118,7 +118,7 @@ function ninja_forms_tab_browse_uploads(){
 					<option value=""><?php _e('Bulk Actions', 'ninja-forms-uploads');?></option>
 					<option value="delete"><?php _e('Delete', 'ninja-forms-uploads');?></option>
 				</select>
-				<input type="submit" name="submit" value="Apply" class="button-secondary">
+				<input type="submit" name="submit" value="<?php _e( 'Apply', 'ninja-forms-uploads' ); ?>" class="button-secondary">
 			</div>
 			<div class="alignleft actions">
 				<select id="" name="limit">
@@ -127,7 +127,7 @@ function ninja_forms_tab_browse_uploads(){
 					<option value="100" <?php selected($saved_limit, 100);?>>100</option>
 				</select>
 				<?php _e('Uploads Per Page', 'ninja-forms-uploads');?>
-				<input type="submit" name="submit" value="Go" class="button-secondary">
+				<input type="submit" name="submit" value="<?php _e( 'Go', 'ninja-forms-uploads' ); ?>" class="button-secondary">
 			</div>
 			<div id="" class="alignright navtable-pages">
 				<?php
@@ -156,9 +156,9 @@ function ninja_forms_tab_browse_uploads(){
 
 				?>
 				<span class="pagination-links">
-					<a class="first-page disabled" title="Go to the first page" href="<?php echo $first_page;?>">«</a>
-					<a class="prev-page disabled" title="Go to the previous page" href="<?php echo $prev_page;?>">‹</a>
-					<span class="paging-input"><input class="current-page" title="Current page" type="text" name="paged" value="<?php echo $current_page;?>" size="2"> of <span class="total-pages"><?php echo $page_count;?></span></span>
+					<a class="first-page disabled" title="<?php _e( 'Go to the first page', 'ninja-forms-uploads' ); ?>" href="<?php echo $first_page;?>">«</a>
+					<a class="prev-page disabled" title="<?php _e( 'Go to the previous page', 'ninja-forms-uploads' ); ?>" href="<?php echo $prev_page;?>">‹</a>
+					<span class="paging-input"><input class="current-page" title="<?php _e( 'Current page', 'ninja-forms-uploads' ); ?>" type="text" name="paged" value="<?php echo $current_page;?>" size="2"> of <span class="total-pages"><?php echo $page_count;?></span></span>
 					<a class="next-page" title="Go to the next page" href="<?php echo $next_page;?>">›</a>
 					<a class="last-page" title="Go to the last page" href="<?php echo $last_page;?>">»</a>
 				</span>
@@ -231,8 +231,8 @@ function ninja_forms_tab_browse_uploads(){
 					<td>
 						<a href="<?php echo $file_url;?>" target="_blank"><?php echo $file_name;?></a>
 						<div class="row-actions">
-							<span class="view"><a class="view" title="View this file" href="<?php echo $file_url;?>" target="_blank" id="">View</a> | </span>
-							<span class="trash"><a class="trash ninja-forms-delete-upload" title="Delete this file" href="#" id="delete_upload_<?php echo $upload_id;?>">Delete</a></span>
+							<span class="view"><a class="view" title="<?php _e( 'View this file', 'ninja-forms-uploads' ); ?>" href="<?php echo $file_url;?>" target="_blank" id=""><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> | </span>
+							<span class="trash"><a class="trash ninja-forms-delete-upload" title="<?php _e( 'Delete this file', 'ninja-forms-uploads' ); ?>" href="#" id="delete_upload_<?php echo $upload_id;?>"><?php _e( 'Delete', 'ninja-forms-uploads' ); ?></a></span>
 						</div>
 					</td>
 					<td>
@@ -257,7 +257,7 @@ function ninja_forms_tab_browse_uploads(){
 		?>
 		<tr id="ninja_forms_files_empty" style="">
 			<td colspan="5">
-				<?php _e("No files found", "ninja-forms");?>
+				<?php _e( 'No files found', 'ninja-forms-uploads');?>
 			</td>
 		</tr>
 		<?php

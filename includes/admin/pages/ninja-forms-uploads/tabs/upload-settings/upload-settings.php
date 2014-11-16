@@ -42,7 +42,7 @@ function ninja_forms_register_upload_settings_metabox(){
 				'name' => 'max_filesize',
 				'type' => 'text',
 				'label' => __( 'Max File Size (in MB)', 'ninja-forms-uploads' ),
-				'desc' => __( 'Your server\'s maximum file size is set to ' . $max_filesize . '. This setting cannot be increased beyond this value. To increase your server file size limit, please contact your host.', 'ninja-forms-uploads' ),
+				'desc' => sprintf( __( 'Your server\'s maximum file size is set to %s. This setting cannot be increased beyond this value. To increase your server file size limit, please contact your host.', 'ninja-forms-uploads' ), $max_filesize ),
 			),
 			array(
 				'name' => 'upload_error',

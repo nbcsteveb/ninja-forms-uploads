@@ -50,7 +50,7 @@ abstract class NF_Upload_External {
 			'page'     => 'ninja-forms-uploads',
 			'tab'      => 'external_settings',
 			'slug'     => $this->slug . '_settings',
-			'title'    => __( $this->title . ' Settings', 'ninja-forms-uploads' ),
+			'title'    => sprintf( __( '%s Settings', 'ninja-forms-uploads' ), $this->title ),
 			'settings' => $this->settings
 		);
 		if ( function_exists( 'ninja_forms_register_tab_metabox' ) ) {

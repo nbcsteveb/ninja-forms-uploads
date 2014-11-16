@@ -10,7 +10,7 @@ function ninja_forms_register_field_upload(){
 			array(
 				'type' => 'text', //What type of input should this be?
 				'name' => 'upload_types', //What should it be named. This should always be a programmatic name, not a label.
-				'label' => '<strong>' . __('Allowed File Types', 'ninja-forms-uploads') . '</strong><br/>' . __('Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. .jpg, .gif, .png, .pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.'), //Label to be shown before the option.
+				'label' => '<strong>' . __('Allowed File Types', 'ninja-forms-uploads') . '</strong><br/>' . __('Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. .jpg, .gif, .png, .pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.', 'ninja-forms-uploads'), //Label to be shown before the option.
 				'class' => 'widefat', //Additional classes to be added to the input element.
 			),
 			array(
@@ -38,18 +38,11 @@ function ninja_forms_register_field_upload(){
 				'type' => 'checkbox',
 				'name' => 'media_library',
 				'label' => __( 'Add this file to the WordPress Media Library?', 'ninja-forms-uploads' ),
-				//'class' => 'widefat',
 			),
-			// array(
-			// 	'type' => 'checkbox',
-			// 	'name' => 'email_attachment',
-			// 	'label' => __('Email file as an attachment to administrators.', 'ninja-forms-uploads' ),
-			// 	//'width' => 'thin',
-			// )
+
 		),
 		'edit_function' => 'ninja_forms_field_upload_edit',
 		'display_function' => 'ninja_forms_field_upload_display', //Required - This function will be called to create output when a user accesses a form containing this element.
-		//'sub_edit_function' => 'ninja_forms_field_upload_sub_edit',	//Optional - This will be called when an admin or user edits the a user submission.
 		'group' => 'standard_fields', //Optional
 		'edit_label' => true, //True or False
 		'edit_label_pos' => true,
@@ -80,7 +73,7 @@ function ninja_forms_register_field_upload(){
 			$option = array(
 				'type' => 'checkbox',
 				'name' => 'featured_image',
-				'label' => __('Set as featured image for the Post.'),
+				'label' => __( 'Set as featured image for the Post.', 'ninja-forms-uploads' ),
 				'class' => 'ninja-forms-upload-multi',
 				'width' => 'wide',
 			);
@@ -199,13 +192,6 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 			if ( isset ( $val['file_name'] ) and !empty ( $val['file_name'] ) ) {
 				$tmp = true;
 			}
-			/*
-				echo $key;
-				echo " - ";
-				var_dump( $val );
-				echo "<br><br>";
-			*/
-
 		}
 		if ( !$tmp ) {
 			$prefill = false;
