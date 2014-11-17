@@ -14,8 +14,24 @@ function ninja_forms_register_tab_upload_settings(){
 	}
 }
 
+function nf_return_mb($val) {
+    $val = trim($val);
+    $last = strtolower($val[strlen($val)-1]);
+    switch($last) {
+        // The 'G' modifier is available since PHP 5.1.0
+        case 'g':
+            $val *= 1024;
+        case 'k':
+            $val /= 1024;
+    }
+
+    return $val;
+}
+
 add_action( 'admin_init', 'ninja_forms_register_upload_settings_metabox');
 function ninja_forms_register_upload_settings_metabox(){
+	$max_filesize = nf_return_mb( ini_get( 'upload_max_filesize' ) );
+
 	$args = array(
 		'page' => 'ninja-forms-uploads',
 		'tab' => 'upload_settings',
@@ -23,10 +39,10 @@ function ninja_forms_register_upload_settings_metabox(){
 		'title' => __('Upload Settings', 'ninja-forms-uploads'),
 		'settings' => array(
 			array(
-				'name' => 'max_file_size',
+				'name' => 'max_filesize',
 				'type' => 'text',
 				'label' => __( 'Max File Size (in MB)', 'ninja-forms-uploads' ),
-				'desc' => '',
+				'desc' => sprintf( __( 'Your server\'s maximum file size is set to %s. This setting cannot be increased beyond this value. To increase your server file size limit, please contact your host.', 'ninja-forms-uploads' ), $max_filesize ),
 			),
 			array(
 				'name' => 'upload_error',
@@ -48,7 +64,7 @@ function ninja_forms_register_upload_settings_metabox(){
 
 function ninja_forms_upload_settings_adv(){
 
-	$plugin_settings = get_option("ninja_forms_settings");
+	$plugin_settings = nf_get_settings();
 
 	if(isset($plugin_settings['base_upload_dir'])){
 		$base_upload_dir = stripslashes($plugin_settings['base_upload_dir']);
@@ -127,8 +143,14 @@ function ninja_forms_upload_settings_adv(){
 }
 
 function ninja_forms_save_upload_settings( $data ){
-	$plugin_settings = get_option( 'ninja_forms_settings' );
+	$plugin_settings = nf_get_settings();
 	foreach( $data as $key => $val ){
+		if ( 'max_filesize' == $key ) {
+			if ( $val > preg_replace( "/[^0-9]/", "", nf_return_mb( ini_get( 'upload_max_filesize' ) ) ) ) {
+				$val = preg_replace( "/[^0-9]/", "", nf_return_mb( ini_get( 'upload_max_filesize' ) ) );
+			}
+			$val = preg_replace( "/[^0-9]/", "", $val );
+		}
 		$plugin_settings[$key] = $val;
 	}
 	update_option( 'ninja_forms_settings', $plugin_settings );

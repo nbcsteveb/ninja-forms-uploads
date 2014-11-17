@@ -8,7 +8,7 @@ add_action('admin_init', 'ninja_forms_register_sidebar_select_uploads');
 
 function ninja_forms_register_sidebar_select_uploads(){
 	$args = array(
-		'name' => 'Find File Uploads',
+		'name' => __( 'Find File Uploads', 'ninja-forms-uploads' ),
 		'page' => 'ninja-forms-uploads',
 		'tab' => 'browse_uploads',
 		'display_function' => 'ninja_forms_sidebar_select_uploads',
@@ -91,7 +91,7 @@ function ninja_forms_sidebar_select_uploads(){
 		<label><strong><?php _e('Select A Form', 'ninja-forms-uploads');?>:</strong></label>
 		<p>
 			<select name="form_id" id="" class="">
-				<option value="all">-- All Forms </option>
+				<option value="all">- <?php _e ( 'All Forms', 'ninja-forms-uploads' ); ?></option>
 			<?php
 			if(is_array($form_results)){
 				foreach($form_results as $form){

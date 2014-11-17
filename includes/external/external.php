@@ -50,7 +50,7 @@ abstract class NF_Upload_External {
 			'page'     => 'ninja-forms-uploads',
 			'tab'      => 'external_settings',
 			'slug'     => $this->slug . '_settings',
-			'title'    => __( $this->title . ' Settings', 'ninja-forms-uploads' ),
+			'title'    => sprintf( __( '%s Settings', 'ninja-forms-uploads' ), $this->title ),
 			'settings' => $this->settings
 		);
 		if ( function_exists( 'ninja_forms_register_tab_metabox' ) ) {
@@ -67,22 +67,21 @@ abstract class NF_Upload_External {
 			return false;
 		}
 		global $ninja_forms_processing;
-		if ( $ninja_forms_processing->get_form_setting( 'create_post' ) != 1 ) {
-			if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
-				foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
-					$field_row  = $ninja_forms_processing->get_field_settings( $field_id );
-					$user_value = $ninja_forms_processing->get_field_value( $field_id );
-					if ( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $this->slug ) {
-						if ( is_array( $user_value ) ) {
-							return array(
-								'user_value' => $user_value,
-								'field_row'  => $field_row,
-								'field_id'   => $field_id
-							);
-						}
+		if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
+			foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
+				$field_row  = $ninja_forms_processing->get_field_settings( $field_id );
+				$user_value = $ninja_forms_processing->get_field_value( $field_id );
+				if ( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $this->slug ) {
+					if ( is_array( $user_value ) ) {
+						return array(
+							'user_value' => $user_value,
+							'field_row'  => $field_row,
+							'field_id'   => $field_id
+						);
 					}
 				}
 			}
+
 		}
 
 		return false;
@@ -101,13 +100,15 @@ abstract class NF_Upload_External {
 			}
 			$filename = $file['file_path'] . $file['file_name'];
 			if ( file_exists( $filename ) ) {
-				if ( ( $path = $this->upload_file( $filename ) ) ) {
-					if ( isset( $data['field_row']['data']['upload_location'] ) ) {
-						$data['user_value'][ $key ]['upload_location'] = $data['field_row']['data']['upload_location'];
-					}
-					$data['user_value'][ $key ]['external_path'] = $path;
-					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
+				$path = $this->upload_file( $filename );
+				if ( $path != '' ) {
+					$path = trailingslashit( $path );
 				}
+				if ( isset( $data['field_row']['data']['upload_location'] ) ) {
+					$data['user_value'][ $key ]['upload_location'] = $data['field_row']['data']['upload_location'];
+				}
+				$data['user_value'][ $key ]['external_path'] = $path;
+				$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
 			}
 		}
 
@@ -115,12 +116,12 @@ abstract class NF_Upload_External {
 	}
 
 	public function remove_server_upload( $form_id ) {
-		$user_value = $this->post_process( $form_id );
-		if ( ! $user_value ) {
+		$data = $this->post_process( $form_id );
+		if ( ! $data['user_value'] ) {
 			return;
 		}
 
-		foreach ( $user_value as $key => $file ) {
+		foreach ( $data['user_value'] as $key => $file ) {
 			if ( ! isset( $file['file_path'] ) ) {
 				continue;
 			}

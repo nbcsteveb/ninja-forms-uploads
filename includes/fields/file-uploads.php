@@ -10,7 +10,7 @@ function ninja_forms_register_field_upload(){
 			array(
 				'type' => 'text', //What type of input should this be?
 				'name' => 'upload_types', //What should it be named. This should always be a programmatic name, not a label.
-				'label' => '<strong>' . __('Allowed File Types', 'ninja-forms-uploads') . '</strong><br/>' . __('Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. .jpg, .gif, .png, .pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.'), //Label to be shown before the option.
+				'label' => '<strong>' . __('Allowed File Types', 'ninja-forms-uploads') . '</strong><br/>' . __('Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. .jpg, .gif, .png, .pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.', 'ninja-forms-uploads'), //Label to be shown before the option.
 				'class' => 'widefat', //Additional classes to be added to the input element.
 			),
 			array(
@@ -38,18 +38,11 @@ function ninja_forms_register_field_upload(){
 				'type' => 'checkbox',
 				'name' => 'media_library',
 				'label' => __( 'Add this file to the WordPress Media Library?', 'ninja-forms-uploads' ),
-				//'class' => 'widefat',
 			),
-			array(
-				'type' => 'checkbox',
-				'name' => 'email_attachment',
-				'label' => __('Email file as an attachment to administrators.', 'ninja-forms-uploads' ),
-				//'width' => 'thin',
-			)
+
 		),
 		'edit_function' => 'ninja_forms_field_upload_edit',
 		'display_function' => 'ninja_forms_field_upload_display', //Required - This function will be called to create output when a user accesses a form containing this element.
-		//'sub_edit_function' => 'ninja_forms_field_upload_sub_edit',	//Optional - This will be called when an admin or user edits the a user submission.
 		'group' => 'standard_fields', //Optional
 		'edit_label' => true, //True or False
 		'edit_label_pos' => true,
@@ -80,7 +73,7 @@ function ninja_forms_register_field_upload(){
 			$option = array(
 				'type' => 'checkbox',
 				'name' => 'featured_image',
-				'label' => __('Set as featured image for the Post.'),
+				'label' => __( 'Set as featured image for the Post.', 'ninja-forms-uploads' ),
 				'class' => 'ninja-forms-upload-multi',
 				'width' => 'wide',
 			);
@@ -152,8 +145,8 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 	global $ninja_forms_loading, $ninja_forms_processing;
 
 	$plugin_settings = get_option('ninja_forms_settings');
-	if(isset($plugin_settings['max_file_size'])){
-		$max_filesize = $plugin_settings['max_file_size'] * 1048576;
+	if(isset($plugin_settings['max_filesize'])){
+		$max_filesize = $plugin_settings['max_filesize'] * 1048576;
 	}else{
 		$max_filesize = 2097152;
 	}
@@ -199,13 +192,6 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 			if ( isset ( $val['file_name'] ) and !empty ( $val['file_name'] ) ) {
 				$tmp = true;
 			}
-			/*
-				echo $key;
-				echo " - ";
-				var_dump( $val );
-				echo "<br><br>";
-			*/
-
 		}
 		if ( !$tmp ) {
 			$prefill = false;
@@ -353,17 +339,18 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 function nf_field_upload_edit_sub_value( $field_id, $user_value ) {
 	if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
 		foreach ( $user_value as $key => $file ) {
+			$file_url = ninja_forms_upload_file_url( $file );
 			?>
-			<div class="nf-sub-edit-upload">
-				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][user_file_name]" value="<?php echo $file['user_file_name'];?>">
-				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_name]" value="<?php echo $file['file_name'];?>">
-				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_path]" value="<?php echo $file['file_path'];?>">
-				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][complete]" value="<?php echo $file['complete'];?>">
-				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
-				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
-
-				<a href="<?php echo $file['file_url'];?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file['file_url'];?>" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]">
-			</div>
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][user_file_name]" value="<?php echo $file['user_file_name'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_name]" value="<?php echo $file['file_name'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_path]" value="<?php echo $file['file_path'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][complete]" value="<?php echo $file['complete'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
+			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]" value="<?php echo $file['file_url'];?>">
+			
+			<a href="<?php echo $file_url; ?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file_url; ?>">
+			<br />
 			<?php
 		}
 	}
@@ -409,12 +396,17 @@ function nf_field_upload_sub_table_value( $field_id, $user_value, $field ) {
 		if ( is_array ( $user_value ) && ! empty ( $user_value ) ) {
 			$x = 0;
 			foreach ( $user_value as $key => $file ) {
-				if ( $x > 4 )
+				if ( $x > 4 ) {
 					break;
-				?>
-				<a href="<?php echo $file['file_url']; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
-				<br />
-				<?php
+				}
+				$file_url = ninja_forms_upload_file_url( $file );
+				if ( isset ( $file['file_url'] ) ) {
+					?>
+					<a href="<?php echo $file_url; ?>" target="_blank"><?php echo basename( $file['file_url'] ); ?></a>
+					<br />
+					<?php					
+				}
+
 				$x++;
 			}
 		}
@@ -433,9 +425,11 @@ function nf_field_upload_fee_sub_table( $user_value, $field_id, $field_row ) {
 			$x = 0;
 			$return = '';
 			foreach ( $user_value as $key => $file ) {
-				if ( $x > 4 )
+				if ( $x > 4 ) {
 					break;
-				$return .= '<a href="' . $file['file_url'] . '" target="_blank">' . basename( $file['file_url'] ) . '</a><br />';
+				}
+				$file_url = ninja_forms_upload_file_url( $file );
+				$return .= '<a href="' . $file_url . '" target="_blank">' . basename( $file['file_url'] ) . '</a><br />';
 				$x++;
 			}
 			$user_value = $return;

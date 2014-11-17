@@ -1,4 +1,34 @@
 <?php
+add_action('init', 'ninja_forms_external_settings', 1);
+function ninja_forms_external_settings() {
+	$load = false;
+	if ( isset( $_GET['page'] ) &&  'ninja-forms-uploads' == $_GET['page'] && isset( $_GET['tab'] ) &&  'external_settings' == $_GET['tab'] ) {
+		$load = true;
+	}
+
+	if ( isset( $_GET['page'] ) &&  'ninja-forms' == $_GET['page'] && isset( $_GET['tab'] ) &&  'field_settings' == $_GET['tab'] ) {
+		$load = true;
+	}
+
+	if ( $load ) {
+		nf_fu_load_externals();
+	}
+}
+
+add_action( 'ninja_forms_post_process', 'ninja_forms_post_process_load_externals', 1 );
+function ninja_forms_post_process_load_externals() {
+	global $ninja_forms_processing;
+	if ( $ninja_forms_processing->get_form_setting( 'create_post' ) != 1 ) {
+		if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
+			foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
+				$field_row = $ninja_forms_processing->get_field_settings( $field_id );
+				if ( isset( $field_row['data']['upload_location'] ) AND NINJA_FORMS_UPLOADS_DEFAULT_LOCATION != $field_row['data']['upload_location'] ) {
+					nf_fu_load_externals();
+				}
+			}
+		}
+	}
+}
 
 add_action('admin_init', 'ninja_forms_register_tab_external_settings');
 function ninja_forms_register_tab_external_settings(){
@@ -32,7 +62,8 @@ function ninja_forms_external_url() {
 }
 
 function ninja_forms_upload_file_url( $data ) {
-	$file_url = $data['file_url'];
+	nf_fu_load_externals();
+	$file_url = isset ( $data['file_url'] ) ? $data['file_url'] : '';
 	if ( isset( $data['upload_location'] ) && ( isset( $data['upload_id'] ) ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
 		$external = NF_Upload_External::instance( $data['upload_location'] );
 		if ( $external && $external->is_connected() ) {
