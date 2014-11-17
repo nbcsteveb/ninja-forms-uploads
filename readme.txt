@@ -27,7 +27,7 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
-= 1.3.9 (17 November 2014) =
+= 1.3.10 (17 November 2014) =
 
 *Bugs:*
 
