@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
-Tested up to: 3.9.1
-Stable tag: 1.3.8
+Tested up to: 4.0
+Stable tag: 1.3.9
 
 License: GPLv2 or later
 
@@ -27,14 +27,25 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
-= 1.3.8 (15 September 2014 ) =
+= 1.3.9 (17 November 2014) =
+
+*Bugs:*
+
+* Fixed two PHP notices.
+
+*Changes:*
+
+* Added filter for filename $file_name = apply_filters( 'nf_fu_filename' , $filename );
+* The maximum file upload size can now not exceed the server PHP setting for max file uploads.
+
+= 1.3.8 (15 September 2014) =
 
 *Changes:*
 
 * File Uploads should now be compatible with Ninja Forms version 2.8 and the new notification system.
 * Performance should be noticeably increased.
 
-= 1.3.7 (12 August 2014 ) =
+= 1.3.7 (12 August 2014) =
 
 *Bugs:*
 
