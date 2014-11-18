@@ -120,6 +120,22 @@ function ninja_forms_uploads_load_translations() {
 
 add_action( 'plugins_loaded', 'ninja_forms_uploads_load_translations' );
 
+function nf_fu_load_externals() {
+	// External location class loader
+	require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/external/external.php' );
+	$external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
+	if ( $external_dir ) {
+		foreach ( $external_dir as $dir ) {
+			if ( basename( $dir, '.php' ) == 'external' ) {
+				continue;
+			}
+			$external = NF_Upload_External::instance( $dir, true );
+		}
+		$external = NF_Upload_External::instance( $dir, true );
+	}
+}
+
+
 function nf_fu_pre_27() {
 	if ( defined( 'NINJA_FORMS_VERSION' ) ) {
 		if ( version_compare( NINJA_FORMS_VERSION, '2.7' ) == -1 ) {
