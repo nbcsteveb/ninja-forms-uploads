@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - File Uploads
 Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 1.4
+Version: 1.4.1
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 */
@@ -12,7 +12,7 @@ global $wpdb;
 define("NINJA_FORMS_UPLOADS_DIR", WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( __FILE__ ) ) );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
-define("NINJA_FORMS_UPLOADS_VERSION", "1.4");
+define("NINJA_FORMS_UPLOADS_VERSION", "1.4.1");
 define("NINJA_FORMS_UPLOADS_DEFAULT_LOCATION", 'server' );
 
 function ninja_forms_uploads_setup_license() {
@@ -119,6 +119,22 @@ function ninja_forms_uploads_load_translations() {
 }
 
 add_action( 'plugins_loaded', 'ninja_forms_uploads_load_translations' );
+
+function nf_fu_load_externals() {
+	// External location class loader
+	require_once( NINJA_FORMS_UPLOADS_DIR . '/includes/external/external.php' );
+	$external_dir = glob( NINJA_FORMS_UPLOADS_DIR . '/includes/external/*.php' );
+	if ( $external_dir ) {
+		foreach ( $external_dir as $dir ) {
+			if ( basename( $dir, '.php' ) == 'external' ) {
+				continue;
+			}
+			$external = NF_Upload_External::instance( $dir, true );
+		}
+		$external = NF_Upload_External::instance( $dir, true );
+	}
+}
+
 
 function nf_fu_pre_27() {
 	if ( defined( 'NINJA_FORMS_VERSION' ) ) {
