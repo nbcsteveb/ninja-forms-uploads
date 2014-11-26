@@ -8,6 +8,8 @@ class External_Dropbox extends NF_Upload_External {
 
 	private $slug = 'dropbox';
 
+	private $path;
+
 	private $settings;
 
 	function __construct() {
@@ -29,10 +31,35 @@ class External_Dropbox extends NF_Upload_External {
 				'display_function' => array( $this, 'connect_url' )
 			),
 			array(
+				'name'          => 'dropbox_file_path',
+				'type'          => 'text',
+				'label'         => __( 'File Path', 'ninja-forms-uploads' ),
+				'desc'          => __( 'Custom directory for the files to be uploaded to in your Dropbox:<br> /Apps/Ninja Forms Uploads/'. $this->get_path() , 'ninja-forms-uploads' ),
+				'default_value' => ''
+			),
+			array(
 				'name' => 'dropbox_token',
 				'type' => 'hidden'
 			)
 		);
+	}
+
+	private function get_path() {
+		if ( is_null( $this->path ) ) {
+			$plugin_settings = get_option( 'ninja_forms_settings' );
+			$this->path = isset( $plugin_settings['dropbox_file_path'] ) ? $plugin_settings['dropbox_file_path'] : '';
+			$this->path = trim( $this->path );
+			$this->path = apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $this->path );
+			if ( '/' == $this->path ) {
+				$this->path = '';
+			}
+
+			if ( '' != $this->path ) {
+				$this->path = $this->sanitize_path( $this->path );
+			}
+		}
+
+		return $this->path;
 	}
 
 	public function is_connected() {
@@ -54,7 +81,7 @@ class External_Dropbox extends NF_Upload_External {
 
 	public function upload_file( $filename, $path = '' ) {
 		$dropbox = new nf_dropbox();
-		$path    = apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $path );
+		$path    = $this->get_path();
 		$dropbox->upload_file( $filename, $path );
 
 		return $path;

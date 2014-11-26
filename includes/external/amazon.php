@@ -95,13 +95,6 @@ class External_Amazon extends NF_Upload_External {
 		return $this->file_path;
 	}
 
-	private function sanitize_path( $path ) {
-		$path = ltrim( $path, '/' );
-		$path = rtrim( $path, '/' );
-
-		return $path . '/';
-	}
-
 	public function file_url( $filename, $path = '' ) {
 		$s3 = $this->prepare( $path );
 
