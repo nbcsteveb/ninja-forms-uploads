@@ -22,7 +22,7 @@ function ninja_forms_post_process_load_externals() {
 		if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
 			foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
 				$field_row = $ninja_forms_processing->get_field_settings( $field_id );
-				if ( isset( $field_row['data']['upload_location'] ) AND NINJA_FORMS_UPLOADS_DEFAULT_LOCATION != $field_row['data']['upload_location'] ) {
+				if ( isset( $field_row['data']['upload_location'] ) AND ninja_forms_upload_is_location_external( $field_row['data']['upload_location'] ) ) {
 					nf_fu_load_externals();
 				}
 			}
@@ -64,7 +64,7 @@ function ninja_forms_external_url() {
 function ninja_forms_upload_file_url( $data ) {
 	nf_fu_load_externals();
 	$file_url = isset ( $data['file_url'] ) ? $data['file_url'] : '';
-	if ( isset( $data['upload_location'] ) && ( isset( $data['upload_id'] ) ) && $data['upload_location'] != NINJA_FORMS_UPLOADS_DEFAULT_LOCATION ) {
+	if ( isset( $data['upload_location'] ) && ( isset( $data['upload_id'] ) ) && ninja_forms_upload_is_location_external( $data['upload_location'] ) ) {
 		$external = NF_Upload_External::instance( $data['upload_location'] );
 		if ( $external && $external->is_connected() ) {
 			$file_url = admin_url( '?nf-upload='. $data['upload_id'] );
@@ -72,4 +72,8 @@ function ninja_forms_upload_file_url( $data ) {
 	}
 
 	return $file_url;
+}
+
+function ninja_forms_upload_is_location_external( $location ) {
+	return ! in_array( $location, array( NINJA_FORMS_UPLOADS_DEFAULT_LOCATION, 'none' ) );
 }
