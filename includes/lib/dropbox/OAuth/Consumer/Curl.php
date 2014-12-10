@@ -62,6 +62,8 @@ class Dropbox_OAuth_Consumer_Curl extends Dropbox_OAuth_Consumer_ConsumerAbstrac
         // Initialise and execute a cURL request
         $handle = curl_init($request['url']);
 
+        curl_setopt($handle, CURLOPT_SAFE_UPLOAD, false);
+
         // Get the default options array
         $options = $this->defaultOptions;
         $options[CURLOPT_CAINFO] = dirname(__FILE__) . '/ca-bundle.pem';
@@ -85,7 +87,7 @@ class Dropbox_OAuth_Consumer_Curl extends Dropbox_OAuth_Consumer_ConsumerAbstrac
         }
 
         // Set the cURL options at once
-        curl_setopt_array($handle, $options);
+        @curl_setopt_array($handle, $options);
 
         // Execute and parse the response
         $response = curl_exec($handle);
@@ -106,6 +108,8 @@ class Dropbox_OAuth_Consumer_Curl extends Dropbox_OAuth_Consumer_ConsumerAbstrac
 
         // Check if an error occurred and throw an Exception
         if (!empty($response['body']->error)) {
+            var_dump( $response['body']->error );
+            die();
             // Dropbox returns error messages inconsistently...
             if ($response['body']->error instanceof stdClass) {
                 $array = array_values((array) $response['body']->error);
