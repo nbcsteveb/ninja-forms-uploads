@@ -29,6 +29,10 @@ function ninja_forms_register_field_upload(){
 						array (
 							'value' => NINJA_FORMS_UPLOADS_DEFAULT_LOCATION,
 							'name' => __( 'Server', 'ninja-forms-uploads' )
+						),
+						array (
+							'value' => 'none',
+							'name' => __( 'None', 'ninja-forms-uploads' )
 						)
 					)
 				),
