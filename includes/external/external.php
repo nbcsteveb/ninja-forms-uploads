@@ -35,7 +35,7 @@ abstract class NF_Upload_External {
 	}
 
 	public function register_location( $locations ) {
-		if ( $this->is_connected() ) {
+		if ( $this->is_connected() && ! $this->already_registered( $locations, $this->slug ) ) {
 			$locations[] = array(
 				'value' => $this->slug,
 				'name'  => $this->title
@@ -43,6 +43,16 @@ abstract class NF_Upload_External {
 		}
 
 		return $locations;
+	}
+
+	private function already_registered( $locations, $slug ) {
+		foreach ( $locations as $location ) {
+			if ( isset( $location[ 'value' ] ) && $location[ 'value' ] == $slug ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public function register_settings() {
