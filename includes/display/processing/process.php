@@ -223,3 +223,67 @@ function ninja_forms_upload_db_update( $field_id ){
 }
 
 add_action('ninja_forms_upload_process', 'ninja_forms_upload_db_update');
+
+/**
+ * Get files uploaded to form for a specific location to save to
+ *
+ * @param $location
+ *
+ * @return array|bool
+ */
+function ninja_forms_upload_get_uploaded_files( $location ) {
+	global $ninja_forms_processing;
+	if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
+		foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
+			$field_row  = $ninja_forms_processing->get_field_settings( $field_id );
+			$user_value = $ninja_forms_processing->get_field_value( $field_id );
+			if ( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $location ) {
+				if ( is_array( $user_value ) ) {
+					return array(
+						'user_value' => $user_value,
+						'field_row'  => $field_row,
+						'field_id'   => $field_id
+					);
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Remove uploaded files
+ *
+ * @param $data
+ */
+function ninja_forms_upload_remove_uploaded_files( $data ) {
+	if ( ! $data ) {
+		return;
+	}
+	if ( ! is_array( $data['user_value'] ) ) {
+		return;
+	}
+
+	foreach ( $data['user_value'] as $key => $file ) {
+		if ( ! isset( $file['file_path'] ) ) {
+			continue;
+		}
+		$filename = $file['file_path'] . $file['file_name'];
+		if ( file_exists( $filename ) ) {
+			// Delete local file
+			unlink( $filename );
+		}
+	}
+}
+
+/**
+ * Remove uploaded files for when a file upload field has no location set
+ * Eg. when an admin only wants uploads to be sent on email attachments and not saved anywhere
+ */
+function ninja_forms_upload_remove_files_no_location() {
+	$files_data = ninja_forms_upload_get_uploaded_files( 'none' );
+
+	ninja_forms_upload_remove_uploaded_files( $files_data );
+}
+add_action( 'ninja_forms_post_process', 'ninja_forms_upload_remove_files_no_location', 1001 );
