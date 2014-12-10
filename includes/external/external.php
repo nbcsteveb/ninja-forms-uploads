@@ -141,4 +141,11 @@ abstract class NF_Upload_External {
 		return '';
 	}
 
+	public function sanitize_path( $path, $suffix = '/' ) {
+		$path = ltrim( $path, '/' );
+		$path = rtrim( $path, '/' );
+
+		return $path . $suffix;
+	}
+
 } 
