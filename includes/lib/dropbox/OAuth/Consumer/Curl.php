@@ -62,7 +62,9 @@ class Dropbox_OAuth_Consumer_Curl extends Dropbox_OAuth_Consumer_ConsumerAbstrac
         // Initialise and execute a cURL request
         $handle = curl_init($request['url']);
 
-        curl_setopt($handle, CURLOPT_SAFE_UPLOAD, false);
+        if ( defined( 'CURLOPT_SAFE_UPLOAD' ) ) {
+            curl_setopt( $handle, CURLOPT_SAFE_UPLOAD, false );
+        }
 
         // Get the default options array
         $options = $this->defaultOptions;
