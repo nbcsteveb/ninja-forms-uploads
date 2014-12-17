@@ -185,11 +185,11 @@ function ninja_forms_field_upload_process($field_id, $user_value){
 						}
 					}
 				}
-				if ( !$ninja_forms_processing->get_all_errors() ) {
-					do_action('ninja_forms_upload_process', $field_id);
-				}
 			}
 		}
+		if ( !$ninja_forms_processing->get_all_errors() ) {
+			do_action('ninja_forms_upload_process', $field_id);
+		}		
 	}
 }
 
