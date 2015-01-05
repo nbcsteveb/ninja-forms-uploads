@@ -110,8 +110,8 @@ class Dropbox_OAuth_Consumer_Curl extends Dropbox_OAuth_Consumer_ConsumerAbstrac
 
         // Check if an error occurred and throw an Exception
         if (!empty($response['body']->error)) {
-            var_dump( $response['body']->error );
-            die();
+            // var_dump( $response['body']->error );
+            // die();
             // Dropbox returns error messages inconsistently...
             if ($response['body']->error instanceof stdClass) {
                 $array = array_values((array) $response['body']->error);
