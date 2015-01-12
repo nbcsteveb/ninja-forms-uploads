@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 3.3
-Tested up to: 4.0.1
-Stable tag: 1.4.2
+Tested up to: 4.1
+Stable tag: 1.4.3
 
 
 License: GPLv2 or later
@@ -27,6 +27,14 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.4.3 (12 January 2015) =
+
+*Bugs:*
+
+* Fixed a bug that could cause Dropbox to disconnect.
+* Fixed a bug with multi-file uploads that could cause the wrong URL to be stored in the file uploads table.
+* Fixed a PHP notice.
 
 = 1.4.2 (9 December 2014) =
 
