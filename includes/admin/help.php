@@ -3,7 +3,7 @@ add_action( 'init', 'ninja_forms_register_uploads_help' );
 function ninja_forms_register_uploads_help(){
 	$args = array(
 		'page' => 'ninja-forms',
-		'tab' => 'field_settings',
+		'tab' => 'builder',
 		'title' => 'File Renaming',
 		'display_function' => 'ninja_forms_help_uploads',
 	);

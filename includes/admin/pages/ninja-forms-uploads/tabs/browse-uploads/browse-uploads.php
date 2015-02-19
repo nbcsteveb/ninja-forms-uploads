@@ -191,7 +191,7 @@ function ninja_forms_tab_browse_uploads(){
 				$data = $all_files[$i]['data'];
 				$form_row = ninja_forms_get_form_by_field_id($field_id);
 				$form_data = $form_row['data'];
-				$form_title = $form_data['form_title'];
+				$form_title = isset ( $form_data['form_title'] ) ? $form_data['form_title'] : '';
 				if ( isset( $data['user_file_name'] ) ) {
 					$user_file_name = stripslashes($data['user_file_name']);
 				} else {
