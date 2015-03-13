@@ -13,9 +13,12 @@ abstract class NF_Upload_External {
 		$this->slug     = $slug;
 		$this->settings = $settings;
 
+		$this->init();
+	}
+
+	public function init( ){
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_filter( 'ninja_forms_upload_locations', array( $this, 'register_location' ) );
-
 		add_action( 'ninja_forms_post_process', array( $this, 'upload_to_external' ) );
 		add_action( 'ninja_forms_post_process', array( $this, 'remove_server_upload' ), 1001 );
 	}
