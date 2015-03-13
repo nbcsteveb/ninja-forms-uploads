@@ -83,27 +83,33 @@ abstract class NF_Upload_External {
 	}
 
 	public function upload_to_external( $form_id ) {
-		$data = $this->post_process( $form_id );
-		if ( ! $data['user_value'] ) {
+		$files = $this->post_process( $form_id );
+		if ( ! is_array( $files ) || empty( $files ) ) {
 			return;
 		}
+
 		global $ninja_forms_processing, $wpdb;
 
-		foreach ( $data['user_value'] as $key => $file ) {
-			if ( ! isset( $file['file_path'] ) ) {
+		foreach ( $files as $data ) {
+			if ( ! $data['user_value'] ) {
 				continue;
 			}
-			$filename = $file['file_path'] . $file['file_name'];
-			if ( file_exists( $filename ) ) {
-				$path = $this->upload_file( $filename );
-				if ( $path != '' ) {
-					$path = trailingslashit( $path );
+			foreach ( $data['user_value'] as $key => $file ) {
+				if ( ! isset( $file['file_path'] ) ) {
+					continue;
 				}
-				if ( isset( $data['field_row']['data']['upload_location'] ) ) {
-					$data['user_value'][ $key ]['upload_location'] = $data['field_row']['data']['upload_location'];
+				$filename = $file['file_path'] . $file['file_name'];
+				if ( file_exists( $filename ) ) {
+					$path = $this->upload_file( $filename );
+					if ( $path != '' ) {
+						$path = trailingslashit( $path );
+					}
+					if ( isset( $data['field_row']['data']['upload_location'] ) ) {
+						$data['user_value'][ $key ]['upload_location'] = $data['field_row']['data']['upload_location'];
+					}
+					$data['user_value'][ $key ]['external_path'] = $path;
+					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
 				}
-				$data['user_value'][ $key ]['external_path'] = $path;
-				$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
 			}
 		}
 
@@ -111,12 +117,12 @@ abstract class NF_Upload_External {
 	}
 
 	public function remove_server_upload( $form_id ) {
-		$data = $this->post_process( $form_id );
-		if ( ! $data['user_value'] ) {
+		$files = $this->post_process( $form_id );
+		if ( ! is_array( $files ) || empty( $files ) ) {
 			return;
 		}
 
-		ninja_forms_upload_remove_uploaded_files( $data );
+		ninja_forms_upload_remove_uploaded_files( $files );
 	}
 
 	public function upload_file( $filename, $path = '' ) {
