@@ -111,9 +111,11 @@ abstract class NF_Upload_External {
 					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
 				}
 			}
+
+			$ninja_forms_processing->update_field_value( $data['field_id'], $data['user_value'] );
 		}
 
-		$ninja_forms_processing->update_field_value( $data['field_id'], $data['user_value'] );
+
 	}
 
 	public function remove_server_upload( $form_id ) {
