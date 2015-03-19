@@ -15,8 +15,8 @@ function ninja_forms_external_settings() {
 	}
 }
 
-add_action( 'ninja_forms_post_process', 'ninja_forms_post_process_load_externals', 1 );
-function ninja_forms_post_process_load_externals() {
+add_action( 'ninja_forms_pre_process', 'ninja_forms_pre_process_load_externals', 1 );
+function ninja_forms_pre_process_load_externals() {
 	global $ninja_forms_processing;
 	if ( $ninja_forms_processing->get_form_setting( 'create_post' ) != 1 ) {
 		if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
