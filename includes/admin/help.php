@@ -28,6 +28,7 @@ function ninja_forms_help_uploads(){
 			<li><span class="code">%month%</span> - <?php _e('Today\'s month in mm format.', 'ninja-forms-uploads');?></li>
 			<li><span class="code">%day%</span> - <?php _e('Today\'s day in dd format.', 'ninja-forms-uploads');?></li>
 			<li><span class="code">%year%</span> - <?php _e('Today\'s year in yyyy format.', 'ninja-forms-uploads');?></li>
+			<li><span class="code">%field_x%</span> - <?php _e('Another field in your form, where x is the field id.', 'ninja-forms-uploads');?></li>
 		</ul>
 	</p>
 	<p>

@@ -233,13 +233,14 @@ add_action('ninja_forms_upload_process', 'ninja_forms_upload_db_update');
  */
 function ninja_forms_upload_get_uploaded_files( $location ) {
 	global $ninja_forms_processing;
+	$files = array();
 	if ( $ninja_forms_processing->get_extra_value( 'uploads' ) ) {
 		foreach ( $ninja_forms_processing->get_extra_value( 'uploads' ) as $field_id ) {
 			$field_row  = $ninja_forms_processing->get_field_settings( $field_id );
 			$user_value = $ninja_forms_processing->get_field_value( $field_id );
 			if ( isset( $field_row['data']['upload_location'] ) AND $field_row['data']['upload_location'] == $location ) {
 				if ( is_array( $user_value ) ) {
-					return array(
+					$files[] = array(
 						'user_value' => $user_value,
 						'field_row'  => $field_row,
 						'field_id'   => $field_id
@@ -249,30 +250,33 @@ function ninja_forms_upload_get_uploaded_files( $location ) {
 		}
 	}
 
-	return false;
+	return $files;
 }
 
 /**
  * Remove uploaded files
  *
- * @param $data
+ * @param $files
  */
-function ninja_forms_upload_remove_uploaded_files( $data ) {
-	if ( ! $data ) {
-		return;
-	}
-	if ( ! is_array( $data['user_value'] ) ) {
+function ninja_forms_upload_remove_uploaded_files( $files ) {
+	if ( ! $files ) {
 		return;
 	}
 
-	foreach ( $data['user_value'] as $key => $file ) {
-		if ( ! isset( $file['file_path'] ) ) {
-			continue;
+	foreach( $files as $data ) {
+		if ( ! is_array( $data['user_value'] ) ) {
+			return;
 		}
-		$filename = $file['file_path'] . $file['file_name'];
-		if ( file_exists( $filename ) ) {
-			// Delete local file
-			unlink( $filename );
+
+		foreach ( $data['user_value'] as $key => $file ) {
+			if ( ! isset( $file['file_path'] ) ) {
+				continue;
+			}
+			$filename = $file['file_path'] . $file['file_name'];
+			if ( file_exists( $filename ) ) {
+				// Delete local file
+				unlink( $filename );
+			}
 		}
 	}
 }

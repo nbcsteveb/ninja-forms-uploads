@@ -281,9 +281,20 @@ function ninja_forms_field_upload_move_uploads($field_id, $file_data, $multi = f
 			$file_name = str_replace("%firstname%", $first_name, $file_name);
 			$file_name = str_replace("%lastname%", $last_name, $file_name);
 			$file_name = str_replace("%random%", ninja_forms_random_string(5), $file_name );
+
+			// Loop through our fields and see if we have any renaming fields.
+			$fields = $ninja_forms_processing->get_all_fields();
+			foreach ( $fields as $field_id => $user_value ) {
+				if ( is_array( $user_value ) ) {
+					$user_value = implode( ',', $user_value );
+				}
+				$user_value = strtolower( wp_kses_post( $user_value ) );
+				$file_name = str_replace( "%field_" . $field_id . "%", $user_value, $file_name );
+			}
+
+
 			$file_name .= '.'.$ext;
 			
-
 		}else{
 			$user_file_name = stripslashes( trim( $user_file_name ) );
 			$user_file_name = preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $user_file_name);
