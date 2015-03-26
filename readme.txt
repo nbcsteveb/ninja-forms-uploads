@@ -2,9 +2,9 @@
 Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
-Requires at least: 3.3
+Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 
 
 License: GPLv2 or later
@@ -27,6 +27,13 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.4.4 (26 March 2015) =
+
+*Bugs:*
+
+* Multiple file uploads should work properly with external services.
+* Fixed several PHP notices.
 
 = 1.4.3 (12 January 2015) =
 
