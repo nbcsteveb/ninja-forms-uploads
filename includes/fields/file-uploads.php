@@ -70,19 +70,23 @@ function ninja_forms_register_field_upload(){
 		'req_validation' => 'ninja_forms_field_upload_req_validation',
 	);
 
-	if( isset( $_REQUEST['form_id'] ) ){
-		$form_row = ninja_forms_get_form_by_id( $_REQUEST['form_id'] );
-		$form_data = $form_row['data'];
-		if( isset( $form_data['create_post'] ) AND $form_data['create_post'] == 1 ){
-			$option = array(
-				'type' => 'checkbox',
-				'name' => 'featured_image',
-				'label' => __( 'Set as featured image for the Post.', 'ninja-forms-uploads' ),
-				'class' => 'ninja-forms-upload-multi',
-				'width' => 'wide',
-			);
-			array_push( $args['edit_options'], $option );
-		}
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset ( $_REQUEST['field_id'] ) ) {
+		$form_row = ninja_forms_get_form_by_field_id( $_REQUEST['field_id'] );
+	} else if ( isset( $_REQUEST['form_id'] ) ) {
+		$form_id = $_REQUEST['form_id'];
+		$form_row = ninja_forms_get_form_by_id( $form_id );
+	}
+
+	$form_data = $form_row['data'];
+	if( isset( $form_data['create_post'] ) AND $form_data['create_post'] == 1 ){
+		$option = array(
+			'type' => 'checkbox',
+			'name' => 'featured_image',
+			'label' => __( 'Set as featured image for the Post.', 'ninja-forms-uploads' ),
+			'class' => 'ninja-forms-upload-multi',
+			'width' => 'wide',
+		);
+		array_push( $args['edit_options'], $option );
 	}
 
 	if( function_exists( 'ninja_forms_register_field' ) ){
