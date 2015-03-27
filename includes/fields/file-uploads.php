@@ -70,6 +70,8 @@ function ninja_forms_register_field_upload(){
 		'req_validation' => 'ninja_forms_field_upload_req_validation',
 	);
 
+	$form_row = array();
+
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset ( $_REQUEST['field_id'] ) ) {
 		$form_row = ninja_forms_get_form_by_field_id( $_REQUEST['field_id'] );
 	} else if ( isset( $_REQUEST['form_id'] ) ) {
@@ -77,7 +79,7 @@ function ninja_forms_register_field_upload(){
 		$form_row = ninja_forms_get_form_by_id( $form_id );
 	}
 
-	$form_data = $form_row['data'];
+	$form_data = isset ( $form_row['data'] ) ? $form_row['data'] : array();
 	if( isset( $form_data['create_post'] ) AND $form_data['create_post'] == 1 ){
 		$option = array(
 			'type' => 'checkbox',
