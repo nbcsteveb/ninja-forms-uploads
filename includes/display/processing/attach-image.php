@@ -213,24 +213,26 @@ function ninja_forms_post_edit_file_attachment_filter( $data, $field_id ){
 		}
 
 		if( isset( $field_row['data']['featured_image'] ) AND $field_row['data']['featured_image'] == 1 ){
-			$post_thumbnail_id = get_post_thumbnail_id( $post->ID );
-			if ( $post_thumbnail_id != '' ) {
-				$attach_field = get_post_meta( $post_thumbnail_id, 'ninja_forms_field_id', true );
-				if( $attach_field == '' ){
-					$file_key = ninja_forms_field_uploads_create_key( array() );
-					$upload_id = '';				
-					$filename = basename ( get_attached_file( $post_thumbnail_id ) );
-					$filepath = str_replace( $filename, '', get_attached_file( $post_thumbnail_id ) );
-					$data['default_value'][$file_key] = array(
-						'user_file_name' => $filename,
-						'file_name' => $filename,
-						'file_path' => $filepath,
-						'file_url' => wp_get_attachment_url( $post_thumbnail_id ),
-						'complete' => 1,
-						'upload_id' => $upload_id
-					);
-				}				
-			}
+            if ( isset( $_GET['_ninja_forms_action'] ) AND 'edit' == $_GET['_ninja_forms_action'] ) {
+                $post_thumbnail_id = get_post_thumbnail_id($post->ID);
+                if ($post_thumbnail_id != '') {
+                    $attach_field = get_post_meta($post_thumbnail_id, 'ninja_forms_field_id', true);
+                    if ($attach_field == '') {
+                        $file_key = ninja_forms_field_uploads_create_key(array());
+                        $upload_id = '';
+                        $filename = basename(get_attached_file($post_thumbnail_id));
+                        $filepath = str_replace($filename, '', get_attached_file($post_thumbnail_id));
+                        $data['default_value'][$file_key] = array(
+                            'user_file_name' => $filename,
+                            'file_name' => $filename,
+                            'file_path' => $filepath,
+                            'file_url' => wp_get_attachment_url($post_thumbnail_id),
+                            'complete' => 1,
+                            'upload_id' => $upload_id
+                        );
+                    }
+                }
+            }
 
 		}
 
