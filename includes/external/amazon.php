@@ -88,11 +88,12 @@ class External_Amazon extends NF_Upload_External {
 		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
 	}
 
-	public function upload_file( $filename, $path = false ) {
-		$s3 = $this->prepare( $path );
-		$s3->putObjectFile( $filename, $this->connected_settings['bucket_name'], $this->file_path . basename( $filename ), S3::ACL_PUBLIC_READ );
+	public function upload_file( $file, $path = false ) {
+		$s3       = $this->prepare( $path );
+		$filename = $this->get_filename_external( $file );
+		$s3->putObjectFile( $filename, $this->connected_settings['bucket_name'], $this->file_path . $filename, S3::ACL_PUBLIC_READ );
 
-		return $this->file_path;
+		return array( 'path' => $this->file_path, 'filename' => $filename );
 	}
 
 	public function file_url( $filename, $path = '' ) {

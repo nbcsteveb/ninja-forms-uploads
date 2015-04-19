@@ -79,12 +79,13 @@ class External_Dropbox extends NF_Upload_External {
 		return false;
 	}
 
-	public function upload_file( $filename, $path = '' ) {
-		$dropbox = new nf_dropbox();
-		$path    = $this->get_path();
-		$dropbox->upload_file( $filename, $path );
+	public function upload_file( $file, $path = '' ) {
+		$dropbox  = new nf_dropbox();
+		$path     = $this->get_path();
+		$filename = $this->get_filename_external( $file );
+		$dropbox->upload_file( $file, $filename, $path );
 
-		return $path;
+		return array( 'path' => $path, 'filename' => $filename );
 	}
 
 	public function file_url( $filename, $path = '' ) {
