@@ -2,9 +2,9 @@
 Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
-Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 1.4.4
+Requires at least: 1.0
+Tested up to: 4.2.1
+Stable tag: 1.4.5
 
 
 License: GPLv2 or later
@@ -27,6 +27,13 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.4.5 (12 May 2015) =
+
+*Bugs:*
+
+* Featured images in the Post Creation extension should now function properly.
+* Save Progress extension tables should now show File Upload fields properly.
 
 = 1.4.4 (26 March 2015) =
 
