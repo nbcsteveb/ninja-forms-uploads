@@ -100,14 +100,15 @@ abstract class NF_Upload_External {
 				}
 				$filename = $file['file_path'] . $file['file_name'];
 				if ( file_exists( $filename ) ) {
-					$path = $this->upload_file( $filename );
-					if ( $path != '' ) {
-						$path = trailingslashit( $path );
+					$args = $this->upload_file( $filename );
+					if ( $args['path'] != '' ) {
+						$path = trailingslashit( $args['path'] );
 					}
 					if ( isset( $data['field_row']['data']['upload_location'] ) ) {
 						$data['user_value'][ $key ]['upload_location'] = $data['field_row']['data']['upload_location'];
 					}
 					$data['user_value'][ $key ]['external_path'] = $path;
+					$data['user_value'][ $key ]['external_filename'] = $args['filename'];
 					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
 				}
 			}
@@ -140,6 +141,13 @@ abstract class NF_Upload_External {
 		$path = rtrim( $path, '/' );
 
 		return $path . $suffix;
+	}
+
+	public function get_filename_external( $file ) {
+		$filename = basename( $file );
+		$filename = time() . '-'. $filename;
+
+		return apply_filters( 'ninja_forms_uploads_' . $this->slug . '_filename', $filename );
 	}
 
 } 

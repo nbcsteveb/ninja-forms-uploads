@@ -53,8 +53,9 @@ function ninja_forms_external_url() {
 		$upload = ninja_forms_get_uploads( $args );
 		$external = NF_Upload_External::instance( $upload['data']['upload_location'] );
 		if ( $external ) {
-			$path = ( isset( $upload['data']['external_path'] ) ) ? $upload['data']['external_path'] : '';
-			$file_url = $external->file_url( $upload['data']['file_name'], $path );
+			$path     = ( isset( $upload['data']['external_path'] ) ) ? $upload['data']['external_path'] : '';
+			$filename = ( isset( $upload['data']['external_filename'] ) ) ? $upload['data']['external_filename'] : $upload['data']['file_name'];
+			$file_url = $external->file_url( $filename, $path );
 		}
 		wp_redirect( $file_url );
 		die();
