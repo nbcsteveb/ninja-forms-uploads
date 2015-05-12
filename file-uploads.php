@@ -147,3 +147,23 @@ function nf_fu_pre_27() {
 		return null;
 	}
 }
+
+//Save User Progress Table Column
+add_filter( 'nf_sp_user_sub_table' , 'nf_fu_sp_user_sub_table', 10, 2 );
+function nf_fu_sp_user_sub_table( $user_value, $field_id ) {
+
+    $field = ninja_forms_get_field_by_id( $field_id );
+
+    if ( isset( $field['type'] ) AND '_upload' == $field['type'] ) {
+
+        $file_names = array();
+
+        foreach ( $user_value as $value ) {
+            $file_names[] = $value['file_name'];
+        }
+
+        return implode( ', ', $file_names );
+    }
+
+    return $user_value;
+}
