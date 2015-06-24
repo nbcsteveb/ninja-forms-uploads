@@ -20,6 +20,9 @@ function ninja_forms_register_sidebar_select_uploads(){
 
 	if( is_admin() AND isset( $_REQUEST['page'] ) AND $_REQUEST['page'] == 'ninja-forms-uploads' ){
 		if( !isset( $_REQUEST['paged'] ) AND !isset( $_REQUEST['form_id'] ) ){
+			if( !session_id() ) {
+	       		session_start();
+			}
 			unset( $_SESSION['ninja_forms_form_id'] );
 			unset( $_SESSION['ninja_forms_begin_date'] );
 			unset( $_SESSION['ninja_forms_end_date'] );
