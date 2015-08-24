@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.2.1
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 
 
 License: GPLv2 or later
@@ -27,6 +27,13 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.4.6 (24 August 2015) =
+
+*Bugs:*
+
+* Fixed an issue with connecting to Amazon accounts.
+* Fixed several PHP notices that appeared on the uploads settings page.
 
 = 1.4.5 (12 May 2015) =
 
