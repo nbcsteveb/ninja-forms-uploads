@@ -93,7 +93,7 @@ class External_Amazon extends NF_Upload_External {
 		}
 	}
 
-	private function prepare( $path = false ) {
+	private function prepare( $path = false, $region = null ) {
 		$this->load_settings();
 		if ( ! $path ) {
 			$path = apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $this->connected_settings['file_path'] );
@@ -102,7 +102,18 @@ class External_Amazon extends NF_Upload_External {
 		}
 		$this->file_path = $this->sanitize_path( $path );
 
-		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
+		$s3 = new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
+
+		if ( is_null( $region ) ) {
+			$region = $this->connected_settings['bucket_region'];
+		}
+
+		if ( '' !== $region && 'US' !== $region ) {
+			// Use the correct API endpoint for non US standard bucket regions
+			$s3->setEndpoint( 's3-' . $this->connected_settings['bucket_region'] . '.amazonaws.com' );
+		}
+
+		return $s3;
 	}
 
 	public function upload_file( $file, $path = false ) {
