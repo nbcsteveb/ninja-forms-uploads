@@ -88,7 +88,7 @@ class External_Dropbox extends NF_Upload_External {
 		return array( 'path' => $path, 'filename' => $filename );
 	}
 
-	public function file_url( $filename, $path = '' ) {
+	public function file_url( $filename, $path = '', $data = array() ) {
 		$dropbox = new nf_dropbox();
 		$url     = $dropbox->get_link( $path . $filename );
 		if ( $url ) {
