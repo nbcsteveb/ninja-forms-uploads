@@ -71,7 +71,24 @@ class External_Amazon extends NF_Upload_External {
 			$settings['access_key']   = $data['amazon_s3_access_key'];
 			$settings['secret_key']   = $data['amazon_s3_secret_key'];
 			$settings['bucket_name']  = $data['amazon_s3_bucket_name'];
-			$settings['file_path']    = $data['amazon_s3_file_path'];
+
+			$bucket = $settings['bucket_name'];
+
+			if ( ( ! isset( $data['amazon_s3_bucket_region'][ $bucket ] ) || '' === $data['amazon_s3_bucket_region'][ $bucket ] ) && isset( $settings['bucket_name'] ) ) {
+				// Retrieve the bucket region if we don't have it
+				// Or the bucket has changed since we last retrieved it
+				$s3     = new S3( $settings['access_key'], $settings['secret_key'] );
+				$region = $s3->getBucketLocation( $settings['bucket_name'] );
+
+				$data['amazon_s3_bucket_region'] = array( $settings['bucket_name'] => $region );
+				update_option( 'ninja_forms_settings', $data );
+			} else {
+				$region = $data['amazon_s3_bucket_region'][ $bucket ];
+			}
+
+			$settings['bucket_region'] = $region;
+			$settings['file_path']     = $data['amazon_s3_file_path'];
+
 			$this->connected_settings = $settings;
 		}
 	}
