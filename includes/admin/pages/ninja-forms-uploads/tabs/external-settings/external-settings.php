@@ -44,7 +44,11 @@ function ninja_forms_register_tab_external_settings(){
     }
 }
 
-add_action('admin_init', 'ninja_forms_external_url');
+add_action( 'admin_init', 'ninja_forms_external_url' );
+if ( defined( 'NINJA_FORMS_UPLOADS_USE_PUBLIC_URL') && NINJA_FORMS_UPLOADS_USE_PUBLIC_URL ) {
+	add_action('template_redirect', 'ninja_forms_external_url');
+}
+
 function ninja_forms_external_url() {
 	if ( isset( $_GET['nf-upload'] ) ) {
 		$args = array(
@@ -68,7 +72,12 @@ function ninja_forms_upload_file_url( $data ) {
 	if ( isset( $data['upload_location'] ) && ( isset( $data['upload_id'] ) ) && ninja_forms_upload_is_location_external( $data['upload_location'] ) ) {
 		$external = NF_Upload_External::instance( $data['upload_location'] );
 		if ( $external && $external->is_connected() ) {
-			$file_url = admin_url( '?nf-upload='. $data['upload_id'] );
+			$url_path = '?nf-upload='. $data['upload_id'];
+			if ( defined( 'NINJA_FORMS_UPLOADS_USE_PUBLIC_URL') && NINJA_FORMS_UPLOADS_USE_PUBLIC_URL ) {
+				$file_url = home_url( $url_path );
+			} else {
+				$file_url = admin_url( $url_path );
+			}
 		}
 	}
 
