@@ -109,7 +109,11 @@ abstract class NF_Upload_External {
 					}
 					$data['user_value'][ $key ]['external_path'] = $path;
 					$data['user_value'][ $key ]['external_filename'] = $args['filename'];
-					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $data['user_value'][ $key ] ) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
+
+					// Allow the external service classes to alter the file data
+					$file_data = $this->enrich_file_data( $data['user_value'][ $key ] );
+
+					$wpdb->update( NINJA_FORMS_UPLOADS_TABLE_NAME, array( 'data' => serialize( $file_data) ), array( 'id' => $data['user_value'][ $key ]['upload_id'] ) );
 				}
 			}
 
@@ -132,7 +136,7 @@ abstract class NF_Upload_External {
 		return '';
 	}
 
-	public function file_url( $filename, $path ) {
+	public function file_url( $filename, $path = '', $data = array() ) {
 		return '';
 	}
 
@@ -148,6 +152,10 @@ abstract class NF_Upload_External {
 		$filename = time() . '-'. $filename;
 
 		return apply_filters( 'ninja_forms_uploads_' . $this->slug . '_filename', $filename );
+	}
+
+	public function enrich_file_data( $data ){
+		return $data;
 	}
 
 } 

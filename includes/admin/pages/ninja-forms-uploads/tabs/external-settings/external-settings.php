@@ -55,7 +55,7 @@ function ninja_forms_external_url() {
 		if ( $external ) {
 			$path     = ( isset( $upload['data']['external_path'] ) ) ? $upload['data']['external_path'] : '';
 			$filename = ( isset( $upload['data']['external_filename'] ) ) ? $upload['data']['external_filename'] : $upload['data']['file_name'];
-			$file_url = $external->file_url( $filename, $path );
+			$file_url = $external->file_url( $filename, $path, $upload['data'] );
 		}
 		wp_redirect( $file_url );
 		die();

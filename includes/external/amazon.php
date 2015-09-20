@@ -124,9 +124,37 @@ class External_Amazon extends NF_Upload_External {
 		return array( 'path' => $this->file_path, 'filename' => $filename );
 	}
 
-	public function file_url( $filename, $path = '' ) {
-		$s3 = $this->prepare( $path );
+	/**
+	 * Get the Amazon S3 URL using bucket and region for the file, falling
+	 * back to the settings bucket and region
+	 *
+	 * @param string $filename
+	 * @param string $path
+	 * @param array  $data
+	 *
+	 * @return string
+	 */
+	public function file_url( $filename, $path = '', $data = array() ) {
+		$bucket = ( isset( $data['bucket'] ) ) ? $data['bucket'] : $this->connected_settings['bucket_name'];
+		$region = ( isset( $data['region'] ) ) ? $data['region'] : $this->connected_settings['bucket_region'];
 
-		return $s3->getAuthenticatedURL( $this->connected_settings['bucket_name'], $this->file_path . $filename, 3600 );
+		$s3 = $this->prepare( $path, $region );
+
+		return $s3->getAuthenticatedURL( $bucket, $this->file_path . $filename, 3600 );
+	}
+
+	/**
+	 * Save the bucket and region to the file data
+	 * in case it is changed in settings.
+	 *
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	public function enrich_file_data( $data ) {
+		$data['bucket'] = $this->connected_settings['bucket_name'];
+		$data['region'] = $this->connected_settings['bucket_region'];
+
+		return $data;
 	}
 }
