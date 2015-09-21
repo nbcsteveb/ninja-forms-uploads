@@ -71,12 +71,29 @@ class External_Amazon extends NF_Upload_External {
 			$settings['access_key']   = $data['amazon_s3_access_key'];
 			$settings['secret_key']   = $data['amazon_s3_secret_key'];
 			$settings['bucket_name']  = $data['amazon_s3_bucket_name'];
-			$settings['file_path']    = $data['amazon_s3_file_path'];
+
+			$bucket = $settings['bucket_name'];
+
+			if ( ( ! isset( $data['amazon_s3_bucket_region'][ $bucket ] ) || '' === $data['amazon_s3_bucket_region'][ $bucket ] ) && isset( $settings['bucket_name'] ) ) {
+				// Retrieve the bucket region if we don't have it
+				// Or the bucket has changed since we last retrieved it
+				$s3     = new S3( $settings['access_key'], $settings['secret_key'] );
+				$region = $s3->getBucketLocation( $settings['bucket_name'] );
+
+				$data['amazon_s3_bucket_region'] = array( $settings['bucket_name'] => $region );
+				update_option( 'ninja_forms_settings', $data );
+			} else {
+				$region = $data['amazon_s3_bucket_region'][ $bucket ];
+			}
+
+			$settings['bucket_region'] = $region;
+			$settings['file_path']     = $data['amazon_s3_file_path'];
+
 			$this->connected_settings = $settings;
 		}
 	}
 
-	private function prepare( $path = false ) {
+	private function prepare( $path = false, $region = null ) {
 		$this->load_settings();
 		if ( ! $path ) {
 			$path = apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $this->connected_settings['file_path'] );
@@ -85,7 +102,18 @@ class External_Amazon extends NF_Upload_External {
 		}
 		$this->file_path = $this->sanitize_path( $path );
 
-		return new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
+		$s3 = new S3( $this->connected_settings['access_key'], $this->connected_settings['secret_key'] );
+
+		if ( is_null( $region ) ) {
+			$region = $this->connected_settings['bucket_region'];
+		}
+
+		if ( '' !== $region && 'US' !== $region ) {
+			// Use the correct API endpoint for non US standard bucket regions
+			$s3->setEndpoint( 's3-' . $this->connected_settings['bucket_region'] . '.amazonaws.com' );
+		}
+
+		return $s3;
 	}
 
 	public function upload_file( $file, $path = false ) {
@@ -96,9 +124,37 @@ class External_Amazon extends NF_Upload_External {
 		return array( 'path' => $this->file_path, 'filename' => $filename );
 	}
 
-	public function file_url( $filename, $path = '' ) {
-		$s3 = $this->prepare( $path );
+	/**
+	 * Get the Amazon S3 URL using bucket and region for the file, falling
+	 * back to the settings bucket and region
+	 *
+	 * @param string $filename
+	 * @param string $path
+	 * @param array  $data
+	 *
+	 * @return string
+	 */
+	public function file_url( $filename, $path = '', $data = array() ) {
+		$bucket = ( isset( $data['bucket'] ) ) ? $data['bucket'] : $this->connected_settings['bucket_name'];
+		$region = ( isset( $data['region'] ) ) ? $data['region'] : $this->connected_settings['bucket_region'];
 
-		return $s3->getAuthenticatedURL( $this->connected_settings['bucket_name'], $this->file_path . $filename, 3600 );
+		$s3 = $this->prepare( $path, $region );
+
+		return $s3->getAuthenticatedURL( $bucket, $this->file_path . $filename, 3600 );
+	}
+
+	/**
+	 * Save the bucket and region to the file data
+	 * in case it is changed in settings.
+	 *
+	 * @param array $data
+	 *
+	 * @return array
+	 */
+	public function enrich_file_data( $data ) {
+		$data['bucket'] = $this->connected_settings['bucket_name'];
+		$data['region'] = $this->connected_settings['bucket_region'];
+
+		return $data;
 	}
 }
