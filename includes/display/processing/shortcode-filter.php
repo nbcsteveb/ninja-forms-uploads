@@ -26,7 +26,9 @@ function ninja_forms_uploads_shortcode( $value, $atts ){
 				if ( ! isset ( $val['file_url'] ) )
 					continue;
 
-				$url = $val['file_url'];
+				// Make sure we get link to external file if necessary
+				$url = ninja_forms_upload_file_url( $val );
+
 				$filename = $val['user_file_name'];
 				switch( $method ){
 					case 'embed':
