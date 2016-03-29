@@ -95,7 +95,7 @@ class Dropbox_API
      * @param  boolean     $overwrite Should the file be overwritten? (Default: true)
      * @return object      stdClass
      */
-    public function putFile($file, $filename = false, $path = '', $overwrite = true)
+    public function postFile($file, $filename = false, $path = '', $overwrite = true)
     {
         if (file_exists($file)) {
             if (filesize($file) <= 157286400) {
@@ -117,6 +117,27 @@ class Dropbox_API
         // Throw an Exception if the file does not exist
         throw new Exception('Local file ' . $file . ' does not exist');
     }
+
+	/**
+	 * Uploads a physical file from disk
+	 * Dropbox impose a 150MB limit to files uploaded via the API. If the file
+	 *
+	 * @param string     $file
+	 * @param bool|false $filename
+	 * @param string     $path
+	 * @param bool|true  $overwrite
+	 *
+	 * @return mixed
+	 */
+	public function putFile($file, $filename = false, $path = '', $overwrite = true)
+	{
+		$this->OAuth->setInFile( fopen( $file, 'r' ) );
+		$path   = $this->encodePath( $filename );
+		$call   = 'files_put/' . $this->root . '/' . $path;
+		$params = array( 'overwrite' => (int) $overwrite );
+
+		return $this->fetch( 'PUT', self::CONTENT_URL, $call, $params );
+	}
 
     /**
      * Uploads file data from a stream
