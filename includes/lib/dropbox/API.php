@@ -132,7 +132,7 @@ class Dropbox_API
 	public function putFile($file, $filename = false, $path = '', $overwrite = true)
 	{
 		$this->OAuth->setInFile( fopen( $file, 'r' ) );
-		$path   = $this->encodePath( $filename );
+		$path   = $this->encodePath( trailingslashit( $path ) . $filename );
 		$call   = 'files_put/' . $this->root . '/' . $path;
 		$params = array( 'overwrite' => (int) $overwrite );
 
