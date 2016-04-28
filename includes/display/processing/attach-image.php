@@ -61,7 +61,7 @@ function ninja_forms_attach_files_to_post( $post_id ){
 						}
 					}
 
-					if( isset( $file['complete'] ) AND $file['complete'] == 1 && ( ! isset ( $file['changed'] ) || $file['changed'] == 1 ) ){
+					if( isset( $file['complete'] ) AND $file['complete'] == 1 && ( ! isset ( $file['changed'] ) || $file['changed'] == 1 || ( isset( $ninja_forms_processing->data['form'][ 'create_post' ] ) && 1 == $ninja_forms_processing->data['form'][ 'create_post' ]  ) ) ){
 						
 						$filename = $file['file_path'].$file['file_name'];
 						$attach_array = ninja_forms_generate_metadata( $post_id, $filename );
