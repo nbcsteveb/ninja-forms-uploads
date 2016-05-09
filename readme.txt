@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
-Tested up to: 4.4.2
-Stable tag: 1.4.8
+Tested up to: 4.5.2
+Stable tag: 1.4.9
 
 
 License: GPLv2 or later
@@ -27,6 +27,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 1.4.9 (09 May 2016) =
+
+*Bugs:*
+
+* Fixed a bug where duplicate file names could cause the extension to be changed. Credit to "fruh of citadelo" for reporting the security vulnerability.
 
 = 1.4.8 (29 March 2016) =
 
