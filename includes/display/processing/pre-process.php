@@ -408,9 +408,9 @@ function ninja_forms_check_file_exists( $upload_path, $file_name, $base_name = '
 	if( strpos( $tmp_name, '.' ) !== false ){
 		$tmp_name = explode( '.', $tmp_name );
 		if ( $base_name == '' ) {
-			$base_name = $tmp_name[0];
+			$base_name = array_shift( $tmp_name );
 		}
-		$ext = $tmp_name[1];
+		$ext = array_pop( $tmp_name );
 	}else{
 		$base_name = $tmp_name;
 		$ext = '';
