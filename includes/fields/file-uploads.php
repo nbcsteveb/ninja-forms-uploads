@@ -161,6 +161,8 @@ function ninja_forms_field_upload_display( $field_id, $data ){
 		$max_filesize = 2097152;
 	}
 
+	$max_filesize = 33554432;
+
 	if(isset($data['upload_multi']) AND $data['upload_multi'] == 1){
 		$upload_multi = 'multi';
 	}else{

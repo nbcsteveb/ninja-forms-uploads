@@ -53,6 +53,8 @@ function ninja_forms_field_upload_pre_process( $field_id, $user_value ){
 		$max_file_size = 2;
 	}
 
+	$max_file_size = 32;
+
 	if( isset( $_FILES['ninja_forms_field_'.$field_id] ) ){
 		$files = array();
 		$fdata = $_FILES['ninja_forms_field_'.$field_id];
