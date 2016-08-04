@@ -74,7 +74,7 @@ class External_Amazon extends NF_Upload_External {
 
 			$bucket = $settings['bucket_name'];
 
-			if ( ( ! isset( $data['amazon_s3_bucket_region'][ $bucket ] ) || '' === $data['amazon_s3_bucket_region'][ $bucket ] ) && isset( $settings['bucket_name'] ) ) {
+			if ( ( ! isset( $data['amazon_s3_bucket_region'][ $bucket ] ) || empty( $data['amazon_s3_bucket_region'][ $bucket ] ) ) && isset( $settings['bucket_name'] ) ) {
 				// Retrieve the bucket region if we don't have it
 				// Or the bucket has changed since we last retrieved it
 				$s3     = new S3( $settings['access_key'], $settings['secret_key'] );
