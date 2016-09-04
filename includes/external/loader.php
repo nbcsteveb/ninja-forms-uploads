@@ -51,33 +51,56 @@ class NF_FU_External_Loader {
 	 * @return array
 	 */
 	public function get_services() {
-		$services = glob( dirname( NF_File_Uploads()->plugin_file_path ) . '/includes/external/services/*', GLOB_ONLYDIR );
-		$services = array_map( 'basename', $services );
+		$default_services = glob( dirname( NF_File_Uploads()->plugin_file_path ) . '/includes/external/services/*', GLOB_ONLYDIR );
+		$default_services = array_map( 'basename', $default_services );
 
-		return $services;
+		$services = array();
+		foreach ( $default_services as $service ) {
+			$file = dirname( NF_File_Uploads()->plugin_file_path ) . '/includes/external/services/' . $service . '/service.php';
+
+			$services[ $file ] = $service;
+		}
+
+		/**
+		 * External services
+		 *
+		 * Array of external services, key is the path to service file, value is service name slug
+		 *
+		 * @return array $services
+		 */
+		return apply_filters( 'ninja_forms_uploads_external_service', $services );
 	}
 
-    /**
-     * Get external service
-     *
-     * @param string $service
-     *
-     * @return bool|NF_FU_External_Service
-     */
-    public function get( $service ) {
+	/**
+	 * Get external service
+	 *
+	 * @param string     $service
+	 * @param null|array $services
+	 *
+	 * @return bool|NF_FU_External_Service
+	 */
+    public function get( $service, $services = null ) {
         $service = $this->get_upload_location( $service );
 
-        if ( ! in_array( $service, $this->get_services() ) ) {
-            return false;
-        }
+	    if ( is_null( $services ) ) {
+		    $services = $this->get_services();
+	    }
 
-        $file = dirname( NF_File_Uploads()->plugin_file_path ) . '/includes/external/services/' . $service . '/service.php';
-		if ( ! file_exists( $file ) ) {
-			return false;
-		}
+	    if ( ! in_array( $service, $services ) ) {
+		    return false;
+	    }
+
+	    $file = array_search( $service, $services );
+	    if ( ! file_exists( $file ) ) {
+		    return false;
+	    }
 
 		$service = ucfirst( $service );
 		$class   = $this->class_prefix . $service . '_Service';
+
+	    if ( ! method_exists( $class, 'instance') ) {
+	    	return false;
+	    }
 
 		$external = call_user_func( array( $class, 'instance' ) );
 
@@ -90,8 +113,13 @@ class NF_FU_External_Loader {
 	 * @return bool
 	 */
 	protected function is_connected_services() {
-		foreach ( $this->get_services() as $service ) {
-			if ( $this->get( $service )->is_compatible() && $this->get( $service )->is_connected() ) {
+		$services = $this->get_services();
+		foreach ( $services as $service ) {
+			if ( ! ( $instance = $this->get( $service, $services ) ) ) {
+				continue;
+			}
+
+			if ( $instance->is_compatible() && $instance->is_connected() ) {
 				return true;
 			}
 		}
@@ -137,7 +165,10 @@ class NF_FU_External_Loader {
 	public function add_settings_to_whitelist( $whitelist ) {
 		$services = $this->get_services();
 		foreach ( $services as $service ) {
-			$settings  = $this->get( $service )->get_settings();
+			if ( ! ( $instance = $this->get( $service, $services ) ) ) {
+				continue;
+			}
+			$settings  = $instance->get_settings();
 			$whitelist = array_merge( $whitelist, $settings );
 		}
 
@@ -151,7 +182,9 @@ class NF_FU_External_Loader {
 		$services = $this->get_services();
 
 		foreach ( $services as $service ) {
-			$instance = $this->get( $service );
+			if ( ! ( $instance = $this->get( $service, $services ) ) ) {
+				continue;
+			}
 
 			$requirements = $instance->get_missing_requirements();
 			if ( $requirements ) {

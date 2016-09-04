@@ -86,7 +86,9 @@ abstract class NF_FU_External_Abstracts_Service {
 			$parts = explode( '_', str_replace( '_Service', '', $called_class ) );
 			$slug  = strtolower( array_pop( $parts ) );
 
-			self::$instances[ $called_class ]->file          = str_replace( '/abstracts/', '/services/' . $slug . '/', __FILE__ );
+			$reflector = new ReflectionClass( $called_class );
+
+			self::$instances[ $called_class ]->file          = $reflector->getFileName();
 			self::$instances[ $called_class ]->slug          = $slug;
 			self::$instances[ $called_class ]->library_alias = 'NF_FU_Library_' . ucfirst( $slug );
 			
@@ -134,7 +136,13 @@ abstract class NF_FU_External_Abstracts_Service {
 	 * Load our library class
 	 */
 	protected function alias_library() {
-		require_once dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/' . self::get_instance()->library_file;
+		$file = self::get_instance()->library_file;
+		if ( ! file_exists( self::get_instance()->library_file ) ) {
+			$file = dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/' . self::get_instance()->library_file;
+		}
+
+		require_once $file;
+
 		class_alias( self::get_instance()->library_class, self::get_instance()->library_alias );
 	}
 
