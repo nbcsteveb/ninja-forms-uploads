@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
-Tested up to: 4.5.2
-Stable tag: 1.4.9
+Tested up to: 4.6
+Stable tag: 3.0
 
 
 License: GPLv2 or later
@@ -27,6 +27,11 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0 (06 Sept 2016) =
+
+* Updated with Ninja Forms v3.x compatibility
+* Deprecated Ninja Forms v2.9.x compatible code
 
 = 1.4.9 (09 May 2016) =
 

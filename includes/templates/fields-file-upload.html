@@ -1,0 +1,22 @@
+<script id="nf-tmpl-field-file-upload" type="text/template">
+	<!-- The fileinput-button span is used to style the file input field as button -->
+	<button class="btn btn-success fileinput-button">
+        <span>Select files</span>
+		<!-- The file input field used as target for the file upload widget -->
+        <input class="nf-element" type="file" <% uploadMulti ? print( 'name="files[]" multiple' ) : print( 'name="files"' ) %>>
+        <input type="hidden" class="nf-upload-nonce" value="<% print( uploadNonce ) %>">
+    </button>
+	<!-- The global progress bar -->
+	<div class="progress">
+		<div class="progress-bar progress-bar-success animate"></div>
+	</div>
+	<!-- The container for the uploaded files -->
+	<div class="files_uploaded"></div>
+</script>
+
+<script id="nf-tmpl-field-file-row" type="text/template">
+	<p>
+		<%= name %>
+		<a href="#" class="delete">Delete</a>
+	</p>
+</script>

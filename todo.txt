@@ -1,0 +1,25 @@
+
+submissions edit/view/td/export
+Especially for external
+(file-uploads.php in dedprecated)
+
+Go through all deprecated files and check for parity of features
+
+Always use file URL wrapper for FU URL ??
+
+Work through all the TODOs
+
+Other plugins
+
+Saved Progress:
+Handle forms saved but not completed
+Edit field when using saved addon - removing existing files
+Handle default value of array of URLs to show existing files wit save progress
+Submitted / saved progress
+ninja_forms_localize_field_settings_{field_type}
+ninja_forms_render_default_value
+
+Front end editor
+- Set as featured image for the Post
+
+multi-part forms
