@@ -126,7 +126,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 				'file_name'       => $file_name,
 				'file_path'       => $target_file,
 				'file_url'        => $file_url,
-				'upload_location' => 'server',
+				'upload_location' => __( 'server', 'ninja-forms-uploads' ),
 				'complete'        => 0,
 			);
 
