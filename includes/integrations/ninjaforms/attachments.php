@@ -83,6 +83,10 @@ class NF_FU_Integrations_NinjaForms_Attachments {
 				continue;
 			}
 
+			if ( ! isset( $data['fields'] ) ) {
+				continue;
+			}
+
 			$field_key = str_replace( 'field_list_fu_email_attachments-', '', $key );
 			foreach ( $data['fields'] as $field ) {
 				if ( $field_key != $field['key'] ) {

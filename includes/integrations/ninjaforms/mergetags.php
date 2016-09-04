@@ -53,7 +53,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 		}
 
 		if ( empty( $return ) ) {
-			return $value;
+			return is_array( $value ) ? $value[0] : $value;
 		}
 
 		return implode( '<br>', $return );
