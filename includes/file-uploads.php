@@ -117,7 +117,6 @@ final class NF_FU_File_Uploads {
 		add_filter( 'ninja_forms_field_template_file_paths', array( $this, 'register_template_path' ) );
 		add_action( 'ninja_forms_loaded', array( $this, 'load_plugin' ) );
 		add_action( 'init', array( $this, 'load_translations' ) );
-        add_action( 'ninja_forms_builder_templates', array( $this, 'builder_templates' ) );
 
 		// External services
 		self::$instance->externals = new NF_FU_External_Loader();
@@ -175,11 +174,6 @@ final class NF_FU_File_Uploads {
 
 		return $file_paths;
 	}
-
-    public function builder_scripts()
-    {
-        wp_localize_script( 'nf-fu-builder', 'nffui18n', self::config( 'i18nFUBuilder' ) );
-    }
 
 	/**
 	 * Install plugin

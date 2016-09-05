@@ -74,6 +74,9 @@ class NF_FU_Display_Render {
 				'upload_error'         => __( 'Nonce error, upload failed', 'ninja-forms-uploads' ),
 				'unknown_upload_error' => __( 'Upload error, upload failed', 'ninja-forms-uploads' ),
 				'max_file_size_error'  => __( 'File exceeds maximum file size. File must be under %nMB.', 'ninja-forms-uploads' ),
+				'max_file_size_error'  => __( 'File exceeds maximum file size. File must be under %nMB.', 'ninja-forms-uploads' ),
+				'select_files'         => __( 'Select Files', 'ninja-forms-uploads' ),
+				'delete_file'          => __( 'Delete', 'ninja-forms_uploads' ),
 			),
 		) );
 
