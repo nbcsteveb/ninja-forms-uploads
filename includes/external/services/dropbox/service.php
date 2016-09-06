@@ -34,7 +34,7 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 		$prefix = 'Dropbox_';
 		$path   = dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/' . dirname( self::get_instance()->library_file ) . '/';
 
-		NF_File_Uploads()->maybe_load_class( $class, $prefix, $path );
+		NF_File_Uploads()->maybe_load_class( $class, $prefix, $path, true );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 		if ( is_null( $this->client ) ) {
 			$this->load_settings();
 
-			$this->client = new Dropbox_API( $this->get_oauth() );
+			$this->client = new NF_FU_Library_Dropbox( $this->get_oauth() );
 		}
 
 		return $this->client;

@@ -243,14 +243,16 @@ final class NF_FU_File_Uploads {
 	 * @param string $class
 	 * @param string $prefix
 	 * @param string $dir
+	 * @param bool   $preserve_case
 	 */
-	public function maybe_load_class( $class, $prefix, $dir ) {
+	public function maybe_load_class( $class, $prefix, $dir, $preserve_case = false ) {
 		if ( false === strpos( $class, $prefix ) ) {
 			return;
 		}
 
 		$class_name = str_replace( $prefix, '', $class );
-		$class_file = str_replace( '_', DIRECTORY_SEPARATOR, strtolower( $class_name ) ) . '.php';
+		$class_name = $preserve_case ? $class_name : strtolower( $class_name );
+		$class_file = str_replace( '_', DIRECTORY_SEPARATOR, $class_name ) . '.php';
 
 		if ( file_exists( $dir . $class_file ) ) {
 			require_once $dir . $class_file;
