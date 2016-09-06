@@ -5,7 +5,7 @@
 class NF_FU_Database_Migrations_Uploads extends NF_Abstracts_Migration {
 
 	protected $version = '3.0';
-	protected $version_key = 'uploads_version';
+	protected $version_key = 'uploads_table_version';
 
 	public function __construct() {
 		parent::__construct( 'ninja_forms_uploads', '' );
@@ -35,11 +35,11 @@ class NF_FU_Database_Migrations_Uploads extends NF_Abstracts_Migration {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
 		}
+		
+		$current_version = Ninja_Forms()->get_setting( $this->version_key, NF_File_Uploads()->plugin_version );
+		$version        = $this->version;
 
-		$curent_version = Ninja_Forms()->get_setting( $this->version_key, 0 );
-		$version        = NF_File_Uploads()->plugin_version;
-
-		if ( version_compare( $curent_version, $version, '!=' ) ) {
+		if ( version_compare( $current_version, $version, '!=' ) ) {
 
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
