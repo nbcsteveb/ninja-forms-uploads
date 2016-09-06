@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ninja-forms-uploads\n"
 "Report-Msgid-Bugs-To: help@ninjaforms.com\n"
-"POT-Creation-Date: 2016-09-02 21:58+0100\n"
-"PO-Revision-Date: 2016-09-02 21:58+GMT+0100\n"
+"POT-Creation-Date: 2016-09-06 12:41+0100\n"
+"PO-Revision-Date: 2016-09-06 12:41+GMT+0100\n"
 "Last-Translator: Ninja Forms <help@ninjaforms.com>\n"
 "Language-Team: English <LL@li.org>\n"
 "Language: \n"
@@ -106,7 +106,8 @@ msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:119
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:235
-#: includes/admin/uploadstable.php:211
+#: includes/admin/uploadstable.php:211 includes/admin/uploadstable.php:265
+#: includes/display/render.php:79
 msgid "Delete"
 msgstr ""
 
@@ -147,6 +148,7 @@ msgstr ""
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:175
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:271
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/sidebars/select-uploads.php:117
+#: includes/admin/uploadstable.php:69
 msgid "File Name"
 msgstr ""
 
@@ -162,16 +164,19 @@ msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:178
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:274
+#: includes/admin/uploadstable.php:72
 msgid "Form Name"
 msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:179
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:275
+#: includes/admin/uploadstable.php:73
 msgid "User Name"
 msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:180
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:276
+#: includes/admin/uploadstable.php:74
 msgid "File Location"
 msgstr ""
 
@@ -182,7 +187,7 @@ msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:234
 #: deprecated/includes/fields/file-uploads.php:363
-#: includes/admin/uploadstable.php:204 includes/fields/upload.php:172
+#: includes/admin/uploadstable.php:204 includes/fields/upload.php:188
 msgid "View"
 msgstr ""
 
@@ -523,7 +528,6 @@ msgid "Puts in a random 5 character string"
 msgstr ""
 
 #: includes/admin/menus/uploads.php:16
-#: includes/integrations/ninjaforms/attachments.php:26
 #: includes/templates/admin-menu-uploads.html.php:3
 msgid "File Uploads"
 msgstr ""
@@ -538,6 +542,14 @@ msgstr ""
 
 #: includes/admin/uploadstable.php:25
 msgid "No uploads found."
+msgstr ""
+
+#: includes/admin/uploadstable.php:70
+msgid "Original File name"
+msgstr ""
+
+#: includes/admin/uploadstable.php:71
+msgid "Created"
 msgstr ""
 
 #: includes/admin/uploadstable.php:349
@@ -657,8 +669,12 @@ msgstr ""
 msgid "Upload error, upload failed"
 msgstr ""
 
-#: includes/display/render.php:76
+#: includes/display/render.php:76 includes/display/render.php:77
 msgid "File exceeds maximum file size. File must be under %nMB."
+msgstr ""
+
+#: includes/display/render.php:78
+msgid "Select Files"
 msgstr ""
 
 #: includes/external/action.php:36
@@ -666,6 +682,7 @@ msgid "External File Upload"
 msgstr ""
 
 #: includes/external/action.php:62
+#: includes/integrations/ninjaforms/attachments.php:44
 msgid "Field"
 msgstr ""
 
@@ -707,11 +724,15 @@ msgstr ""
 msgid "The default file path in the bucket where the file will be uploaded to."
 msgstr ""
 
-#: includes/integrations/ninjaforms/post.php:17
+#: includes/integrations/ninjaforms/attachments.php:36
+msgid "Attach File Uploads"
+msgstr ""
+
+#: includes/integrations/postcreation/postcreation.php:17
 msgid "Featured Image"
 msgstr ""
 
-#: includes/integrations/ninjaforms/post.php:26
+#: includes/integrations/postcreation/postcreation.php:26
 msgid "Single file upload fields only"
 msgstr ""
 
