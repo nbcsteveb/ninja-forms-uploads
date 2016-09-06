@@ -173,7 +173,27 @@
 						return;
 					}
 
+					var allowed = view.model.get( 'upload_multi_count' );
+					var limit = 1;
+
+					if ( 1 != allowed ) {
+						var uploaded = view.model.get( 'files' ).length;
+						limit = allowed - uploaded;
+
+						if ( limit <= 0 ) {
+							var error_msg = nf_upload.strings.file_limit.replace( '%n', allowed );
+							self.showError( error_msg, view );
+							self.resetProgress( e );
+							return;
+						}
+					}
+
+					var count = 0;
 					$.each( data.result.data.files, function( index, file ) {
+						count++;
+						if ( count > limit ) {
+							return false;
+						}
 						files.add( new fileModel( { name: file.name, tmp_name: file.tmp_name, fieldID: fieldID } ) );
 					} );
 
