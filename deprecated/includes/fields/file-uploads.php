@@ -359,7 +359,16 @@ function nf_field_upload_edit_sub_value( $field_id, $user_value ) {
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][changed]" value="0">
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_id]" value="<?php echo $file['upload_id'];?>">
 			<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][file_url]" value="<?php echo $file['file_url'];?>">
-			
+			<?php if( isset( $file['upload_location'] ) ) : ?>
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][upload_location]" value="<?php echo $file['upload_location'];?>">
+			<?php endif; ?>
+			<?php if( isset( $file['external_path'] ) ) : ?>
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][external_path]" value="<?php echo $file['external_path'];?>">
+			<?php endif; ?>
+			<?php if( isset( $file['external_filename'] ) ) : ?>
+				<input type="hidden" name="fields[<?php echo $field_id; ?>][<?php echo $key;?>][external_filename]" value="<?php echo $file['external_filename'];?>">
+			<?php endif; ?>
+
 			<a href="<?php echo $file_url; ?>" target="_blank"><?php _e( 'View', 'ninja-forms-uploads' ); ?></a> <input type="text" value="<?php echo $file_url; ?>">
 			<br />
 			<?php
@@ -381,12 +390,6 @@ function nf_field_upload_filter_edit_sub_value( $user_value, $field_id, $sub_id 
 				foreach ( $user_value as $key => $file ) {
 				if ( empty ( $user_value[ $key ]['file_url'] ) ) {
 					unset ( $user_value[ $key ] );
-				} else {
-					$name = basename( $file['file_url'] );
-					$user_value[ $key ]['user_file_name'] = $name;
-					$user_value[ $key ]['file_name'] = $name;
-					$user_value[ $key ]['file_path'] = '';
-					$user_value[ $key ]['upload_id'] = '';					
 				}
 			}
 		}
