@@ -14,6 +14,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 	protected $_section = 'common';
 	protected $_templates = 'file-upload';
 	protected $_icon = 'file';
+    protected $_test_value = false;
 	protected $_settings_all_fields = array(
 		'key',
 		'label',
