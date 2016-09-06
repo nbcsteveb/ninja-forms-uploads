@@ -84,7 +84,7 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 		if ( is_null( $this->client ) ) {
 			$this->load_settings();
 
-			$this->client = new Dropbox_API( $this->get_oauth() );
+			$this->client = new NF_FU_Library_Dropbox( $this->get_oauth() );
 		}
 
 		return $this->client;
