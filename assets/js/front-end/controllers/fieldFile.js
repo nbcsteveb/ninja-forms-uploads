@@ -15,7 +15,7 @@
 
 	var fileView = Marionette.ItemView.extend( {
 		tagName: 'nf-section',
-		template: '#nf-tmpl-field-file-row',
+		template: '#tmpl-nf-field-file-row',
 
 		events: {
 			'click .delete': 'clickDelete'
