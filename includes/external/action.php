@@ -44,9 +44,13 @@ class NF_FU_External_Action extends NF_Abstracts_Action {
 	protected function build_settings() {
 		$settings = array();
 		$external = NF_File_Uploads()->externals;
+		$services = $external->get_services();
+		foreach ( $services as $service ) {
+			if ( ! ( $instance = $external->get( $service, $services ) ) ) {
+				continue;
+			}
 
-		foreach ( $external->get_services() as $service ) {
-			if ( $external->get( $service )->is_compatible() && $external->get( $service )->is_connected() ) {
+			if ( $instance->is_compatible() && $instance->is_connected() ) {
 
 				$settings[ 'field_list_' . $service ] = array(
 					'name'        => 'field_list_' . $service,
@@ -68,19 +72,6 @@ class NF_FU_External_Action extends NF_Abstracts_Action {
 		}
 
 		$this->_settings = array_merge( $this->_settings, $settings );
-	}
-
-	/**
-	 * Process the upload to the service for those files selected in the action
-	 *
-	 * @param array $file
-	 *
-	 * @return array|NF_Database_Models_Field
-	 */
-	protected function handle( $file, $service ) {
-		$file['data'] = NF_File_Uploads()->externals->get( $service )->process_upload( $file['data'] );
-
-		return $file;
 	}
 
 	/**
@@ -108,7 +99,13 @@ class NF_FU_External_Action extends NF_Abstracts_Action {
 				}
 
 				foreach ( $field['files'] as $files_key => $file ) {
-					$field['files'][ $files_key ] = $this->handle( $file, $service );
+					if ( ! ( $instance = NF_File_Uploads()->externals->get( $service, $services ) ) ) {
+						continue;
+					}
+
+					$file['data'] = $instance->process_upload( $file['data'] );
+
+					$field['files'][ $files_key ] = $file;
 				}
 
 				$data['fields'][ $key ] = $field;
