@@ -3,7 +3,7 @@
 	<button class="btn btn-success fileinput-button">
         <span>{{{ nf_upload.strings.select_files }}}</span>
 		<!-- The file input field used as target for the file upload widget -->
-        <input class="nf-element" type="file" {{{ data.uploadMulti ? print( 'name="files[]" multiple' ) : print( 'name="files"' ) }}}>
+        <input class="nf-element" type="file" <# data.uploadMulti ? print( 'name="files[]" multiple' ) : print ( 'name="files"' ) #>>
         <input type="hidden" class="nf-upload-nonce" value="{{{ data.uploadNonce }}}">
     </button>
 	<!-- The global progress bar -->
