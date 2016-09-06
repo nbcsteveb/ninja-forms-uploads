@@ -66,12 +66,12 @@ class NF_FU_Admin_UploadsTable extends WP_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'cb'                => '<input type="checkbox" />',
-			'filename'          => 'File Name',
-			'original_filename' => 'Original File name',
-			'date'              => 'Created',
-			'form_name'         => 'Form Name',
-			'user_name'         => 'User Name',
-			'file_location'     => 'File Location',
+			'filename'          => __( 'File Name', 'ninja-forms-uploads' ),
+			'original_filename' => __( 'Original File name', 'ninja-forms-uploads' ),
+			'date'              => __( 'Created', 'ninja-forms-uploads' ),
+			'form_name'         => __( 'Form Name', 'ninja-forms-uploads' ),
+			'user_name'         => __( 'User Name', 'ninja-forms-uploads' ),
+			'file_location'     => __( 'File Location', 'ninja-forms-uploads' ),
 		);
 
 		return $columns;
@@ -262,7 +262,7 @@ class NF_FU_Admin_UploadsTable extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'bulk-delete-upload' => 'Delete',
+			'bulk-delete-upload' => __( 'Delete', 'ninja-forms-uploads' ),
 		);
 
 		return $actions;
