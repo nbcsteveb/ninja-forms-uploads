@@ -193,7 +193,7 @@ final class NF_FU_File_Uploads {
 			return false;
 		}
 
-		return version_compare( get_option( 'ninja_forms_version', '0' ), '3', '<'  );
+		return version_compare( get_option( 'ninja_forms_version', '0' ), '3', '>='  );
 	}
 
 	/**
