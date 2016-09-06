@@ -4,7 +4,7 @@
 
 class NF_FU_Database_Migrations_Uploads extends NF_Abstracts_Migration {
 
-	protected $version = '3.0';
+	protected $version = '3.0.1';
 	protected $version_key = 'uploads_table_version';
 
 	public function __construct() {
@@ -15,15 +15,16 @@ class NF_FU_Database_Migrations_Uploads extends NF_Abstracts_Migration {
 	 * Create table
 	 */
 	public function run() {
-		$query = "CREATE TABLE $this->table_name (
-             		id int(11) NOT NULL AUTO_INCREMENT,
-				 	user_id int(11) DEFAULT NULL,
-				  	form_id int(11) NOT NULL,
-				  	field_id int(11) NOT NULL,
-				  	data longtext CHARACTER SET utf8 NOT NULL,
-				  	date_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE KEY (`id`)
-        ) $this->charset_collate;";
+		$query = "
+CREATE TABLE $this->table_name (
+id int(11) NOT NULL AUTO_INCREMENT,
+user_id int(11) DEFAULT NULL,
+form_id int(11) NOT NULL,
+field_id int(11) NOT NULL,
+data longtext CHARACTER SET utf8 NOT NULL,
+date_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (id)
+) $this->charset_collate;";
 
 		dbDelta( $query );
 	}
