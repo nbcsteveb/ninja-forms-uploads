@@ -28,7 +28,7 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
-= 3.0 (06 Sept 2016) =
+= 3.0 (06 September 2016) =
 
 * Updated with Ninja Forms v3.x compatibility
 * Deprecated Ninja Forms v2.9.x compatible code
