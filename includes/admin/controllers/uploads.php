@@ -42,11 +42,14 @@ class NF_FU_Admin_Controllers_Uploads {
 				continue;
 			}
 
-			if ( ! isset( $field['save_to_server'] ) ) {
+			// The ability to always remove the file from the server, overriding the field setting
+			$force_remove = apply_filters( 'ninja_forms_uploads_remove_files_from_server', false, $field );
+
+			if ( ! $force_remove && ! isset( $field['save_to_server'] ) ) {
 				continue;
 			}
 
-			if ( "1" == $field['save_to_server'] ) {
+			if ( ! $force_remove && "1" == $field['save_to_server'] ) {
 				continue;
 			}
 
