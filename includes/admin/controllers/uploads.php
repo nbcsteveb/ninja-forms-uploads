@@ -53,14 +53,10 @@ class NF_FU_Admin_Controllers_Uploads {
 				continue;
 			}
 
-			foreach ( $field['value'] as $upload_id => $url ) {
-				$upload = $this->get( $upload_id );
-
-				$file_path = $upload->file_path;
-
-				if ( file_exists( $file_path ) ) {
+			foreach ( $field['files'] as $file ) {
+				if ( isset( $file['data']['file_path'] ) && file_exists( $file['data']['file_path'] ) ) {
 					// Delete local file
-					unlink( $file_path );
+					unlink( $file['data']['file_path'] );
 				}
 			}
 		}
