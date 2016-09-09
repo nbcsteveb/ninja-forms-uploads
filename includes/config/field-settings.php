@@ -58,7 +58,6 @@ return apply_filters( 'ninja_forms_uploads_field_settings', array(
 	'upload_types'       => array(
 		'name'        => 'upload_types',
 		'type'        => 'textbox',
-		'placeholder' => 'jpg, gif, png',
 		'label'       => __( 'Allowed File Types', 'ninja-forms-uploads' ),
 		'help'        => __( 'Comma Separated List of allowed file types. An empty list means all file types are accepted. (i.e. jpg, gif, png, pdf) This is not fool-proof and can be tricked, please remember that there is always a danger in allowing users to upload files.', 'ninja-forms-uploads' ),
 		'group'       => 'restrictions',
