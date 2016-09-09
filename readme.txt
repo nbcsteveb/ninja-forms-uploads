@@ -4,7 +4,11 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.6
+<<<<<<< HEAD
 Stable tag: 3.0.2
+=======
+Stable tag: 3.0.1
+>>>>>>> master
 
 
 License: GPLv2 or later
