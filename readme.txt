@@ -35,8 +35,9 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 *Bugs:*
 
 * Fixed SQL format that breaks dbdelta.
-* Fix Dropbox case sensitive issues.
-* Fix Multiple file selection bug.
+* Fixed Dropbox case sensitive issues.
+* Fixed Multiple file selection bug.
+* Fixed a bug with uploading .jpg files.
 
 = 3.0.1 (06 September 2016) =
 
