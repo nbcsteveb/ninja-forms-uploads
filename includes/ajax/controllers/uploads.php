@@ -152,7 +152,12 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 			return true;
 		}
 
-		$types = explode( ',', strtolower( $upload_types ) );
+		$types = str_replace( '.', '', strtolower( $upload_types ) );
+		$types = array_map( 'trim', explode( ',', $types ) );
+
+		if ( in_array( 'jpg', $types ) && ! in_array( 'jpeg', $types ) ) {
+			$types[] = 'jpeg';
+		}
 
 		// Check for whitelist of file types
 		if ( is_array( $types )&& false === $this->whitelisted( $types, $file['type'] ) ) {
@@ -195,7 +200,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 	protected function whitelisted( $types, $file_type) {
 		// Check for whitelisted file types
 		foreach ( $types as $extension ) {
-			if ( ( false !== stripos( $file_type, ltrim( $extension, '.' ) ) ) ) {
+			if ( false !== stripos( $file_type, $extension ) ) {
 				return true;
 			}
 		}

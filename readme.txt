@@ -4,7 +4,11 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.6
+<<<<<<< HEAD
+Stable tag: 3.0.2
+=======
 Stable tag: 3.0.1
+>>>>>>> master
 
 
 License: GPLv2 or later
@@ -27,6 +31,17 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.2 (09 September 2016) =
+
+* Update to 3.0.2
+
+*Bugs:*
+
+* Fixed SQL format that breaks dbdelta.
+* Fixed Dropbox case sensitive issues.
+* Fixed Multiple file selection bug.
+* Fixed a bug with uploading .jpg files.
 
 = 3.0.1 (06 September 2016) =
 
