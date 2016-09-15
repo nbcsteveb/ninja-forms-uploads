@@ -263,4 +263,10 @@
 	} );
 
 	new uploadController();
+
+	$( document ).ready( function() {
+		$( 'body' ).on( 'click', 'button.fileinput-button', function( e ) {
+			$( this ).next( 'input.nf-element' ).click();
+		} );
+	} );
 })( jQuery );
