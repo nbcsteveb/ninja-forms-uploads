@@ -159,8 +159,9 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 			$types[] = 'jpeg';
 		}
 
-		// Check for whitelist of file types
-		if ( is_array( $types )&& false === $this->whitelisted( $types, $file['type'] ) ) {
+		// Check file extension against whitelist of file extensions
+		$extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
+		if ( is_array( $types ) && false === $this->whitelisted( $types, $extension ) ) {
 			return false;
 		}
 
