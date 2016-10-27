@@ -22,6 +22,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		'required',
 		'classes',
 		'manual_key',
+		'help',
+		'description',
 	);
 
 	public function __construct() {
