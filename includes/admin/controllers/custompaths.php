@@ -70,6 +70,31 @@ class NF_FU_Admin_Controllers_CustomPaths {
 	}
 
 	/**
+	 * Replace the custom filename with values of fields submitted using ID and Key
+	 *
+	 * @param string $string
+	 * @param array $fields
+	 *
+	 * @return string
+	 */
+	public function replace_field_shortcodes( $string, $fields ) {
+		foreach( $fields as $field ) {
+			$find   = array();
+			$find[] = $this->identifier . 'field_' . $field['id'] . $this->identifier;
+			$find[] = $this->identifier . 'field_' . Ninja_Forms()->form()->get_field( $field['id'] )->get_setting( 'key' ) . $this->identifier;
+
+			$user_value = $field['value'];
+			if ( is_array( $field['value'] ) ) {
+				$user_value = implode( ',', $field['value'] );
+			}
+			$replace = strtolower( sanitize_file_name( trim( $user_value ) ) );
+			$string  = str_replace( $find, $replace, $string );
+		}
+
+		return $string;
+	}
+
+	/**
 	 * Replace a single shortcode
 	 *
 	 * @param string $string

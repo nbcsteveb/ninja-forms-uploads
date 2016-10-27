@@ -99,6 +99,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			// Custom renaming of files
 			if ( ! empty( $field['upload_rename'] ) ) {
 				$file_name = NF_File_Uploads()->controllers->custom_paths->replace_shortcodes( $field['upload_rename'] );
+				$file_name = NF_File_Uploads()->controllers->custom_paths->replace_field_shortcodes( $file_name, $data['fields'] );
+
 				$file_name .= '.' . $ext;
 			}
 
