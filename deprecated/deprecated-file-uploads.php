@@ -3,7 +3,7 @@
 global $wpdb;
 
 define("NINJA_FORMS_UPLOADS_DIR", dirname( __FILE__ ) );
-define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( NF_File_Uploads()->plugin_file_path ) ) );
+define("NINJA_FORMS_UPLOADS_URL", plugins_url()."/".basename( dirname( NF_File_Uploads()->plugin_file_path ) ) . '/deprecated'  );
 define("NINJA_FORMS_UPLOADS_TABLE_NAME", $wpdb->prefix . "ninja_forms_uploads");
 define("NINJA_FORMS_UPLOADS_VERSION", NF_File_Uploads()->plugin_version );
 define("NINJA_FORMS_UPLOADS_DEFAULT_LOCATION", 'server' );

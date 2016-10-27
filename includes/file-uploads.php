@@ -117,6 +117,7 @@ final class NF_FU_File_Uploads {
 		add_filter( 'ninja_forms_field_template_file_paths', array( $this, 'register_template_path' ) );
 		add_action( 'ninja_forms_loaded', array( $this, 'load_plugin' ) );
 		add_action( 'init', array( $this, 'load_translations' ) );
+		add_action( 'ninja_forms_rollback', array( $this, 'handle_rollback' ) );
 
 		// External services
 		self::$instance->externals = new NF_FU_External_Loader();
@@ -360,5 +361,22 @@ final class NF_FU_File_Uploads {
 		}
 
 		return $clean_value;
+	}
+
+	/**
+	 * Ensure the deprecated activation code is run on Ninja Forms 2.9.x rollback
+	 */
+	public function handle_rollback() {
+		global $wpdb;
+		if ( ! defined( 'NINJA_FORMS_UPLOADS_TABLE_NAME' ) ) {
+			define( 'NINJA_FORMS_UPLOADS_TABLE_NAME', $wpdb->prefix . "ninja_forms_uploads" );
+		}
+		if ( ! defined( 'NINJA_FORMS_UPLOADS_VERSION' ) ) {
+			define( "NINJA_FORMS_UPLOADS_VERSION", $this->plugin_version );
+		}
+
+		require_once dirname( $this->plugin_file_path ) . '/deprecated/includes/activation.php';
+
+		ninja_forms_uploads_activation();
 	}
 }
