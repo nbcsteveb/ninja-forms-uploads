@@ -24,7 +24,7 @@ $max_mb_int = substr( $max_filesize, 0, -1 );
 if ( isset( $default ) ) {
 	$default = ( $default < $max_mb_int ) ? $default : $max_mb_int;
 } else {
-	$default = '';
+	$default = $max_mb_int;
 }
 
 return apply_filters( 'ninja_forms_uploads_settings_upload', array(

@@ -61,7 +61,13 @@ class NF_FU_Admin_Controllers_Settings {
 			return $default;
 		}
 
-		return $settings[ $key ];
+		$value = $settings[ $key ];
+
+		if ( 'max_filesize' === $key && empty( $value ) ) {
+			return $default;
+		}
+
+		return $value;
 	}
 
 	/**

@@ -53,7 +53,7 @@ return apply_filters( 'ninja_forms_uploads_field_settings', array(
 		'max'   => $max_mb_int, // TODO fix max not appearing in markup
 		'width' => 'one-half',
 		'group' => 'restrictions',
-		'help'  => sprintf( __( 'Maximum size of a file that can be uploaded. Defaults to %sM', 'ninja-forms-uploads' ), NF_File_Uploads()->controllers->settings->get_setting( 'max_filesize' ) ),
+		'help'  => sprintf( __( 'Maximum size of a file that can be uploaded. Defaults to %sM', 'ninja-forms-uploads' ), NF_File_Uploads()->controllers->settings->get_setting( 'max_filesize', $max_mb_int ) ),
 	),
 	'upload_types'       => array(
 		'name'        => 'upload_types',
