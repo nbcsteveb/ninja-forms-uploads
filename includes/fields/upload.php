@@ -35,6 +35,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$this->_settings = array_merge( $this->_settings, $settings );
 
         add_action( 'nf_admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+        add_filter( 'ninja_forms_merge_tag_value_' . $this->_name, array( $this, 'merge_tag_value' ), 10, 2 );
 	}
 
 	/**
@@ -46,6 +47,11 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 	 * @return mixed
 	 */
 	public function process( $field, $data ) {
+
+	    if( isset( $data[ 'fields' ][ $field[ 'id' ] ][ 'files' ] ) ){
+	        $field[ 'files' ] = $data[ 'fields' ][ $field[ 'id' ] ][ 'files' ];
+        }
+
 		if ( ! isset( $field['files'] ) || empty( $field['files'] ) ) {
 			return $data;
 		}
@@ -56,8 +62,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$user_id  = $this->get_user_id();
 		$base_dir = NF_File_Uploads()->controllers->uploads->get_path( '' );
 		$base_url = NF_File_Uploads()->controllers->uploads->get_url( '' );
-		$base_dir .= $data['form_id'] . '/';
-		$base_url .= $data['form_id'] . '/';
+		$base_dir .= $data['id'] . '/';
+		$base_url .= $data['id'] . '/';
 		wp_mkdir_p( $base_dir );
 
 		// Get custom directory using common data for shortcodes
@@ -133,7 +139,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 				'complete'        => 0,
 			);
 
-			$upload_id = NF_File_Uploads()->model->insert( $user_id, $data['form_id'], $field['id'], $file_data );
+			$upload_id = NF_File_Uploads()->model->insert( $user_id, $data['id'], $field['id'], $file_data );
 
 			$file_data['upload_id'] = $upload_id;
 
@@ -157,6 +163,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 			// Set the field value to the array of file upload data
 			$data['fields'][ $key ]['value'] = $submission_data;
+            $this->submissions_data[ $field['id'] ] = $submission_data;
+
 			// Persist the data for each file
 			$data['fields'][ $key ]['files'] = $field['files'];
 
@@ -229,4 +237,9 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$url = plugin_dir_url( NF_File_Uploads()->plugin_file_path );
 		wp_enqueue_script( 'nf-fu-file-upload', $url . 'assets/js/builder/controllers/fieldFile.js', array( 'nf-builder' ) );
 	}
+
+	public function merge_tag_value( $field_value, $field_settings )
+    {
+        return $this->submission_data[ $field_settings[ 'id' ] ];
+    }
 }
