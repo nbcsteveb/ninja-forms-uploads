@@ -240,6 +240,12 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 	public function merge_tag_value( $field_value, $field_settings )
     {
-        return $this->submission_data[ $field_settings[ 'id' ] ];
+        $return = array();
+        $field_id = $field_settings[ 'id' ];
+        $uploads = $this->submissions_data[ $field_id ];
+        foreach( $uploads as $id => $value ){
+            $return[] = $value;
+        }
+        return implode( ',', $return );
     }
 }
