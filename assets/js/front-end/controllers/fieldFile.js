@@ -204,7 +204,7 @@
 					self.resetProgress( e );
 
 					nfRadio.channel( 'fields' ).trigger( 'change:field', view.el, view.model );
-					nfRadio.channel( 'form-' + formID ).trigger( 'enable:submit' );
+					nfRadio.channel( 'form-' + formID ).trigger( 'enable:submit', view.model );
 				},
 				start: function() {
 					if ( 1 == view.model.get( 'upload_multi_count' ) ) {
@@ -213,7 +213,7 @@
 						files.reset();
 					}
 					nfRadio.channel( 'fields' ).request( 'remove:error', view.model.id, 'upload-file-error' );
-					nfRadio.channel( 'form-' + formID ).trigger( 'disable:submit', 'File upload in progress.' );
+					nfRadio.channel( 'form-' + formID ).trigger( 'disable:submit', view.model );
 				},
 				progressall: function( e, data ) {
 					var progress = parseInt( data.loaded / data.total * 100, 10 );
