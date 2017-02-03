@@ -15,7 +15,7 @@ class NF_FU_Admin_Controllers_CustomPaths {
 	 */
 	public function get_shortcodes() {
 		$shortcodes = array(
-			'filename'    => __( 'Puts in the title of the current form without any spaces', 'ninja-forms-uploads' ),
+			'filename'    => __( 'Puts in the title of the file without any spaces', 'ninja-forms-uploads' ),
 			'formtitle'   => __( 'Puts in the title of the current form without any spaces', 'ninja-forms-uploads' ),
 			'date'        => __( 'Puts in the date in yyyy-mm-dd (1998-05-23) format', 'ninja-forms-uploads' ),
 			'month'       => __( 'Puts in the month in mm (04) format', 'ninja-forms-uploads' ),

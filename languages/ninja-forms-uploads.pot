@@ -1,15 +1,15 @@
 # Ninja Forms Uploads Pot File.
-# Copyright (C) 2016
+# Copyright (C) 2017
 # This file is distributed under the same license as the ninja-forms-uploads package.
-# Ninja Forms <help@ninjaforms.com>, 2016.
+# Ninja Forms <help@ninjaforms.com>, 2017.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ninja-forms-uploads\n"
 "Report-Msgid-Bugs-To: help@ninjaforms.com\n"
-"POT-Creation-Date: 2016-09-06 12:41+0100\n"
-"PO-Revision-Date: 2016-09-06 12:41+GMT+0100\n"
+"POT-Creation-Date: 2017-02-03 11:15+0000\n"
+"PO-Revision-Date: 2017-02-03 11:15+GMT\n"
 "Last-Translator: Ninja Forms <help@ninjaforms.com>\n"
 "Language-Team: English <LL@li.org>\n"
 "Language: \n"
@@ -186,8 +186,8 @@ msgid "View this file"
 msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/browse-uploads/browse-uploads.php:234
-#: deprecated/includes/fields/file-uploads.php:363
-#: includes/admin/uploadstable.php:204 includes/fields/upload.php:188
+#: deprecated/includes/fields/file-uploads.php:372
+#: includes/admin/uploadstable.php:204 includes/fields/upload.php:193
 msgid "View"
 msgstr ""
 
@@ -257,7 +257,7 @@ msgid "Filter File Uploads"
 msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/external-settings/external-settings.php:36
-#: includes/external/loader.php:125
+#: includes/external/loader.php:153
 msgid "External Settings"
 msgstr ""
 
@@ -303,7 +303,6 @@ msgid "For example: /custom/director/structure/"
 msgstr ""
 
 #: deprecated/includes/admin/pages/ninja-forms-uploads/tabs/upload-settings/upload-settings.php:129
-#: includes/admin/controllers/custompaths.php:18
 #: includes/admin/controllers/custompaths.php:19
 msgid "Puts in the title of the current form without any spaces"
 msgstr ""
@@ -417,13 +416,13 @@ msgid "Disconnected from %s"
 msgstr ""
 
 #: deprecated/includes/external/external.php:65
-#: includes/external/loader.php:166
+#: includes/external/loader.php:199
 #, php-format
 msgid "%s Settings"
 msgstr ""
 
 #: deprecated/includes/fields/file-uploads.php:13
-#: includes/config/field-settings.php:62
+#: includes/config/field-settings.php:61
 msgid "Allowed File Types"
 msgstr ""
 
@@ -507,6 +506,10 @@ msgid ""
 "activated.%s"
 msgstr ""
 
+#: includes/admin/controllers/custompaths.php:18
+msgid "Puts in the title of the file without any spaces"
+msgstr ""
+
 #: includes/admin/controllers/custompaths.php:25
 msgid "Puts in the user's user ID if they are logged in"
 msgstr ""
@@ -569,43 +572,43 @@ msgstr[1] ""
 msgid "Unable to move uploaded temp file"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:178
-#: includes/ajax/controllers/uploads.php:203
+#: includes/ajax/controllers/uploads.php:184
+#: includes/ajax/controllers/uploads.php:209
 #, php-format
 msgid "File extension of %s not allowed"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:235
+#: includes/ajax/controllers/uploads.php:241
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:238
+#: includes/ajax/controllers/uploads.php:244
 msgid ""
 "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
 "the HTML form"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:241
+#: includes/ajax/controllers/uploads.php:247
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:244
+#: includes/ajax/controllers/uploads.php:250
 msgid "No file was uploaded"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:247
+#: includes/ajax/controllers/uploads.php:253
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:250
+#: includes/ajax/controllers/uploads.php:256
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:253
+#: includes/ajax/controllers/uploads.php:259
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: includes/ajax/controllers/uploads.php:257
+#: includes/ajax/controllers/uploads.php:263
 msgid "Unknown upload error"
 msgstr ""
 
@@ -638,7 +641,7 @@ msgstr ""
 msgid "Maximum size of a file that can be uploaded. Defaults to %sM"
 msgstr ""
 
-#: includes/config/field-settings.php:63
+#: includes/config/field-settings.php:62
 msgid ""
 "Comma Separated List of allowed file types. An empty list means all file "
 "types are accepted. (i.e. jpg, gif, png, pdf) This is not fool-proof and can "
@@ -681,12 +684,12 @@ msgstr ""
 msgid "External File Upload"
 msgstr ""
 
-#: includes/external/action.php:62
+#: includes/external/action.php:66
 #: includes/integrations/ninjaforms/attachments.php:44
 msgid "Field"
 msgstr ""
 
-#: includes/external/loader.php:158
+#: includes/external/loader.php:191
 #, php-format
 msgid "%s requires %s"
 msgstr ""
