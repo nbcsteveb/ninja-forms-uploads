@@ -188,6 +188,10 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 	 * @return string
 	 */
 	public function admin_form_element( $id, $value ) {
+		if ( ! is_array( $value ) || empty( $value ) ) {
+			return $value;
+		}
+
 		$new_value = array();
 		foreach ( $value as $upload_id => $file_url ) {
 			$new_value[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a><br><input class="widefat" type="text" value="%1$s">', $file_url, __( 'View', 'ninja-forms-uploads' ) );
