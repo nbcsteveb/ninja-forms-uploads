@@ -50,6 +50,10 @@ class NF_FU_Admin_Controllers_Uploads {
 				continue;
 			}
 
+			if ( empty( $field['value'] ) ) {
+				continue;
+			}
+
 			foreach ( $field['value'] as $upload_id => $url ) {
 				$upload = $this->get( $upload_id );
 
