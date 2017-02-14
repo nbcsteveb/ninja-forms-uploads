@@ -63,4 +63,13 @@ return apply_filters( 'ninja_forms_uploads_field_settings', array(
 		'group'       => 'restrictions',
 		'width'       => 'one-half',
 	),
+	'select_files_text' => array(
+		'name'  => 'select_files_text',
+		'type'  => 'textbox',
+		'value' => __( 'Select Files', 'ninja-forms-uploads' ),
+		'label' => __( 'Select Files Button Text', 'ninja-forms-uploads' ),
+		'group' => 'display',
+		'width' => 'full',
+		'help'  => __( 'Change the button text for selecting files.', 'ninja-forms-uploads' ),
+	),
 ) );
