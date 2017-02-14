@@ -122,9 +122,24 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 			return false;
 		}
 
-		// Check for max_filesize
-		$max_file_size_mb = NF_File_Uploads()->controllers->settings->get_max_file_size_mb();
-		$max_file_size    = NF_File_Uploads()->controllers->settings->max_filesize( $max_file_size_mb );
+		$form_id = filter_input( INPUT_POST, 'form_id', FILTER_VALIDATE_INT );
+		$field_id = filter_input( INPUT_POST, 'field_id', FILTER_VALIDATE_INT );
+
+		if ( ! isset( $form_id ) || ! isset( $field_id ) ) {
+			// Haven't got the data to grab field settings, bail
+			return true;
+		}
+
+		$field = Ninja_Forms()->form( $form_id )->field( $field_id )->get();
+
+		// Check for max_filesize in the field settings
+		$max_file_size_mb = $field->get_setting( 'max_file_size' );
+		if ( ! $max_file_size_mb ) {
+			// Use the global setting
+			$max_file_size_mb = NF_File_Uploads()->controllers->settings->get_max_file_size_mb();
+		}
+
+		$max_file_size = NF_File_Uploads()->controllers->settings->max_filesize( $max_file_size_mb );
 		if ( $file['size'] > $max_file_size ) {
 			$this->_errors[] = __( 'File exceeds maximum file size. File must be under: ' . $max_file_size_mb . 'MB.', 'ninja-forms-uploads' );
 
@@ -136,17 +151,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 			return false;
 		}
 
-		$form_id = filter_input( INPUT_POST, 'form_id', FILTER_VALIDATE_INT );
-		$field_id = filter_input( INPUT_POST, 'field_id', FILTER_VALIDATE_INT );
-
-		if ( ! isset( $form_id ) || ! isset( $field_id ) ) {
-			// Haven't got the data to grab field settings, bail
-			return true;
-		}
-
-		$field = Ninja_Forms()->form( $form_id )->field( $field_id )->get();
 		$upload_types = $field->get_setting( 'upload_types' );
-
 		if ( empty( $upload_types ) ) {
 			// We aren't restricting file types, bail
 			return true;
