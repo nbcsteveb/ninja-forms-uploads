@@ -59,6 +59,10 @@ class NF_FU_Integrations_NinjaForms_Attachments {
 	 */
 	protected function form_has_file_uploads( $form_id ) {
 		foreach ( Ninja_Forms()->form( $form_id )->get_fields() as $field_id => $field ) {
+			if ( ! is_object( $field ) || ! method_exists( $field, 'get_settings' ) ) {
+				continue;
+			}
+
 			$get_settings = $field->get_settings();
 			if ( NF_FU_File_Uploads::TYPE == $get_settings['type'] ) {
 				return true;
