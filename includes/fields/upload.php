@@ -232,7 +232,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 	 * Load admin scripts for the builder
 	 */
 	public function admin_enqueue_scripts() {
+	    $ver = NF_File_Uploads()->plugin_version;
 		$url = plugin_dir_url( NF_File_Uploads()->plugin_file_path );
-		wp_enqueue_script( 'nf-fu-file-upload', $url . 'assets/js/builder/controllers/fieldFile.js', array( 'nf-builder' ) );
+		wp_enqueue_script( 'nf-fu-file-upload', $url . 'assets/js/builder/controllers/fieldFile.js', array( 'nf-builder' ), $ver );
 	}
 }
