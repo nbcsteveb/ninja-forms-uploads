@@ -61,7 +61,7 @@ function ninja_forms_add_upload_menu(){
 	add_action('admin_print_styles-' . $uploads, 'ninja_forms_admin_css');
 }
 
-register_activation_hook( __FILE__, 'ninja_forms_uploads_activation' );
+register_activation_hook( NF_File_Uploads()->plugin_file_path, 'ninja_forms_uploads_activation' );
 
 $plugin_settings = get_option( 'ninja_forms_settings' );
 
@@ -97,7 +97,7 @@ function ninja_forms_uploads_load_translations() {
 	load_textdomain( $textdomain, $wp_lang_dir );
 
 	/** Translations: Secondly, look in plugin's "lang" folder = default */
-	$plugin_dir = trailingslashit( basename( dirname( __FILE__ ) ) );
+	$plugin_dir = trailingslashit( basename( dirname( NF_File_Uploads()->plugin_file_path ) ) );
 	$lang_dir = apply_filters( 'ninja_forms_uploads_lang_dir', $plugin_dir . 'languages/' );
 	load_plugin_textdomain( $textdomain, FALSE, $lang_dir );
 
