@@ -29,11 +29,8 @@ class NF_FU_External_Loader {
 		add_filter( 'ninja_forms_uploads_file_url', array( $this, 'generate_url' ), 10, 2);
 		add_filter( 'ninja_forms_uploads_file_location', array( $this, 'get_service_display_name' ) );
 
-		$url_hook = 'admin_init';
-		if ( defined( 'NINJA_FORMS_UPLOADS_USE_PUBLIC_URL' ) && NINJA_FORMS_UPLOADS_USE_PUBLIC_URL ) {
-			$url_hook = 'template_redirect';
-		}
-		add_action( $url_hook, array( $this, 'handle_external_url' ) );
+		add_action( 'admin_init', array( $this, 'handle_external_url' ) );
+		add_action( 'template_redirect', array( $this, 'handle_external_url_public' ) );
 	}
 
 	/**
@@ -237,6 +234,17 @@ class NF_FU_External_Loader {
 		}
 
 		return $file_url;
+	}
+
+	/**
+	 * Listen for external service file URLs and redirect to the service URL with a public URL
+	 */
+	public function handle_external_url_public() {
+		if ( ! defined( 'NINJA_FORMS_UPLOADS_USE_PUBLIC_URL' ) || ! NINJA_FORMS_UPLOADS_USE_PUBLIC_URL ) {
+			return;
+		}
+
+		$this->handle_external_url();
 	}
 
 	/**
