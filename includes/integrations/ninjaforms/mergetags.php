@@ -9,7 +9,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	 */
 	public function __construct() {
 		add_filter( 'ninja_forms_merge_tag_value_' . NF_FU_File_Uploads::TYPE, array( $this, 'merge_tag_value' ), 10, 2 );
-		add_filter( 'ninja_forms_submission_actions', array( $this, 'add_raw_mergetag' ) , 10, 2 );
+		add_filter( 'ninja_forms_submission_actions', array( $this, 'add_plain_mergetag' ) , 10, 2 );
 	}
 
 	/**
@@ -61,14 +61,14 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	}
 
 	/**
-	 * Add raw mergetag which is a comma separated list of URLs. Eg. {field:xxx:raw}
+	 * Add plain mergetag which is a comma separated list of URLs. Eg. {field:xxx:plain}
 	 *
 	 * @param array $actions
 	 * @param array $data
 	 *
 	 * @return array
 	 */
-	public function add_raw_mergetag( $actions, $data ) {
+	public function add_plain_mergetag( $actions, $data ) {
 		$all_merge_tags = Ninja_Forms()->merge_tags;
 
 		foreach ( $data['fields'] as $field ) {
@@ -86,7 +86,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 				$output[] = $item->getAttribute( 'href' );
 			}
 			$value = implode( ',', $output );
-			$all_merge_tags['fields']->add( 'field_' . $field['settings']['key'] . '_raw', $field['settings']['key'], "{field:{$field['settings']['key']}:raw}", $value );
+			$all_merge_tags['fields']->add( 'field_' . $field['settings']['key'] . '_plain', $field['settings']['key'], "{field:{$field['settings']['key']}:plain}", $value );
 		}
 
 		// Save merge tags
