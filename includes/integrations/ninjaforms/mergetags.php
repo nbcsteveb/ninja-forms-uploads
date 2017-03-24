@@ -71,6 +71,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	public function add_plain_mergetag( $actions, $data ) {
 		$all_merge_tags = Ninja_Forms()->merge_tags;
 
+		$count = 0;
 		foreach ( $data['fields'] as $field ) {
 			if ( NF_FU_File_Uploads::TYPE !== $field['settings']['type'] ) {
 				continue;
@@ -79,18 +80,27 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 			$existing_values = $all_merge_tags['fields']->get_merge_tags();
 			$existing_value  = $existing_values[ 'field_' . $field['settings']['key'] ]['field_value'];
 
+			if ( empty( $existing_value ) ) {
+				continue;
+			}
+
 			$dom = new DomDocument();
 			$dom->loadHTML( $existing_value );
 			$output = array();
 			foreach ( $dom->getElementsByTagName( 'a' ) as $item ) {
 				$output[] = $item->getAttribute( 'href' );
 			}
+
 			$value = implode( ',', $output );
 			$all_merge_tags['fields']->add( 'field_' . $field['settings']['key'] . '_plain', $field['settings']['key'], "{field:{$field['settings']['key']}:plain}", $value );
+			$count++;
 		}
 
-		// Save merge tags
-		Ninja_Forms()->merge_tags = $all_merge_tags;
+
+		if ( $count > 0 ) {
+			// Save merge tags
+			Ninja_Forms()->merge_tags = $all_merge_tags;
+		}
 
 		return $actions;
 	}
