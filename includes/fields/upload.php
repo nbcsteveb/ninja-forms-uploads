@@ -122,8 +122,12 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			$file_url = trailingslashit( $base_url . ltrim( $custom_upload_dir, '/' ) ) . $file_name;
 
 			// Move to permanent location
-			// TODO error handling
 			$result = rename( $tmp_file, $target_file );
+			if ( false === $result ) {
+				$data['errors']['fields'][ $field['id'] ] = __( 'File upload error' );
+
+				return $data;
+			}
 
 			// Add to FU table
 			$file_data = array(
