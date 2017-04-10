@@ -91,6 +91,10 @@ class NF_FU_External_Action extends NF_Abstracts_Action {
 				continue;
 			}
 
+			if ( ! isset( $field['files'] ) ||  empty( $field['files'] )) {
+				continue;
+			}
+
 			foreach ( $services as $service ) {
 				$field_key = 'field_list_' . $service . '-' . $field['key'];
 
@@ -109,6 +113,8 @@ class NF_FU_External_Action extends NF_Abstracts_Action {
 				}
 
 				$data['fields'][ $key ] = $field;
+
+				do_action( 'ninja_forms_uploads_external_action_post_process', $field, $service );
 			}
 		}
 
