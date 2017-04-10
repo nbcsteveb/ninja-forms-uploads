@@ -69,7 +69,7 @@ class NF_FU_Display_Render {
 			'nonces'  => array(
 				'file_upload' => wp_create_nonce( 'nf-file-upload' ),
 			),
-			'strings' => array(
+			'strings' => apply_filters( 'ninja_forms_uploads_js_strings', array(
 				'file_limit'           => __( 'Max %n files are allowed', 'ninja-forms-uploads' ),
 				'upload_error'         => __( 'Nonce error, upload failed', 'ninja-forms-uploads' ),
 				'unknown_upload_error' => __( 'Upload error, upload failed', 'ninja-forms-uploads' ),
@@ -77,7 +77,7 @@ class NF_FU_Display_Render {
 				'max_file_size_error'  => __( 'File exceeds maximum file size. File must be under %nMB.', 'ninja-forms-uploads' ),
 				'select_files'         => isset( $settings['select_files_text'] ) ? $settings['select_files_text'] : __( 'Select Files', 'ninja-forms-uploads' ),
 				'delete_file'          => __( 'Delete', 'ninja-forms-uploads' ),
-			),
+			) ),
 		) );
 
 		wp_enqueue_style( 'nf-fu-jquery-fileupload', $url . 'assets/css/file-upload.css', array(), $ver );
