@@ -194,7 +194,13 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 		$new_value = array();
 		foreach ( $value as $upload_id => $file_url ) {
-			$new_value[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a><br><input class="widefat" type="text" value="%1$s">', $file_url, __( 'View', 'ninja-forms-uploads' ) );
+			$upload = NF_File_Uploads()->controllers->uploads->get( $upload_id );
+
+			if ( false !== $upload ) {
+				$file_url = NF_File_Uploads()->controllers->uploads->get_file_url( $file_url, $upload->data );
+			}
+
+			$new_value[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a><br><input class="widefat" disabled type="text" value="%1$s">', $file_url, __( 'View', 'ninja-forms-uploads' ) );
 		}
 
 		return implode( '<br>', $new_value );
