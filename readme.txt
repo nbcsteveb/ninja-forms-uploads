@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.7
-Stable tag: 3.0.5
+Stable tag: 3.0.6
 
 License: GPLv2 or later
 
@@ -26,6 +26,15 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.6 (12 April 2017) =
+
+*Bugs:*
+
+* Fixed the description text for custom file upload paths.
+* Fixed PHP warnings related to uploading a file to a remote server.
+* Links to uploaded files should now always show properly.
+* Fixed a bug that could cause unexpected output when displaying a form.
 
 = 3.0.5 (07 December 2016) =
 
