@@ -53,6 +53,11 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 
 		$values = $this->get_values( $field );
 
+		if ( $update_all_fields ) {
+			$field['value'] = $values['html'];
+			$all_merge_tags['fields']->add_field( $field );
+		}
+
 		foreach ( $tags as $type => $value_type ) {
 			$tag    = '_' . $type;
 			$suffix = ':' . $type;
