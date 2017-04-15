@@ -32,7 +32,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 		$values = $this->get_values( $field );
 
 		// Add plain mergetag
-		$this->update_mergetags( $field, array( 'plain' => 'plain') );
+		$this->update_mergetags( $field, array( 'plain' => 'plain'), false );
 
 		return $values['html'];
 	}
@@ -44,7 +44,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	 * @param array $tags Array keyed on field suffix ('default' for normal field), and value as the type of value, eg.
 	 *                    html or plain
 	 */
-	protected function update_mergetags( $field, $tags = array() ) {
+	protected function update_mergetags( $field, $tags = array(), $update_all_fields = true ) {
 		$all_merge_tags = Ninja_Forms()->merge_tags;
 
 		if ( ! isset( $all_merge_tags['fields'] ) ) {
