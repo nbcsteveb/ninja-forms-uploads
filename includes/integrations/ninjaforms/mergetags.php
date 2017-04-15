@@ -31,7 +31,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 			}
 
 			// Update Mergetags
-			$this->update_mergetags( $field, array( 'plain' => 'plain') );
+			$this->update_mergetags( $field, $this->get_default_tags() );
 		}
 
 		return $actions;
@@ -68,18 +68,27 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 			return $value;
 		}
 
-		if ( ! isset( $field['files'] ) || empty( $field['files'] )  ) {
+		if ( ! isset( $field['files'] ) || empty( $field['files'] ) ) {
 			return '';
 		}
 
 		$values = $this->get_values( $field );
 
-		// Add plain mergetag
-		$this->update_mergetags( $field, array( 'plain' => 'plain'), false );
-
 		return $values['html'];
 	}
 
+	/**
+	 * @return array
+	 */
+	protected function get_default_tags() {
+		return array(
+			'default' => 'html',
+			'plain'   => 'plain',
+			'embed'   => 'embed',
+			'link'    => 'link',
+			'url'     => 'url',
+		);
+	}
 	/**
 	 * Update mergetag(s) value
 	 *
@@ -87,7 +96,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	 * @param array $tags Array keyed on field suffix ('default' for normal field), and value as the type of value, eg.
 	 *                    html or plain
 	 */
-	protected function update_mergetags( $field, $tags = array(), $update_all_fields = true ) {
+	protected function update_mergetags( $field, $tags = array() ) {
 		$all_merge_tags = Ninja_Forms()->merge_tags;
 
 		if ( ! isset( $all_merge_tags['fields'] ) ) {
@@ -96,10 +105,8 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 
 		$values = $this->get_values( $field );
 
-		if ( $update_all_fields ) {
-			$field['value'] = $values['html'];
-			$all_merge_tags['fields']->add_field( $field );
-		}
+		$field['value'] = $values['html'];
+		$all_merge_tags['fields']->add_field( $field );
 
 		foreach ( $tags as $type => $value_type ) {
 			$tag    = '_' . $type;
@@ -136,15 +143,27 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 			$file_url = NF_File_Uploads()->controllers->uploads->get_file_url( $upload->file_url, $upload->data );
 
 			$values['html'][]  = sprintf( '<a href="%s" target="_blank">%s</a>', $file_url, $upload->file_name );
+			$values['link'][]  = sprintf( '<a href="%s" target="_blank">%s</a>', $file_url, $upload->file_name );
+			$values['embed'][] = sprintf( '<img src="%s">', $file_url );
+			$values['url'][]   = $file_url;
 			$values['plain'][] = $file_url;
 		}
 
 		if ( isset( $values['html'] ) ) {
 			$values['html'] = implode( '<br>', $values['html'] );
 		}
+		if ( isset( $values['link'] ) ) {
+			$values['link'] = implode( '<br>', $values['link'] );
+		}
+		if ( isset( $values['embed'] ) ) {
+			$values['embed'] = implode( '<br>', $values['embed'] );
+		}
 
 		if ( isset( $values['plain'] ) ) {
 			$values['plain'] = implode( ',', $values['plain'] );
+		}
+		if ( isset( $values['url'] ) ) {
+			$values['url'] = implode( ',', $values['url'] );
 		}
 
 		return $values;
@@ -160,9 +179,9 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 		$tags = array(
 			$service            => 'html',
 			$service . '_plain' => 'plain',
-			'default'           => 'html',
-			'plain'             => 'plain',
 		);
+
+		$tags = array_merge( $tags, $this->get_default_tags() );
 
 		$this->update_mergetags( $field, $tags );
 	}
