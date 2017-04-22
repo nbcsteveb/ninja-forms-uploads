@@ -9,7 +9,7 @@
 		fieldID: 0
 	} );
 
-	var fileCollection = Backbone.Collection.extend( {
+	var FileCollection = Backbone.Collection.extend( {
 		model: fileModel
 	} );
 
@@ -46,13 +46,6 @@
 		initFile: function( model ) {
 			model.set( 'uploadMulti', 1 != model.get( 'upload_multi_count' ) ) ;
 			model.set( 'uploadNonce', nf_upload.nonces.file_upload );
-
-			var files = model.get( 'files' );
-			if ( typeof files === 'undefined' ) {
-				files = []
-			}
-
-			model.set( 'files', new fileCollection( files ) );
 		},
 
 		renderView: function( view ) {
@@ -121,6 +114,20 @@
 			var url = nfFrontEnd.adminAjax + '?action=nf_fu_upload';
 			var self = this;
 			var files = view.model.get( 'files' );
+
+			/*
+			 * Make sure that our files array isn't undefined.
+			 * If it is, set it to an empty array.
+			 */
+			files = files || [];
+
+			/*
+			 * If "files" isn't a collection, turn it into one.
+			 */
+			if ( ! ( files instanceof FileCollection ) ) {
+				files = new FileCollection( files );
+				view.model.set( 'files', files );
+			}
 
 			this.renderView( view );
 
