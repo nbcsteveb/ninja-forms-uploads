@@ -110,7 +110,7 @@
 			var $file = $( view.el ).find( '.nf-element' );
 			var $nonce = $( view.el ).find( '.nf-upload-nonce' );
 			var $files_uploaded = $( view.el ).find( '.files_uploaded' );
-			this.$progress_bars[ fieldID ] = $( view.el ).find( '.progress-bar' );
+			this.$progress_bars[ fieldID ] = $( view.el ).find( '.nf-fu-progress-bar' );
 			var url = nfFrontEnd.adminAjax + '?action=nf_fu_upload';
 			var self = this;
 			var files = view.model.get( 'files' );
@@ -272,7 +272,7 @@
 	new uploadController();
 
 	$( document ).ready( function() {
-		$( 'body' ).on( 'click', 'button.fileinput-button', function( e ) {
+		$( 'body' ).on( 'click', 'button.nf-fu-fileinput-button', function( e ) {
 			$( this ).next( 'input.nf-element' ).click();
 		} );
 	} );
