@@ -9,7 +9,7 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	 */
 	public function __construct() {
 		add_filter( 'ninja_forms_merge_tag_value_' . NF_FU_File_Uploads::TYPE, array( $this, 'merge_tag_value' ), 10, 2 );
-		add_filter( 'ninja_forms_submission_actions', array( $this, 'update_all_mergetags' ) );
+		add_filter( 'ninja_forms_submission_actions', array( $this, 'update_all_mergetags' ), 10, 3 );
 		add_action( 'ninja_forms_uploads_external_action_post_process', array( $this, 'update_mergetags_for_external' ), 10, 2 );
 	}
 
@@ -20,11 +20,11 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 	 *
 	 * @return array
 	 */
-	public function update_all_mergetags( $actions ) {
-		$form_data = $this->get_form_data();
-		if ( empty( $form_data ) ) {
+	public function update_all_mergetags( $actions, $form_cache, $form_data ) {
+		if ( ! isset( $form_data['fields'] ) ) {
 			return $actions;
 		}
+
 		foreach ( $form_data['fields'] as $field ) {
 			if ( NF_FU_File_Uploads::TYPE !== $field['type'] ) {
 				continue;
@@ -35,24 +35,6 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 		}
 
 		return $actions;
-	}
-
-	/**
-	 * Get the protected form data from the Submission.
-	 *
-	 * @return mixed
-	 */
-	protected function get_form_data() {
-		$submission = Ninja_Forms()->controllers['submission'];
-
-		$submission_class = new \ReflectionClass( $submission );
-
-		$property = $submission_class->getProperty( '_form_data' );
-		$property->setAccessible( true );
-
-		$data = $property->getValue( $submission );
-
-		return $data;
 	}
 
 	/**
