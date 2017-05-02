@@ -202,6 +202,12 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 		$new_value = array();
 		foreach ( $value as $upload_id => $file_url ) {
+			if ( is_array( $file_url ) ) {
+				// FU 2.9.x data format
+				$upload_id = $file_url['upload_id'];
+				$file_url  = $file_url['file_url'];
+			}
+
 			$upload = NF_File_Uploads()->controllers->uploads->get( $upload_id );
 
 			if ( false !== $upload ) {
