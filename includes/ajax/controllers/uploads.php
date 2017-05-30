@@ -27,7 +27,17 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 	 * Process the upload of files
 	 */
 	public function handle_upload() {
-		check_ajax_referer( 'nf-file-upload', 'nonce' );
+		$field_id = filter_input( INPUT_POST, 'field_id' );
+		if ( empty( $field_id ) ) {
+			$this->_errors[] = __( 'No field ID supplied', 'ninja-forms-uploads' );
+			$this->_respond();
+		}
+
+		$result = check_ajax_referer( 'nf-file-upload-' . $field_id, 'nonce', false );
+		if ( false === $result ) {
+			$this->_errors[] = __( 'Nonce error', 'ninja-forms-uploads' );
+			$this->_respond();
+		}
 
 		if ( ! isset( $_FILES['files'] ) ) {
 			$this->_errors[] = $this->code_to_message( '' );
@@ -95,7 +105,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 
 			$result = move_uploaded_file( $file['tmp_name'], $file_path );
 			if ( false === $result ) {
-				$this->_errors[] = __( 'Unable to move uploaded temp file', 'ninja-forms' );
+				$this->_errors[] = __( 'Unable to move uploaded temp file', 'ninja-forms-uploads' );
 
 				continue;
 			}

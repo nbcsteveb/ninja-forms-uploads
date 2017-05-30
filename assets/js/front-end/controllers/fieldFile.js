@@ -45,7 +45,6 @@
 
 		initFile: function( model ) {
 			model.set( 'uploadMulti', 1 != model.get( 'upload_multi_count' ) ) ;
-			model.set( 'uploadNonce', nf_upload.nonces.file_upload );
 		},
 
 		renderView: function( view ) {
@@ -107,8 +106,8 @@
 		initFileUpload: function( view ) {
 			var fieldID = view.model.id;
 			var formID = view.model.get( 'formID' );
+			var nonce = view.model.get( 'uploadNonce' );
 			var $file = $( view.el ).find( '.nf-element' );
-			var $nonce = $( view.el ).find( '.nf-upload-nonce' );
 			var $files_uploaded = $( view.el ).find( '.files_uploaded' );
 			this.$progress_bars[ fieldID ] = $( view.el ).find( '.nf-fu-progress-bar' );
 			var url = nfFrontEnd.adminAjax + '?action=nf_fu_upload';
@@ -136,8 +135,8 @@
 				dataType: 'json',
 				formData: {
 					form_id: formID,
-					field_id: view.model.id,
-					nonce: $nonce.val()
+					field_id: fieldID,
+					nonce: nonce
 				},
 				messages: {
 					maxFileSize: nf_upload.strings.max_file_size_error.replace( '%n', view.model.get( 'max_file_size_mb' ) )

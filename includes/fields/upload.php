@@ -243,7 +243,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 		$settings['max_file_size_mb'] = $max_file_size_mb;
 		$max_file_size    = NF_File_Uploads()->controllers->settings->max_filesize( $max_file_size_mb );
-		$settings['max_file_size']    = $max_file_size;
+		$settings['max_file_size'] = $max_file_size;
+		$settings['uploadNonce'] = wp_create_nonce( 'nf-file-upload-' . $settings['id'] );
 
 		return $settings;
 	}

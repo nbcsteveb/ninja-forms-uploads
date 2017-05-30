@@ -66,9 +66,6 @@ class NF_FU_Display_Render {
 		), $ver );
 
 		wp_localize_script( 'nf-fu-file-upload', 'nf_upload', array(
-			'nonces'  => array(
-				'file_upload' => wp_create_nonce( 'nf-file-upload' ),
-			),
 			'strings' => apply_filters( 'ninja_forms_uploads_js_strings', array(
 				'file_limit'           => __( 'Max %n files are allowed', 'ninja-forms-uploads' ),
 				'upload_error'         => __( 'Nonce error, upload failed', 'ninja-forms-uploads' ),
