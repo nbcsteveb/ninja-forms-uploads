@@ -361,7 +361,22 @@ class NF_FU_Admin_UploadsTable extends WP_List_Table {
 		}
 	}
 
+	/**
+	 * Delete the item from the file uploads table and remove file from server.
+	 *
+	 * @param int $id
+	 *
+	 * @return false|int
+	 */
 	public static function delete_item( $id ) {
+		$upload = NF_File_Uploads()->controllers->uploads->get( $id );
+
+		if ( file_exists( $upload->file_path ) ) {
+			unlink( $upload->file_path );
+		}
+
+		do_action( 'ninja_forms_upload_delete_upload', $upload );
+
 		return NF_File_Uploads()->model->delete( $id );
 	}
 
