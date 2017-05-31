@@ -28,6 +28,7 @@ class NF_FU_External_Loader {
 		add_action( 'ninja_forms_uploads_external_template', array( $this, 'render_services_settings' ) );
 		add_filter( 'ninja_forms_uploads_file_url', array( $this, 'generate_url' ), 10, 2);
 		add_filter( 'ninja_forms_uploads_file_location', array( $this, 'get_service_display_name' ) );
+		add_action( 'ninja_forms_upload_delete_upload', array( $this, 'delete_upload' ) );
 
 		add_action( 'admin_init', array( $this, 'handle_external_url' ) );
 		add_action( 'template_redirect', array( $this, 'handle_external_url_public' ) );
@@ -303,6 +304,17 @@ class NF_FU_External_Loader {
 		$slug = ucwords( $slug );
 
 		return $slug;
+	}
+
+	public function delete_upload( $upload ) {
+		if ( 'server' === $upload->upload_location ) {
+			return;
+		}
+
+		$instance = NF_File_Uploads()->externals->get( $upload->upload_location );
+		if ( $instance ) {
+			$instance->delete_file( $upload->external_path . $upload->external_filename );
+		}
 	}
 
 }

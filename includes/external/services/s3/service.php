@@ -149,6 +149,10 @@ class NF_FU_External_Services_S3_Service extends NF_FU_External_Abstracts_Servic
 		return $data;
 	}
 
+	public function delete_file( $path ) {
+
+	}
+
 	/**
 	 * Get the Amazon S3 URL using bucket and region for the file, falling
 	 * back to the settings bucket and region

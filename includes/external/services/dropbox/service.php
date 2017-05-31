@@ -293,6 +293,16 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 		return false;
 	}
 
+	public function delete_file( $path ) {
+		try {
+			$result = $this->get_client()->delete( $path );
+
+			return true;
+		} catch ( Exception $e ) {
+			return false;
+		}
+	}
+
 	/**
 	 * Get the Dropbox URL for the file
 	 *

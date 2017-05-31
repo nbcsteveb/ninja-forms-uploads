@@ -307,6 +307,15 @@ abstract class NF_FU_External_Abstracts_Service {
 	protected abstract function upload_file( $data );
 
 	/**
+	 * Delete the file to the service
+	 *
+	 * @param array $path
+	 *
+	 * @return array|bool
+	 */
+	protected abstract function delete_file( $path );
+
+	/**
 	 * Get the service URL to the file
 	 *
 	 * @param string $filename
