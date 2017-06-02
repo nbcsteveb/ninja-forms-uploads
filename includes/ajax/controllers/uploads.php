@@ -96,7 +96,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 
 			if ( false === $this->_validate( $file ) ) {
 				unset( $this->_data['files'][ $key ] );
-
+				@unlink( $file['tmp_name'] );
 				continue;
 			}
 
