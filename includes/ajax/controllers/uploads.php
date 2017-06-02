@@ -216,7 +216,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 	protected function whitelisted( $types, $file_type) {
 		// Check for whitelisted file types
 		foreach ( $types as $extension ) {
-			if ( false !== stripos( $file_type, $extension ) ) {
+			if ( strtolower( $extension ) === strtolower( $file_type ) ) {
 				return true;
 			}
 		}
