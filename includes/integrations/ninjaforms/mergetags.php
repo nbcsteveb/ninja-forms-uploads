@@ -30,6 +30,10 @@ class NF_FU_Integrations_NinjaForms_MergeTags {
 				continue;
 			}
 
+			if ( ! isset( $field['files'] ) || empty( $field['files'] ) ) {
+				continue;
+			}
+
 			// Update Mergetags
 			$this->update_mergetags( $field, $this->get_default_tags() );
 		}
