@@ -75,7 +75,7 @@ class NF_FU_External_Services_S3_Service extends NF_FU_External_Abstracts_Servic
 	protected function get_s3client( $amazon_s3_access_key, $amazon_s3_secret_key, $region = null ) {
 		if ( ! $this->is_aws_plugin_installed() ) {
 			$s3 = new NF_FU_Library_S3( $amazon_s3_access_key, $amazon_s3_secret_key );
-			if ( $region && '' !== $region && 'US' !== $region ) {
+			if ( $region && '' !== $region && 'US' !== $region && 'us-east-1' !== $region ) {
 				// Use the correct API endpoint for non US standard bucket regions
 				$s3->setEndpoint( 's3-' . $region . '.amazonaws.com' );
 			}
@@ -198,8 +198,8 @@ class NF_FU_External_Services_S3_Service extends NF_FU_External_Abstracts_Servic
 	 * @return NF_FU_Library_S3
 	 */
 	protected function get_client( $region = '' ) {
-		if ( '' === $region ) {
-			$region = 'US';
+		if ( '' === $region || 'US' === $region) {
+			$region = 'us-east-1';
 		}
 
 		if ( ! isset( self::$clients[ $region ] ) ) {
