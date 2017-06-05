@@ -191,6 +191,13 @@ class NF_FU_External_Loader {
 				continue;
 			}
 
+			$notices = $instance->get_notices();
+			if ( ! empty( $notices ) ) {
+				foreach ( $notices as $notice ) {
+					printf( '<div class="%s"><p>%s</p></div>', $notice['type'], $notice['message'] );
+				}
+			}
+
 			$args = array(
 				'group'       => $service,
 				'group_label' => sprintf( __( '%s Settings', 'ninja-forms-uploads' ), $instance->get_name() ),

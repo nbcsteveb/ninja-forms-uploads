@@ -298,6 +298,15 @@ abstract class NF_FU_External_Abstracts_Service {
 	}
 
 	/**
+	 * Get notices for the service.
+	 *
+	 * @return array|bool
+	 */
+	public function get_notices() {
+		return array();
+	}
+
+	/**
 	 * Upload the file to the service
 	 *
 	 * @param array $data
