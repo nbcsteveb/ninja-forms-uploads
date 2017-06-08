@@ -105,6 +105,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 
 			$result = move_uploaded_file( $file['tmp_name'], $file_path );
 			if ( false === $result ) {
+				unset( $this->_data['files'][ $key ] );
 				$this->_errors[] = __( 'Unable to move uploaded temp file', 'ninja-forms-uploads' );
 
 				continue;
