@@ -97,7 +97,6 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			// Replace %filename% in custom dir
 			if ( $is_custom_upload_dir ) {
 				$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_shortcode( $custom_upload_dir, 'filename' );
-				wp_mkdir_p( $base_dir . $custom_upload_dir );
 			}
 
 			// Custom renaming of files
@@ -109,6 +108,8 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			}
 
 			$target_file = trailingslashit( $base_dir . ltrim( $custom_upload_dir, '/' ) ) . $file_name;
+			// Ensure the path exists
+			wp_mkdir_p( dirname( $target_file ) );
 
 			if ( file_exists( $target_file ) ) {
 				// Make sure we use a filename that is unique
