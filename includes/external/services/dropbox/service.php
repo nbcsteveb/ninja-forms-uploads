@@ -14,9 +14,9 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 
 	public $name = 'Dropbox';
 
-	protected $library_class = 'Dropbox_API';
+	protected $library_class = 'PVW_Dropbox_API';
 
-	protected $library_file = 'benthedesigner/dropbox/API.php';
+	protected $library_file = 'polevaultweb/wp-dropbox-api/dropbox-api.php';
 
 	protected $client;
 
@@ -25,13 +25,13 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	/**
 	 * Get Dropbox API client instance
 	 *
-	 * @return Dropbox_API
+	 * @return PVW_Dropbox_API
 	 */
 	protected function get_client() {
 		if ( is_null( $this->client ) ) {
-			$this->load_settings();
+			$token = WP_OAuth2::get_access_token( $this->slug );
 
-			$this->client = new NF_FU_Library_Dropbox( $this->get_oauth() );
+			$this->client = new NF_FU_Library_Dropbox( $token->get() );
 		}
 
 		return $this->client;
@@ -43,13 +43,9 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	 * @return bool
 	 */
 	public function is_authorized() {
-		try {
-			$this->get_account_info();
+		return ( bool ) $this->get_account_info();
+	}
 
-			return true;
-		} catch ( Exception $e ) {
-			return false;
-		}
 	/**
 	 * Get the plugins page URL to return to.
 	 * 
@@ -73,8 +69,10 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 
 	public function get_account_info() {
 		if ( ! isset( $this->account_info_cache ) ) {
-			$response                 = $this->get_client()->accountInfo();
-			$this->account_info_cache = $response['body'];
+			$response = $this->get_client()->get_account_info();
+			if ( $response ) {
+				$this->account_info_cache = $response;
+			}
 		}
 
 		return $this->account_info_cache;
@@ -153,13 +151,10 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 
 		$retry_count = apply_filters( 'ninja_forms_upload_dropbox_retry_count', 3 );
 		$i           = 0;
-		while ( $i ++ < $retry_count ) {
-			try {
-				$result = $this->get_client()->putFile( $this->upload_file, $this->external_filename, $this->external_path );
-
+		while ( $i++ < $retry_count ) {
+			$result = $this->get_client()->put_file( $this->upload_file, $this->external_filename, $this->external_path );
+			if ( $result ) {
 				return $data;
-
-			} catch ( Exception $e ) {
 			}
 		}
 
@@ -176,9 +171,9 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	 * @return string
 	 */
 	public function get_url( $filename, $path = '', $data = array() ) {
-		$response = $this->get_client()->media( $path . $filename );
-		if ( $response['code'] == 200 ) {
-			return $response['body']->url;
+		$response = $this->get_client()->get_url( $path . $filename );
+		if ( $response && isset( $response->link ) ) {
+			return $response->link;
 		}
 
 		return admin_url();
