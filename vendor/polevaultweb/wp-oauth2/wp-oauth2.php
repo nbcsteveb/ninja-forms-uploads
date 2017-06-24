@@ -16,6 +16,11 @@ class WP_OAuth2 {
 		return $token->get();
 	}
 
+	public static function set_access_token( $provider, $token ) {
+		$token = new Access_Token( $provider, $token );
+		$token->save();
+	}
+
 	public static function is_authorized( $provider ) {
 		$token = self::get_access_token( $provider );
 
