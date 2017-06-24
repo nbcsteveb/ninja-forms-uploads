@@ -55,6 +55,7 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_access_token_secret' );
 		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_request_token' );
 		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_request_token_secret' );
+		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_oauth_state' );
 		NF_File_Uploads()->controllers->settings->update_settings();
 
 		return $token;
