@@ -40,6 +40,15 @@ class NF_FU_Admin_Controllers_Settings {
 	}
 
 	/**
+	 * Set a setting
+	 *
+	 * @param string $key
+	 */
+	public function remove_settings( $key ) {
+		unset( $this->settings[ $key ] );
+	}
+
+	/**
 	 * Get a setting
 	 *
 	 * @param string     $key

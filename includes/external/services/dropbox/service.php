@@ -21,6 +21,45 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	protected $client;
 
 	const CONSUMER_KEY = 'g80jscev5iosghi';
+	const CONSUMER_SECRET = 'aHN5MHh0cnIzZ2prZDBp';
+
+	/**
+	 * Wrapper to get access token.
+	 * If an OAuth2 token exists use it.
+	 * If an OAuth1 token/secret exists then use them to convert to OAuth2 token.
+	 *
+	 * @return bool|string
+	 */
+	public function get_access_token() {
+		$oauth2_token = WP_OAuth2::get_access_token( $this->slug );
+		if ( $oauth2_token ) {
+			return $oauth2_token;
+		}
+
+		$old_access_token = NF_File_Uploads()->controllers->settings->get_setting( 'dropbox_access_token' );
+		if ( empty( $old_access_token ) ) {
+			return false;
+		}
+
+		$old_access_token_secret = NF_File_Uploads()->controllers->settings->get_setting( 'dropbox_access_token_secret' );
+
+		$client = new NF_FU_Library_Dropbox();
+		$token  = $client->access_token_upgrade( self::CONSUMER_KEY, base64_decode( self::CONSUMER_SECRET ), $old_access_token, $old_access_token_secret );
+		if ( false === $token ) {
+			return false;
+		}
+
+		WP_OAuth2::set_access_token( $this->slug, $token );
+
+		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_access_token' );
+		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_access_token_secret' );
+		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_request_token' );
+		NF_File_Uploads()->controllers->settings->remove_setting( 'dropbox_request_token_secret' );
+		NF_File_Uploads()->controllers->settings->update_settings();
+
+		return $token;
+	}
+
 
 	/**
 	 * Get Dropbox API client instance
@@ -29,9 +68,9 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	 */
 	protected function get_client() {
 		if ( is_null( $this->client ) ) {
-			$token = WP_OAuth2::get_access_token( $this->slug );
+			$token = $this->get_access_token();
 
-			$this->client = new NF_FU_Library_Dropbox( $token->get() );
+			$this->client = new NF_FU_Library_Dropbox( $token );
 		}
 
 		return $this->client;
