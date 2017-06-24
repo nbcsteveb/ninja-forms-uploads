@@ -19,6 +19,7 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	protected $library_file = 'polevaultweb/wp-dropbox-api/dropbox-api.php';
 
 	protected $client;
+	protected $account_info_cache;
 
 	const CONSUMER_KEY = 'g80jscev5iosghi';
 	const CONSUMER_SECRET = 'aHN5MHh0cnIzZ2prZDBp';
