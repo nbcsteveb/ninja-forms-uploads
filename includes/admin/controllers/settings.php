@@ -40,7 +40,7 @@ class NF_FU_Admin_Controllers_Settings {
 	}
 
 	/**
-	 * Set a setting
+	 * Remove a setting
 	 *
 	 * @param string $key
 	 */
