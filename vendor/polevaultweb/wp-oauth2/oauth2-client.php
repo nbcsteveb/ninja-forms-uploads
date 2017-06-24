@@ -4,6 +4,7 @@ namespace Polevaultweb\WP_OAuth2;
 
 class OAuth2_Client {
 
+	protected $authorization_url;
 	protected $client_key;
 	protected $redirect_uri = 'https://oauth.polevaultweb.com/';
 
