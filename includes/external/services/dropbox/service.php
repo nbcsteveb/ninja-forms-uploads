@@ -114,6 +114,8 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 			if ( $response ) {
 				$this->account_info_cache = $response;
 			}
+
+			WP_OAuth2::disconnect( $this->slug );
 		}
 
 		return $this->account_info_cache;
