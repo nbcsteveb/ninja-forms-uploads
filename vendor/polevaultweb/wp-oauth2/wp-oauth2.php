@@ -10,6 +10,11 @@ class WP_OAuth2 {
 		return $url;
 	}
 
+	public static function disconnect( $provider ) {
+		$token = new Access_Token( $provider );
+		$token->delete();
+	}
+
 	public static function get_access_token( $provider ) {
 		$token = new Access_Token( $provider );
 

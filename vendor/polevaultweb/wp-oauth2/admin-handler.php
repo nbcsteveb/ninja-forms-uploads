@@ -57,7 +57,7 @@ class Admin_Handler {
 			return;
 		}
 
-		$this->disconnect( $provider );
+		WP_OAuth2::disconnect( $provider );
 
 		$this->redirect( 'disconnection' );
 	}
@@ -168,10 +168,5 @@ class Admin_Handler {
 
 		$message = sprintf( __( 'You have successfully disconnected your %s account.' ), $provider );
 		printf( '<div class="updated"><p><strong>' . $provider . ' %s</strong> &mdash; %s</p></div>', __( 'Disconnected' ), $message );
-	}
-
-	protected function disconnect( $provider ) {
-		$token = new Access_Token( $provider );
-		$token->delete();
 	}
 }
