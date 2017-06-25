@@ -1,7 +1,5 @@
 <?php
 
-use Polevaultweb\WP_OAuth2\Admin_Handler;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -43,7 +41,8 @@ class NF_FU_External_Loader {
 	}
 
 	public function init() {
-		$admin_handler = new Admin_Handler( NF_File_Uploads()->page->get_url( 'external', array(), false ) );
+		$class         = 'Polevaultweb\\WP_OAuth2\\Admin_Handler';
+		$admin_handler = new $class( NF_File_Uploads()->page->get_url( 'external', array(), false ) );
 		$admin_handler->init();
 	}
 
