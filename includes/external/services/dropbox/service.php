@@ -113,6 +113,8 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 			$response = $this->get_client()->get_account_info();
 			if ( $response ) {
 				$this->account_info_cache = $response;
+
+				return $response;
 			}
 
 			WP_OAuth2::disconnect( $this->slug );
@@ -158,7 +160,7 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	 * @return bool
 	 */
 	public function is_connected( $settings = null ) {
-		if ( ! WP_OAuth2::is_authorized( 'dropbox' ) ) {
+		if ( ! WP_OAuth2::is_authorized( $this->slug ) ) {
 			return false;
 		}
 
