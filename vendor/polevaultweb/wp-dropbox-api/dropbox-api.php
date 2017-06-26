@@ -28,12 +28,16 @@ class PVW_Dropbox_API {
 
 		$data = array( 'path' => $path, 'mode' => 'overwrite' );
 
+		$resource  = @fopen( $file, 'r' );
+		$file_size = filesize( $file );
+		$file_data = fread( $resource, $file_size );
+
 		$args = array(
-			'headers'     => array(
+			'headers' => array(
 				'Content-Type'    => 'application/octet-stream',
 				'Dropbox-API-Arg' => json_encode( $data ),
 			),
-			'data-binary' => '@' . $file,
+			'body'    => $file_data,
 		);
 
 		return $this->post( $endpoint, $args );
