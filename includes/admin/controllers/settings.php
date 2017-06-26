@@ -26,7 +26,7 @@ class NF_FU_Admin_Controllers_Settings {
 	 * Update settings for the plugin
 	 */
 	public function update_settings() {
-		Ninja_Forms()->update_settings( $this->settings );
+		update_option( 'ninja_forms_settings', $this->settings );
 	}
 
 	/**
@@ -37,6 +37,15 @@ class NF_FU_Admin_Controllers_Settings {
 	 */
 	public function set_setting( $key, $value ) {
 		$this->settings[ $key ] = $value;
+	}
+
+	/**
+	 * Remove a setting
+	 *
+	 * @param string $key
+	 */
+	public function remove_setting( $key ) {
+		unset( $this->settings[ $key ] );
 	}
 
 	/**

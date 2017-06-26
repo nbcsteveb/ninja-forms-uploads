@@ -23,14 +23,27 @@ class NF_FU_External_Loader {
 			return;
 		}
 
+		require_once dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/polevaultweb/wp-oauth2/wp-oauth2.php';
+		require_once dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/polevaultweb/wp-oauth2/access-token.php';
+		require_once dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/polevaultweb/wp-oauth2/admin-handler.php';
+		require_once dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/polevaultweb/wp-oauth2/oauth2-client.php';
+		require_once dirname( NF_File_Uploads()->plugin_file_path ) . '/vendor/polevaultweb/wp-oauth2/dropbox-client.php';
+
 		add_filter( 'ninja_forms_register_actions', array( $this, 'register_actions' ) );
 		add_filter( 'ninja_forms_file_uploads_settings_whitelist', array( $this, 'add_settings_to_whitelist' ) );
 		add_action( 'ninja_forms_uploads_external_template', array( $this, 'render_services_settings' ) );
 		add_filter( 'ninja_forms_uploads_file_url', array( $this, 'generate_url' ), 10, 2);
 		add_filter( 'ninja_forms_uploads_file_location', array( $this, 'get_service_display_name' ) );
+		add_action( 'ninja_forms_loaded', array( $this, 'init' ) );
 
 		add_action( 'admin_init', array( $this, 'handle_external_url' ) );
 		add_action( 'template_redirect', array( $this, 'handle_external_url_public' ) );
+	}
+
+	public function init() {
+		$class         = 'Polevaultweb\\WP_OAuth2\\Admin_Handler';
+		$admin_handler = new $class( NF_File_Uploads()->page->get_url( 'external', array(), false ) );
+		$admin_handler->init();
 	}
 
 	/**
