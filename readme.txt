@@ -32,6 +32,11 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 *Changes:*
 
 * Supports Dropbox API v2
+* Custom name of file now supports changing path with field specific data
+
+*Bugs:*
+
+* File appeared even if upload failed
 
 = 3.0.7 ( 5 June 2017) =
 
