@@ -56,6 +56,14 @@
 			} );
 
 			view.model.bind( 'change:files', this.changeCollection, view );
+
+			/*
+			 * This radio responder is only necessary if we have Multi-Part Forms active.
+			 * Thankfully, it won't fire if the add-on isn't active.
+			 *
+			 * When we change our parts in a Multi-Part Form, re-render our file collection.
+			 */
+			view.listenTo( nfRadio.channel( 'nfMP' ), 'change:part', this.changeCollection, view );
 		},
 
 		changeCollection: function() {
