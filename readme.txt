@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 1.0
 Tested up to: 4.8
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 
 License: GPLv2 or later
 
@@ -26,6 +26,13 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.9 (06 July 2017) =
+
+*Bugs:*
+
+* File Uploads should now work properly with Multi-Part Forms.
+* Fixed a bug with non-English characters and file name encoding.
 
 = 3.0.8 ( 26 June 2017) =
 
