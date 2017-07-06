@@ -111,6 +111,10 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			// Ensure the path exists
 			wp_mkdir_p( dirname( $target_file ) );
 
+			// Sanitize the filename for encoding
+			$file_name   = sanitize_file_name( basename( $target_file ) );
+			$target_file = dirname( $target_file ) . '/' . $file_name;
+
 			if ( file_exists( $target_file ) ) {
 				// Make sure we use a filename that is unique
 				$original_target_file = $target_file;
@@ -120,10 +124,10 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 					$i++;
 					$target_file = str_replace( '.' . $ext, '-' . $i . '.' . $ext, $original_target_file );
 				} while ( file_exists( $target_file ) );
-
-				$file_name = basename( $target_file );
 			}
 
+			// Get final filename
+			$file_name = basename( $target_file );
 			$file_url = trailingslashit( $base_url . ltrim( $custom_upload_dir, '/' ) ) . $file_name;
 
 			// Move to permanent location

@@ -69,7 +69,7 @@ class NF_FU_Integrations_NinjaForms_Submissions {
 
 			$file_url = NF_File_Uploads()->controllers->uploads->get_file_url( $file_url, $upload->data );
 			if ( $link ) {
-				$new_value[] = sprintf( '<a href="%s" target="_blank">%s</a>', $file_url, $upload->file_name );
+				$new_value[] = sprintf( '<a href="%s" target="_blank">%s</a>', $file_url, $upload->user_file_name );
 				continue;
 			}
 
