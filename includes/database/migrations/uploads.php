@@ -4,7 +4,7 @@
 
 class NF_FU_Database_Migrations_Uploads extends NF_Abstracts_Migration {
 
-	protected $version = '3.0.1';
+	protected $version = '3.0.10';
 	protected $version_key = 'uploads_table_version';
 
 	public function __construct() {
