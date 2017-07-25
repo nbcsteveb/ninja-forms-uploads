@@ -38,7 +38,7 @@ PRIMARY KEY (id)
 			return;
 		}
 		
-		$current_version = Ninja_Forms()->get_setting( $this->version_key, NF_File_Uploads()->plugin_version );
+		$current_version = Ninja_Forms()->get_setting( $this->version_key, '0' );
 		$version        = $this->version;
 
 		if ( version_compare( $current_version, $version, '!=' ) ) {
