@@ -25,6 +25,7 @@ class PVW_Dropbox_API {
 		$endpoint = 'files/upload';
 
 		$path = trailingslashit( $path ) . $filename;
+		$path = '/'. ltrim( $path, '/' );
 
 		$data = array( 'path' => $path, 'mode' => 'overwrite' );
 
