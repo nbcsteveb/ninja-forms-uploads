@@ -73,7 +73,9 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		if ( ! empty( $custom_upload_dir ) ) {
 			$custom_upload_dir = stripslashes( trim( $custom_upload_dir ) );
 			$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_shortcodes( $custom_upload_dir );
+			$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_field_shortcodes( $custom_upload_dir, $data['fields'] );
 
+			if ( false !== strpos( $custom_upload_dir, '%filename%' ) ) {
 				$is_custom_upload_dir = true;
 			}
 		}
