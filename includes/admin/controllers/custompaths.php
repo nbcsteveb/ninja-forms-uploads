@@ -39,7 +39,7 @@ class NF_FU_Admin_Controllers_CustomPaths {
 	 * @param mixed $value
 	 */
 	public function set_data( $key, $value ) {
-		$this->data[$key] = $value;
+		$this->data[$key] = sanitize_file_name( $value );
 	}
 
 	/**

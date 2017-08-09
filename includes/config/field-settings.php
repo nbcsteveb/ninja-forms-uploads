@@ -22,7 +22,7 @@ return apply_filters( 'ninja_forms_uploads_field_settings', array(
 		'group' => 'primary',
 		'width' => 'full',
 		// TODO link
-		'help'  => __( 'Advanced renaming options. If you do not want to rename the files, leave this box blank', 'ninja-forms-uploads' ),
+		'help'  => __( 'Advanced renaming options. You can also create directories using "/". If you do not want to rename the files, leave this box blank', 'ninja-forms-uploads' ),
 	),
 	'media_library' => array(
 		'name'  => 'media_library',

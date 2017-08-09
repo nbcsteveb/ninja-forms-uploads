@@ -204,10 +204,10 @@ abstract class NF_FU_External_Abstracts_Service {
 	 * @return string
 	 */
 	protected function get_filename_external() {
-		$filename = basename( $this->upload_file );
-		$filename = time() . '-'. $filename;
+		$original_filename = basename( $this->upload_file );
+		$filename          = time() . '-' . $original_filename;
 
-		return apply_filters( 'ninja_forms_uploads_' . self::get_instance()->slug . '_filename', $filename );
+		return apply_filters( 'ninja_forms_uploads_' . self::get_instance()->slug . '_filename', $filename, $original_filename );
 	}
 
 	/**
@@ -220,8 +220,10 @@ abstract class NF_FU_External_Abstracts_Service {
 	/**
 	 * Get the external file path
 	 */
-	protected function get_external_path() {
+	protected function get_external_path( $custom_path ) {
 		$path = $this->settings[ $this->get_path_setting() ];
+
+		$path = untrailingslashit( $path ) . '/' . untrailingslashit( $custom_path );
 
 		return apply_filters( 'ninja_forms_uploads_' . $this->slug . '_path', $this->prepare_path( $path ) );
 	}
@@ -256,8 +258,9 @@ abstract class NF_FU_External_Abstracts_Service {
 		$this->load_settings();
 
 		$this->upload_file       = $data['file_path'];
-		$this->external_path     = $this->get_external_path();
-		$this->external_filename = $this->get_filename_external();
+		$custom_path = isset( $data['custom_path'] ) ? $data['custom_path'] : '';
+		$this->external_path     = $this->get_external_path( $custom_path );
+		$this->external_filename = $this->get_filename_external(  );
 
 		$data = $this->upload_file( $data );
 

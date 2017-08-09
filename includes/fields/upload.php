@@ -64,20 +64,18 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$base_url = NF_File_Uploads()->controllers->uploads->get_url( '' );
 		$base_dir .= $data['form_id'] . '/';
 		$base_url .= $data['form_id'] . '/';
-		wp_mkdir_p( $base_dir );
 
 		// Get custom directory using common data for shortcodes
 		$custom_upload_dir    = NF_File_Uploads()->controllers->settings->custom_upload_dir();
 		$is_custom_upload_dir = false;
+		NF_File_Uploads()->controllers->custom_paths->set_data( 'formtitle', $data['settings']['title'] );
+
 		if ( ! empty( $custom_upload_dir ) ) {
-			NF_File_Uploads()->controllers->custom_paths->set_data( 'formtitle', $data['settings']['title'] );
 			$custom_upload_dir = stripslashes( trim( $custom_upload_dir ) );
 			$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_shortcodes( $custom_upload_dir );
+			$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_field_shortcodes( $custom_upload_dir, $data['fields'] );
 
-			if ( false === strpos( $custom_upload_dir, '%filename%' ) ) {
-				// No more shortcode replacements to do
-				wp_mkdir_p( $base_dir . $custom_upload_dir );
-			} else {
+			if ( false !== strpos( $custom_upload_dir, '%filename%' ) ) {
 				$is_custom_upload_dir = true;
 			}
 		}
@@ -107,13 +105,14 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 				$file_name .= '.' . $ext;
 			}
 
-			$target_file = trailingslashit( $base_dir . ltrim( $custom_upload_dir, '/' ) ) . $file_name;
+			$target_file = trailingslashit( $base_dir . ltrim( $custom_upload_dir, '/' ) ) . ltrim( $file_name, '/' );
+			$target_path = dirname( $target_file );
 			// Ensure the path exists
-			wp_mkdir_p( dirname( $target_file ) );
+			wp_mkdir_p( $target_path );
 
 			// Sanitize the filename for encoding
 			$file_name   = sanitize_file_name( basename( $target_file ) );
-			$target_file = dirname( $target_file ) . '/' . $file_name;
+			$target_file = $target_path . '/' . $file_name;
 
 			if ( file_exists( $target_file ) ) {
 				// Make sure we use a filename that is unique
@@ -127,8 +126,9 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			}
 
 			// Get final filename
-			$file_name = basename( $target_file );
-			$file_url = trailingslashit( $base_url . ltrim( $custom_upload_dir, '/' ) ) . $file_name;
+			$file_name   = basename( $target_file );
+			$custom_path = str_replace( $base_dir, '', $target_path );
+			$file_url    = trailingslashit( $base_url . ltrim( $custom_path, '/' ) ) . $file_name;
 
 			// Move to permanent location
 			$result = rename( $tmp_file, $target_file );
@@ -151,6 +151,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			$upload_id = NF_File_Uploads()->model->insert( $user_id, $data['form_id'], $field['id'], $file_data );
 
 			$file_data['upload_id'] = $upload_id;
+			$file_data['custom_path'] = $custom_path;
 
 			// Save to media library
 			if ( "1" == $field['media_library'] ) {
