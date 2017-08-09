@@ -64,7 +64,6 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$base_url = NF_File_Uploads()->controllers->uploads->get_url( '' );
 		$base_dir .= $data['form_id'] . '/';
 		$base_url .= $data['form_id'] . '/';
-		wp_mkdir_p( $base_dir );
 
 		// Get custom directory using common data for shortcodes
 		$custom_upload_dir    = NF_File_Uploads()->controllers->settings->custom_upload_dir();
@@ -74,10 +73,6 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			$custom_upload_dir = stripslashes( trim( $custom_upload_dir ) );
 			$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_shortcodes( $custom_upload_dir );
 
-			if ( false === strpos( $custom_upload_dir, '%filename%' ) ) {
-				// No more shortcode replacements to do
-				wp_mkdir_p( $base_dir . $custom_upload_dir );
-			} else {
 				$is_custom_upload_dir = true;
 			}
 		}
