@@ -204,10 +204,10 @@ abstract class NF_FU_External_Abstracts_Service {
 	 * @return string
 	 */
 	protected function get_filename_external() {
-		$filename = basename( $this->upload_file );
-		$filename = time() . '-'. $filename;
+		$original_filename = basename( $this->upload_file );
+		$filename          = time() . '-' . $original_filename;
 
-		return apply_filters( 'ninja_forms_uploads_' . self::get_instance()->slug . '_filename', $filename );
+		return apply_filters( 'ninja_forms_uploads_' . self::get_instance()->slug . '_filename', $filename, $original_filename );
 	}
 
 	/**
