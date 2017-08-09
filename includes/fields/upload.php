@@ -68,8 +68,9 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		// Get custom directory using common data for shortcodes
 		$custom_upload_dir    = NF_File_Uploads()->controllers->settings->custom_upload_dir();
 		$is_custom_upload_dir = false;
+		NF_File_Uploads()->controllers->custom_paths->set_data( 'formtitle', $data['settings']['title'] );
+
 		if ( ! empty( $custom_upload_dir ) ) {
-			NF_File_Uploads()->controllers->custom_paths->set_data( 'formtitle', $data['settings']['title'] );
 			$custom_upload_dir = stripslashes( trim( $custom_upload_dir ) );
 			$custom_upload_dir = NF_File_Uploads()->controllers->custom_paths->replace_shortcodes( $custom_upload_dir );
 
