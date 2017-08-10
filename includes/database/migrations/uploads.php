@@ -15,7 +15,11 @@ class NF_FU_Database_Migrations_Uploads extends NF_Abstracts_Migration {
 	 * Create table
 	 */
 	public function run() {
-		$table_name = $this->table_name();
+		$table_name = $this->table_name;
+		if ( method_exists( $this, 'table_name' ) ) {
+			$table_name = $this->table_name();
+		}
+
 		$query = "
 CREATE TABLE {$table_name} (
 id int(11) NOT NULL AUTO_INCREMENT,
