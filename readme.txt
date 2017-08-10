@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
-Tested up to: 4.8
-Stable tag: 3.0.12
+Tested up to: 4.8.1
+Stable tag: 3.0.13
 
 License: GPLv2 or later
 
@@ -26,6 +26,25 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.13 (10 Aug 2017) =
+
+*Features:*
+
+* German translation file, thanks @christophrado!
+
+*Changes:*
+
+* Added original filename to `ninja_forms_uploads_[external service]_filename` filter
+* Added more information to the help bubble for file renames to describe creating directories
+
+*Bugs:*
+
+* Fix isset weirdness when checking for old NF format of file value
+* Fix method not exists when creating table if using older version of NF core.
+* Fix custom upload path not replacing %field_ shortcodes
+* Fix custom upload path not working for external (Dropbox/S3) file paths
+* Fix %formtitle% not being replaced in field rename if no custom upload path
 
 = 3.0.12 (28 July 2017) =
 
