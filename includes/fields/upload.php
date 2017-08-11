@@ -127,7 +127,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 			// Get final filename
 			$file_name   = basename( $target_file );
-			$custom_path = str_replace( $base_dir, '', $target_path );
+			$custom_path = str_replace( trailingslashit( $base_dir ), '', trailingslashit( $target_path ) );
 			$file_url    = trailingslashit( $base_url . ltrim( $custom_path, '/' ) ) . $file_name;
 
 			// Move to permanent location
