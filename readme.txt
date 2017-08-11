@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
 Tested up to: 4.8.1
-Stable tag: 3.0.13
+Stable tag: 3.0.14
 
 License: GPLv2 or later
 
@@ -26,6 +26,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.14 (11 Aug 2017) =
+
+*Bugs:*
+
+* Fix Dropbox file uploaded with full server path when having no custom upload path
 
 = 3.0.13 (10 Aug 2017) =
 
