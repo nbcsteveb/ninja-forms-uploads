@@ -39,6 +39,7 @@ class PVW_Dropbox_API {
 				'Dropbox-API-Arg' => json_encode( $data ),
 			),
 			'body'    => $file_data,
+			'timeout' => 60,
 		);
 
 		return $this->post( $endpoint, $args );
