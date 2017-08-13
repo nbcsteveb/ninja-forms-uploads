@@ -241,10 +241,11 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 
 
 		// If a max file size is defined for the field use that, else you the global setting
+		$server_max_file_size_mb = NF_File_Uploads()->controllers->settings->get_max_file_size_mb();
 		if ( ! isset( $settings['max_file_size'] ) || empty( $settings['max_file_size'] ) ) {
-			$max_file_size_mb = NF_File_Uploads()->controllers->settings->get_max_file_size_mb();
+			$max_file_size_mb = $server_max_file_size_mb;
 		} else {
-			$max_file_size_mb = $settings['max_file_size'];
+			$max_file_size_mb = $settings['max_file_size'] > $server_max_file_size_mb ? $server_max_file_size_mb : $settings['max_file_size'];
 		}
 
 		$settings['max_file_size_mb'] = $max_file_size_mb;
