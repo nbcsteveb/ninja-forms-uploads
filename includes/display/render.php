@@ -74,6 +74,7 @@ class NF_FU_Display_Render {
 				'select_files'         => isset( $settings['select_files_text'] ) ? $settings['select_files_text'] : __( 'Select Files', 'ninja-forms-uploads' ),
 				'delete_file'          => __( 'Delete', 'ninja-forms-uploads' ),
 			) ),
+            'nonce' => wp_create_nonce( 'nf-file-upload' )
 		) );
 
 		wp_enqueue_style( 'nf-fu-jquery-fileupload', $url . 'assets/css/file-upload.css', array(), $ver );

@@ -114,7 +114,7 @@
 		initFileUpload: function( view ) {
 			var fieldID = view.model.id;
 			var formID = view.model.get( 'formID' );
-			var nonce = view.model.get( 'uploadNonce' );
+            var nonce = nf_upload.nonce;
 			var $file = $( view.el ).find( '.nf-element' );
 			var $files_uploaded = $( view.el ).find( '.files_uploaded' );
 			this.$progress_bars[ fieldID ] = $( view.el ).find( '.nf-fu-progress-bar' );
