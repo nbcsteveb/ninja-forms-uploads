@@ -56,6 +56,11 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 			return $data;
 		}
 
+		// If we are saving, as opposed to a regular submission, then bail.
+        if( isset( $data[ 'extra' ][ 'saveProgress' ] ) ){
+            return $data;
+        }
+
 		$submission_data = array();
 
 		// Get common data
