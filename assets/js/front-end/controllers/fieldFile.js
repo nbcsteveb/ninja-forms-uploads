@@ -44,6 +44,12 @@
 		},
 
 		initFile: function( model ) {
+
+			// On (initial) form load, move any upload nonces to the parent form model.
+            this.listenTo( nfRadio.channel( 'form-' + model.get( 'formID' ) ), 'loaded', function( formModel ){
+            	console.log( 'STORE Nonce: ' + model.get( 'uploadNonce' ) );
+				formModel.set( 'upload-nonce-' + model.get( 'id' ), model.get( 'uploadNonce' ) );
+			} );
 			model.set( 'uploadMulti', 1 != model.get( 'upload_multi_count' ) ) ;
 		},
 
@@ -114,7 +120,9 @@
 		initFileUpload: function( view ) {
 			var fieldID = view.model.id;
 			var formID = view.model.get( 'formID' );
-			var nonce = view.model.get( 'uploadNonce' );
+			var form = Backbone.Radio.channel( 'app' ).request( 'get:form', formID );
+			var nonce = form.get( 'upload-nonce-' + fieldID );
+			console.log( 'Fetched Nonce: ' + nonce );
 			var $file = $( view.el ).find( '.nf-element' );
 			var $files_uploaded = $( view.el ).find( '.files_uploaded' );
 			this.$progress_bars[ fieldID ] = $( view.el ).find( '.nf-fu-progress-bar' );
