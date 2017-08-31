@@ -127,6 +127,7 @@ final class NF_FU_File_Uploads {
 		new NF_FU_Integrations_NinjaForms_Attachments();
 		new NF_FU_Integrations_NinjaForms_MergeTags();
 		new NF_FU_Integrations_PostCreation_PostCreation();
+		new NF_FU_Integrations_Zapier_Zapier();
 
 		self::$instance->controllers               = new stdClass();
 		self::$instance->controllers->settings     = new NF_FU_Admin_Controllers_Settings();
