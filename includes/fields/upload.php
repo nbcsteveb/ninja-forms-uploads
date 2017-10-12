@@ -52,7 +52,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		/*
 		 * If we don't have any files set or we are saving progress, bail early.
 		 */
-		if ( ! isset( $field['files'] ) || empty( $field['files'] ) || ( isset ( $data[ 'extra' ][ 'saveProgress' ] ) && 1 == $data[ 'extra' ][ 'saveProgress' ] ) ) {
+		if ( ! isset( $field['files'] ) || empty( $field['files'] ) || ( isset ( $data[ 'extra' ][ 'saveProgress' ] ) && ! empty( $data[ 'extra' ][ 'saveProgress' ] ) ) ) {
 			return $data;
 		}
 
