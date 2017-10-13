@@ -4,7 +4,7 @@ Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
 Tested up to: 4.8.1
-Stable tag: 3.0.15
+Stable tag: 3.0.16
 
 License: GPLv2 or later
 
@@ -26,6 +26,12 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.16 (13 October 2017) =
+
+*Bugs:*
+
+* Fixed a bug that was preventing uploads from being re-saved when using the Save Progress add-on.
 
 = 3.0.15 (1 Aug 2017) =
 

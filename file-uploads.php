@@ -3,7 +3,7 @@
 Plugin Name: Ninja Forms - File Uploads
 Plugin URI: http://ninjaforms.com
 Description: File Uploads add-on for Ninja Forms.
-Version: 3.0.15
+Version: 3.0.16
 Author: The WP Ninjas
 Author URI: http://ninjaforms.com
 */
@@ -20,7 +20,7 @@ if( ! function_exists( 'NF_File_Uploads' ) ) {
     {
         // Load our main plugin class
         require_once dirname(__FILE__) . '/includes/file-uploads.php';
-        $version = '3.0.15';
+        $version = '3.0.16';
 
         return NF_FU_File_Uploads::instance(__FILE__, $version);
     }
