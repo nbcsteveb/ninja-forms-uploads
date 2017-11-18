@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
-Tested up to: 4.8.1
-Stable tag: 3.0.16
+Tested up to: 4.9
+Stable tag: 3.0.17
 
 License: GPLv2 or later
 
@@ -26,6 +26,18 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+= 3.0.17 (18 November 2017) =
+
+*Bugs:*
+
+* Dropbox connection redirect 404ing on some installs
+* Only the first 'Select Files' button text is used for multiple fields
+
+*Changes:*
+
+* Filter added for the cron time when deleting the temp file
+* Filter added for the default 'Select Files' button text
 
 = 3.0.16 (13 October 2017) =
 
