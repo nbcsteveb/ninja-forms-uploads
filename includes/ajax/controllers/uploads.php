@@ -112,7 +112,7 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 			}
 
 			// Schedule a clean up of the file if the form doesn't get submitted
-			wp_schedule_single_event( time() + HOUR_IN_SECONDS, 'nf_fu_delete_temporary_file', array( $file_path ) );
+			wp_schedule_single_event( apply_filters( 'ninja_forms_uploads_temp_file_delete_time', time() + HOUR_IN_SECONDS ), 'nf_fu_delete_temporary_file', array( $file_path ) );
 
 			$this->_data['files'][ $key ]['tmp_name'] = $new_tmp_name;
 		}
