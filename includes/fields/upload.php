@@ -252,6 +252,7 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$max_file_size    = NF_File_Uploads()->controllers->settings->max_filesize( $max_file_size_mb );
 		$settings['max_file_size'] = $max_file_size;
 		$settings['uploadNonce'] = wp_create_nonce( 'nf-file-upload-' . $settings['id'] );
+		$settings['select_files_text'] = ! empty ( $settings['select_files_text'] ) ? $settings['select_files_text'] : apply_filters( 'ninja_forms_upload_select_files_text', __( 'Select Files', 'ninja-forms-uploads' ) );
 
 		return $settings;
 	}
