@@ -131,7 +131,7 @@ class Admin_Handler {
 
 		$method = OAuth2_Client::get_method();
 		$key    = get_site_transient( 'wp-oauth2-key' );
-		$token  = openssl_decrypt( $token, $method, $key, 0, $iv );
+		$token  = openssl_decrypt( $token, $method, $key, 0, urldecode( $iv ) );
 		if ( empty( $token ) ) {
 			$this->redirect( 'error' );
 		}
