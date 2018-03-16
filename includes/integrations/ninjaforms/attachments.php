@@ -22,7 +22,7 @@ class NF_FU_Integrations_NinjaForms_Attachments {
 	public function email_settings( $settings ) {
 		$form_id = filter_input( INPUT_GET, 'form_id', FILTER_VALIDATE_INT );
 
-		if ( ! isset( $form_id ) ) {
+		if ( empty ( $form_id ) ) {
 			return $settings;
 		}
 
