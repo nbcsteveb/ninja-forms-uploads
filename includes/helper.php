@@ -36,9 +36,13 @@ final class NF_FU_Helper {
 			// The 'G' modifier is available since PHP 5.1.0
 			case 'g':
 				$val *= 1024;
+				break;
 			case 'k':
 				$val /= 1024;
+				break;
 		}
+
+		$val = rtrim( strtoupper( $val ), 'M' ) . 'M';
 
 		if ( $return_int ) {
 			$val = substr( $val, 0, -1 );

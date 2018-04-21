@@ -280,6 +280,7 @@
 
 	$( document ).ready( function() {
 		$( 'body' ).on( 'click', 'button.nf-fu-fileinput-button', function( e ) {
+			// e.preventDefault();
 			$( this ).next( 'input.nf-element' ).click();
 		} );
 	} );

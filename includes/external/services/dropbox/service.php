@@ -111,13 +111,17 @@ class NF_FU_External_Services_Dropbox_Service extends NF_FU_External_Abstracts_S
 	public function get_account_info() {
 		if ( ! isset( $this->account_info_cache ) ) {
 			$response = $this->get_client()->get_account_info();
+			if ( isset( $response->error_summary ) && false !== strpos( $response->error_summary, 'invalid_access_token' ) ) {
+				WP_OAuth2::disconnect( $this->slug );
+
+				return false;
+			}
+
 			if ( $response ) {
 				$this->account_info_cache = $response;
 
 				return $response;
 			}
-
-			WP_OAuth2::disconnect( $this->slug );
 		}
 
 		return $this->account_info_cache;

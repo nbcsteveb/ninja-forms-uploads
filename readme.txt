@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
-Tested up to: 4.9
-Stable tag: 3.0.17
+Tested up to: 4.9.4
+Stable tag: 3.0.18
 
 License: GPLv2 or later
 
@@ -26,6 +26,18 @@ This section describes how to install the plugin and get it working.
 For help and video tutorials, please visit our website: [NinjaForms.com](http://ninjaforms.com)
 
 == Changelog ==
+
+
+= 3.0.18 (27 March 2018) =
+
+*Changes:*
+
+* Compatibility with Auto complete support in Ninja Forms 3.2.17
+
+*Bugs:*
+
+* Fatal error when Amazon Web Services plugin installed but not activated
+* Timeout when adding new forms on certain installs
 
 = 3.0.17 (18 November 2017) =
 
