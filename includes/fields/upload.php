@@ -253,6 +253,19 @@ class NF_FU_Fields_Upload extends NF_Abstracts_Field {
 		$settings['max_file_size'] = $max_file_size;
 		$settings['uploadNonce'] = wp_create_nonce( 'nf-file-upload-' . $settings['id'] );
 		$settings['select_files_text'] = ! empty ( $settings['select_files_text'] ) ? $settings['select_files_text'] : apply_filters( 'ninja_forms_upload_select_files_text', __( 'Select Files', 'ninja-forms-uploads' ) );
+		if ( ! empty( $settings['upload_types'] ) ) {
+			$types = array_map( 'trim', explode( ',', $settings['upload_types'] ) );
+
+			if ( in_array( 'jpg', $types ) && ! in_array( 'jpeg', $types ) ) {
+				$types[] = 'jpeg';
+			}
+
+			array_walk( $types, function ( &$value ) {
+				$value = '.' . ltrim( $value, '.' );
+			} );
+
+			$settings['upload_types'] = implode( ',', $types );
+		}
 
 		return $settings;
 	}
