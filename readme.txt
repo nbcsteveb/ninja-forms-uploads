@@ -3,8 +3,8 @@ Contributors: kstover, jameslaws
 Donate link: http://ninjaforms.com
 Tags: form, forms
 Requires at least: 4.6
-Tested up to: 4.9.4
-Stable tag: 3.0.18
+Tested up to: 4.9.5
+Stable tag: 3.0.19
 
 License: GPLv2 or later
 
@@ -27,6 +27,17 @@ For help and video tutorials, please visit our website: [NinjaForms.com](http://
 
 == Changelog ==
 
+= 3.0.19 (26 April 2018) =
+
+*Changes:*
+
+* Compatibility with form templates in Ninja Forms 3.2.23
+* Use file extension whitelist to restrict the file upload select box
+
+*Bugs:*
+
+* upload_max_filesize php.ini config defined in units other than MB not working
+* Dropbox connection removed if site cannot access Dropbox temporarily
 
 = 3.0.18 (27 March 2018) =
 
