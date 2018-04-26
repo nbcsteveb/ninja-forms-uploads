@@ -126,6 +126,7 @@ final class NF_FU_File_Uploads {
 		new NF_FU_Integrations_NinjaForms_Submissions();
 		new NF_FU_Integrations_NinjaForms_Attachments();
 		new NF_FU_Integrations_NinjaForms_MergeTags();
+		new NF_FU_Integrations_NinjaForms_Templates();
 		new NF_FU_Integrations_PostCreation_PostCreation();
 		new NF_FU_Integrations_Zapier_Zapier();
 
