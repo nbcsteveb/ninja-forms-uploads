@@ -5,7 +5,7 @@
 	<input class="nf-element" style="display: block; visibility: hidden; width: 0; height: 0;" type="file" <# data.uploadMulti ? print( 'name="files[]" multiple' ) : print ( 'name="files"' ) #> <# data.upload_types ? print( 'accept=" ' + data.upload_types + '"' ) : '' #>>
 	<input type="hidden" class="nf-upload-nonce" value="{{{ data.uploadNonce }}}">
 	<div class="nf-fu-progress">
-		<div class="nf-fu-progress-bar nf-fu-progress-bar-success animate"></div>
+		<div class="nf-fu-progress-bar nf-fu-progress-bar-success"></div>
 	</div>
 	<div class="files_uploaded"></div>
 </script>
