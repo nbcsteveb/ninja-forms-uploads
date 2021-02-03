@@ -33,7 +33,9 @@ class NF_FU_AJAX_Controllers_Uploads extends NF_Abstracts_Controller {
 			$this->_respond();
 		}
 
-		$result = check_ajax_referer( 'nf-file-upload-' . $field_id, 'nonce', false );
+		list( $field_id_no_instance ) = explode( '_', $field_id );
+
+		$result = check_ajax_referer( 'nf-file-upload-' . $field_id_no_instance, 'nonce', false );
 		if ( false === $result ) {
 			$this->_errors[] = __( 'Nonce error', 'ninja-forms-uploads' );
 			$this->_respond();
